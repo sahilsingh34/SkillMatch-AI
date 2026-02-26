@@ -13,10 +13,15 @@ export default async function RecruiterLayout({
         redirect("/auth/login");
     }
 
-    const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
-        select: { role: true },
-    });
+    let user = null;
+    try {
+        user = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { role: true },
+        });
+    } catch (e) {
+        console.error("Recruiter layout: DB error", e);
+    }
 
     if (user?.role !== "RECRUITER") {
         redirect("/dashboard/profile");

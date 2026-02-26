@@ -13,10 +13,16 @@ export default async function ProfileLayout({
         redirect("/auth/login");
     }
 
-    const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
-        select: { role: true },
-    });
+    let user = null;
+    try {
+        user = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { role: true },
+        });
+    } catch (e) {
+        console.error("Profile layout: DB error", e);
+        redirect("/dashboard/profile"); // stay on page, let the page handle it
+    }
 
     if (user?.role !== "SEEKER") {
         redirect("/dashboard/recruiter");

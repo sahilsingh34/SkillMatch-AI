@@ -13,10 +13,15 @@ export default async function DashboardLayout({
         redirect("/auth/login");
     }
 
-    const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
-        select: { role: true },
-    });
+    let user = null;
+    try {
+        user = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { role: true },
+        });
+    } catch (e) {
+        console.error("Dashboard layout: DB error", e);
+    }
 
     if (!user?.role) {
         redirect("/onboarding");
