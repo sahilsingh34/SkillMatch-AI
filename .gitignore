@@ -41,3 +41,13 @@ yarn-error.log*
 next-env.d.ts
 
 /lib/generated/prisma
+
+# Dev/test files
+prisma/dev.db
+prisma/dev.db-journal
+test.txt
+test_resume.pdf
+test_resume.txt
+test_upload.js
+generate_test_pdf.js
+scripts/
