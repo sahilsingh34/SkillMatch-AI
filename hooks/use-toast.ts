@@ -188,5 +188,6 @@ export { useToast, toast }
 export type ToastProps = {
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    variant?: "default" | "destructive";
 };
 export type ToastActionElement = React.ReactElement;
