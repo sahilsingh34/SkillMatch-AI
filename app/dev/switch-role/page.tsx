@@ -10,11 +10,15 @@ async function switchRole(formData: FormData) {
 
     const newRole = formData.get("role") as "SEEKER" | "RECRUITER";
 
-    await prisma.user.upsert({
-        where: { clerkId: userId },
-        update: { role: newRole },
-        create: { clerkId: userId, email: `dev_${userId}@clerk.local`, role: newRole },
-    });
+    try {
+        await prisma.user.upsert({
+            where: { clerkId: userId },
+            update: { role: newRole },
+            create: { clerkId: userId, email: `dev_${userId}@clerk.local`, role: newRole },
+        });
+    } catch (e) {
+        console.error("switch-role: DB error", e);
+    }
 
     revalidatePath("/");
     redirect(newRole === "RECRUITER" ? "/dashboard/recruiter" : "/dashboard/profile");
@@ -24,10 +28,15 @@ export default async function SwitchRolePage() {
     const { userId } = await auth();
     if (!userId) redirect("/auth/login");
 
-    const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
-        select: { role: true, email: true },
-    });
+    let user = null;
+    try {
+        user = await prisma.user.findUnique({
+            where: { clerkId: userId },
+            select: { role: true, email: true },
+        });
+    } catch (e) {
+        console.error("switch-role: DB error fetching user", e);
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-background">
@@ -38,7 +47,7 @@ export default async function SwitchRolePage() {
                     <p className="text-muted-foreground text-sm mt-1">
                         Current role: <strong className="text-primary">{user?.role ?? "None"}</strong>
                         <br />
-                        Account: {user?.email}
+                        Account: {user?.email ?? "Loading..."}
                     </p>
                 </div>
 
