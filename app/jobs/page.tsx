@@ -31,19 +31,28 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
 
     const { userId } = await auth();
     if (userId && userSkills.length === 0) {
-        // @ts-ignore
-        const user = await prisma.user.findUnique({
-            where: { clerkId: userId },
-            include: { profile: true } as any
-        }) as any;
+        try {
+            // @ts-ignore
+            const user = await prisma.user.findUnique({
+                where: { clerkId: userId },
+                include: { profile: true } as any
+            }) as any;
 
-        if (user?.profile?.skills) {
-            userSkills = user.profile.skills.split(',').map((s: string) => s.trim());
+            if (user?.profile?.skills) {
+                userSkills = user.profile.skills.split(',').map((s: string) => s.trim());
+            }
+        } catch (e) {
+            console.error("Jobs: failed to fetch user profile skills", e);
         }
     }
 
-    // Fetch ALL jobs from the real SQLite database
-    const dbJobs = await prisma.job.findMany();
+    // Fetch ALL jobs from the real database
+    let dbJobs: Job[] = [];
+    try {
+        dbJobs = await prisma.job.findMany();
+    } catch (e) {
+        console.error("Jobs: failed to fetch jobs from DB", e);
+    }
 
     // Sort and score jobs dynamically if skills are passed
     const displayJobs = dbJobs.map((job: Job) => {
