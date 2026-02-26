@@ -50,8 +50,8 @@ export async function createApplicationAction(jobId: string) {
         }
 
         // 4. Calculate Match Score
-        const jobSkills = job.skills.toLowerCase().split(',').map(s => s.trim());
-        const userSkills = user.profile.skills.toLowerCase().split(',').map(s => s.trim());
+        const jobSkills = job.skills.toLowerCase().split(',').map((s: string) => s.trim());
+        const userSkills = user.profile.skills.toLowerCase().split(',').map((s: string) => s.trim());
 
         let matchCount = 0;
         jobSkills.forEach(reqSkill => {
