@@ -36,6 +36,9 @@ export async function Navbar() {
           >
             Dashboard
           </Link>
+          {userRole === "SEEKER" && (
+            <Link href="/dashboard/profile/saved" className="transition-colors hover:text-foreground/80 text-foreground/60">Saved Jobs</Link>
+          )}
         </nav>
         <div className="flex items-center space-x-4">
           <SignedIn>

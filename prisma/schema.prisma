@@ -26,6 +26,7 @@ model User {
   profile      Profile?
   jobsPosted   Job[]       @relation("RecruiterJobs")
   applications Applicant[]
+  savedJobs    SavedJob[]
 }
 
 model Profile {
@@ -48,7 +49,7 @@ model Job {
   type        String
   salary      String
   description String
-  skills      String   // Stored as a comma-separated string for SQLite simplicity
+  skills      String   // Stored as a comma-separated string
   postedAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -56,6 +57,7 @@ model Job {
   recruiterId String
   recruiter   User        @relation("RecruiterJobs", fields: [recruiterId], references: [id])
   applicants  Applicant[]
+  savedBy     SavedJob[]
 }
 
 model Applicant {
@@ -76,3 +78,16 @@ model Applicant {
   // Prevent multiple applications to the same job
   @@unique([jobId, userId]) 
 }
+
+model SavedJob {
+  id        String   @id @default(uuid())
+  userId    String
+  jobId     String
+  savedAt   DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, jobId])
+}
+

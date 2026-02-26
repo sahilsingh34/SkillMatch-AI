@@ -9,6 +9,7 @@ import { Job, Applicant } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { PipelineChart, TimelineChart } from './Charts';
+import { JobManagementButtons } from './JobManagementButtons';
 
 export default async function RecruiterDashboard() {
     const { userId } = await auth();
@@ -241,12 +242,14 @@ export default async function RecruiterDashboard() {
                                     </div>
                                 </div>
 
-                                <div className="flex gap-3 w-full md:w-auto">
+                                <div className="flex gap-3 w-full md:w-auto items-center">
                                     <Link href={`/dashboard/recruiter/jobs/${job.id}/applicants`} className="w-full md:w-auto">
                                         <Button variant="secondary" className="w-full bg-slate-800 hover:bg-slate-700 text-white">
                                             View Pipeline
                                         </Button>
                                     </Link>
+                                    <div className="h-8 w-px bg-slate-800 hidden md:block"></div>
+                                    <JobManagementButtons jobId={job.id} />
                                 </div>
                             </CardContent>
                         </Card>
