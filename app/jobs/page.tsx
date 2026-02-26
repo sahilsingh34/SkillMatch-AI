@@ -12,16 +12,18 @@ import { auth } from "@clerk/nextjs/server";
 
 // Helper for Mock Vector Matching
 function calculateMatchScore(jobSkills: string, userSkills: string[]): number {
-    if (!userSkills || userSkills.length === 0) return Math.floor(Math.random() * 30) + 60; // Random baseline if no skills
+    if (!userSkills || userSkills.length === 0) return 0;
 
-    const formattedJobSkills = jobSkills.split(',').map(s => s.trim().toLowerCase());
-    const formattedUserSkills = userSkills.map(s => s.toLowerCase());
+    const formattedJobSkills = jobSkills.split(',').map((s: string) => s.trim().toLowerCase());
+    const formattedUserSkills = userSkills.map((s: string) => s.toLowerCase());
 
-    const matches = formattedJobSkills.filter((skill: string) => formattedUserSkills.includes(skill));
+    // Enhanced matching: includes partial matches (React ≈ React.js, Node ≈ Node.js)
+    const matches = formattedJobSkills.filter((skill: string) =>
+        formattedUserSkills.some((us: string) => us.includes(skill) || skill.includes(us))
+    );
     const score = Math.round((matches.length / formattedJobSkills.length) * 100);
 
-    // Guarantee a minimum score for UI demo purposes, scale up based on matches
-    return Math.max(40, score + (formattedJobSkills.length < 3 ? 20 : 0));
+    return Math.max(10, score);
 }
 
 export default async function JobsPage({ searchParams }: { searchParams: Promise<{ skills?: string }> }) {

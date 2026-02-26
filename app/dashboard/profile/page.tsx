@@ -4,10 +4,10 @@ import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UploadCloud, FileText, CheckCircle2, AlertCircle, Loader2, Inbox } from "lucide-react";
+import { UploadCloud, FileText, CheckCircle2, AlertCircle, Loader2, Inbox, Sparkles, TrendingUp, Target, Lightbulb } from "lucide-react";
 import Link from "next/link";
 
-import { getJobSeekerProfileAction } from "./actions";
+import { getJobSeekerProfileAction, getSkillGapAnalysisAction } from "./actions";
 
 export default function ProfileDashboard() {
     const [file, setFile] = useState<File | null>(null);
@@ -15,6 +15,10 @@ export default function ProfileDashboard() {
     const [isLoadingProfile, setIsLoadingProfile] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+
+    // Skill Gap state
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [skillGap, setSkillGap] = useState<any>(null);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setError(null);
@@ -51,7 +55,7 @@ export default function ProfileDashboard() {
         }).catch(() => {
             setIsLoadingProfile(false);
         });
-    }, [getJobSeekerProfileAction]);
+    }, []);
 
     const handleUpload = async () => {
         if (!file) return;
@@ -75,7 +79,6 @@ export default function ProfileDashboard() {
                 throw new Error(data.error || "Failed to read resume file");
             }
 
-            // The upload route now directly handles Gemini AI extraction
             setSkills(data.skills ? data.skills.split(',').map((s: string) => s.trim()) : []);
             setSummary(data.message || "Resume processed successfully.");
             if (data.resumeUrl) setResumeUrl(data.resumeUrl);
@@ -87,8 +90,22 @@ export default function ProfileDashboard() {
         }
     };
 
+    const handleSkillGapAnalysis = async () => {
+        setIsAnalyzing(true);
+        try {
+            const result = await getSkillGapAnalysisAction();
+            if (result.success && result.analysis) {
+                setSkillGap(result.analysis);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsAnalyzing(false);
+        }
+    };
+
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl mt-16 md:mt-24">
+        <div className="container mx-auto px-4 py-8 max-w-5xl mt-16 md:mt-24">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-border pb-6">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Your Profile</h1>
@@ -210,14 +227,139 @@ export default function ProfileDashboard() {
                                         ))}
                                     </div>
                                 </div>
-                                <Button className="w-full" variant="outline" asChild>
-                                    <a href={`/jobs?skills=${encodeURIComponent(skills.join(','))}`}>View Matched Jobs</a>
-                                </Button>
+                                <div className="flex gap-3">
+                                    <Button className="flex-1" variant="outline" asChild>
+                                        <a href={`/jobs?skills=${encodeURIComponent(skills.join(','))}`}>View Matched Jobs</a>
+                                    </Button>
+                                    <Button
+                                        className="flex-1"
+                                        onClick={handleSkillGapAnalysis}
+                                        disabled={isAnalyzing}
+                                    >
+                                        {isAnalyzing ? (
+                                            <>
+                                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                Analyzing...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Sparkles className="mr-2 h-4 w-4" />
+                                                Skill Gap Analysis
+                                            </>
+                                        )}
+                                    </Button>
+                                </div>
                             </div>
                         )}
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Skill Gap Analysis Results */}
+            {skillGap && (
+                <div className="mt-8 space-y-6">
+                    <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+                        <Sparkles className="h-6 w-6 text-primary" />
+                        AI Career Analysis
+                    </h2>
+
+                    {/* Profile Strength + Summary row */}
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {/* Profile Strength */}
+                        <Card className="bg-muted/30">
+                            <CardContent className="pt-6">
+                                <div className="text-center">
+                                    <div className="relative inline-flex items-center justify-center w-28 h-28">
+                                        <svg className="w-28 h-28 -rotate-90" viewBox="0 0 120 120">
+                                            <circle cx="60" cy="60" r="54" stroke="currentColor" strokeWidth="8" fill="none" className="text-muted" />
+                                            <circle cx="60" cy="60" r="54" stroke="currentColor" strokeWidth="8" fill="none"
+                                                className={skillGap.profileStrength > 70 ? "text-green-500" : skillGap.profileStrength > 40 ? "text-amber-500" : "text-red-500"}
+                                                strokeDasharray={`${(skillGap.profileStrength / 100) * 339.3} 339.3`}
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                        <span className="absolute text-2xl font-bold">{skillGap.profileStrength}%</span>
+                                    </div>
+                                    <p className="text-sm font-medium mt-3">Profile Strength</p>
+                                    <p className="text-xs text-muted-foreground mt-1">Based on {skillGap.totalJobs} job{skillGap.totalJobs !== 1 ? 's' : ''} in market</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Summary + Strong Skills */}
+                        <Card className="md:col-span-2 bg-muted/30">
+                            <CardContent className="pt-6 space-y-4">
+                                <div className="flex items-start gap-3">
+                                    <TrendingUp className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                                    <div>
+                                        <h4 className="font-medium text-sm mb-1">Career Insight</h4>
+                                        <p className="text-sm text-muted-foreground">{skillGap.summary}</p>
+                                    </div>
+                                </div>
+                                {skillGap.strongSkills.length > 0 && (
+                                    <div className="flex items-start gap-3">
+                                        <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5 shrink-0" />
+                                        <div>
+                                            <h4 className="font-medium text-sm mb-2">Your Top Skills (In Demand)</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {skillGap.strongSkills.map((skill: string) => (
+                                                    <span key={skill} className="px-2.5 py-1 bg-green-500/10 text-green-400 border border-green-500/20 text-xs font-medium rounded-md">
+                                                        {skill}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    {/* Missing Skills + Suggestions */}
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {/* Missing Skills */}
+                        <Card className="bg-muted/30 border-amber-500/20">
+                            <CardHeader className="pb-3">
+                                <CardTitle className="text-base flex items-center gap-2">
+                                    <Target className="h-5 w-5 text-amber-400" />
+                                    Skills to Learn
+                                </CardTitle>
+                                <CardDescription>In-demand skills missing from your profile</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex flex-wrap gap-2">
+                                    {skillGap.missingSkills.map((skill: string) => (
+                                        <span key={skill} className="px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-medium rounded-md">
+                                            + {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Suggestions */}
+                        <Card className="bg-muted/30 border-blue-500/20">
+                            <CardHeader className="pb-3">
+                                <CardTitle className="text-base flex items-center gap-2">
+                                    <Lightbulb className="h-5 w-5 text-blue-400" />
+                                    AI Recommendations
+                                </CardTitle>
+                                <CardDescription>Personalized career suggestions</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ul className="space-y-3">
+                                    {skillGap.suggestions.map((suggestion: string, i: number) => (
+                                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span className="text-blue-400 font-bold mt-0.5 shrink-0">{i + 1}.</span>
+                                            {suggestion}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
