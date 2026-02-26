@@ -1,12 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 
-// Prevent multiple instances of Prisma Client in development
-declare global {
-    var prisma: PrismaClient | undefined;
-}
+// Proper Vercel serverless singleton pattern
+// See: https://www.prisma.io/docs/guides/performance-and-optimization/connection-management#prismaclient-in-long-running-applications
 
-export const prisma = globalThis.prisma || new PrismaClient();
+const globalForPrisma = globalThis as unknown as {
+    prisma: PrismaClient | undefined;
+};
+
+export const prisma =
+    globalForPrisma.prisma ??
+    new PrismaClient({
+        log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+    });
 
 if (process.env.NODE_ENV !== "production") {
-    globalThis.prisma = prisma;
+    globalForPrisma.prisma = prisma;
 }
