@@ -102,17 +102,26 @@ const PointerCursorSVG: FC = () => {
   }, []);
 
   const color = isDark ? "white" : "black";
+  const outline = isDark ? "black" : "white";
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="38"
-      height="38"
+      width="32"
+      height="32"
       viewBox="0 0 24 24"
-      style={{ marginLeft: '-12px', marginTop: '-4px' }}
+      style={{ marginLeft: '-10px', marginTop: '-2px' }}
     >
+      {/* Click effect rays - outline */}
+      <g stroke={outline} strokeWidth="4" strokeLinecap="round">
+        <line x1="11" y1="1" x2="11" y2="3.5" />
+        <line x1="6" y1="3" x2="8" y2="5" />
+        <line x1="16" y1="3" x2="14" y2="5" />
+        <line x1="3" y1="8" x2="5.5" y2="8" />
+        <line x1="19" y1="8" x2="16.5" y2="8" />
+      </g>
       {/* Click effect rays */}
-      <g stroke={color} strokeWidth="2.5" strokeLinecap="round">
+      <g stroke={color} strokeWidth="2" strokeLinecap="round">
         <line x1="11" y1="1" x2="11" y2="3.5" />
         <line x1="6" y1="3" x2="8" y2="5" />
         <line x1="16" y1="3" x2="14" y2="5" />
@@ -122,6 +131,10 @@ const PointerCursorSVG: FC = () => {
       {/* Solid hand */}
       <path
         fill={color}
+        stroke={outline}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         d="M13.5 11.5V13h1.5V9.5A1.5 1.5 0 0 1 18 9.5V13h1V11.5A1.5 1.5 0 0 1 22 11.5V17.5C22 21 19.5 23.5 16 23.5H10.5C8 23.5 5 21 4 18.5L2.8 16.5C2.2 15.2 2.7 13.8 3.8 13.2C4.9 12.6 6.2 12.9 7 13.8L8.5 15.5V6.5C8.5 4.8 9.6 3.5 11 3.5C12.4 3.5 13.5 4.8 13.5 6.5V11.5Z"
       />
     </svg>
