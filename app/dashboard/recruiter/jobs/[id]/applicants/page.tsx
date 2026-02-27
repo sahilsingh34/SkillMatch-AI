@@ -118,7 +118,7 @@ export default async function ApplicantsPage(props: { params: Promise<{ id: stri
                                             </div>
                                             <div className="flex items-center justify-between text-sm pt-2">
                                                 <span className="text-slate-500 font-semibold">Current Stage</span>
-                                                <div onClick={(e) => e.stopPropagation()}>
+                                                <div>
                                                     <StatusDropdown applicantId={applicant.id} currentStatus={applicant.status} />
                                                 </div>
                                             </div>
