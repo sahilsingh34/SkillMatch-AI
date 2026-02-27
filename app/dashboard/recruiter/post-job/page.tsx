@@ -39,10 +39,10 @@ export default function PostJobPage() {
     }
 
     return (
-        <div className="bg-white min-h-screen pb-24">
-            <div className="h-40 bg-slate-50 border-b border-slate-100 flex items-end pb-8">
+        <div className="bg-white dark:bg-[#0a0a0a] min-h-screen pb-24 transition-colors">
+            <div className="h-40 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-8">
                 <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-                    <Link href="/dashboard/recruiter" className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors">
+                    <Link href="/dashboard/recruiter" className="inline-flex items-center text-sm font-bold text-neutral-500 hover:text-black dark:hover:text-white transition-colors">
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to Dashboard
                     </Link>
@@ -51,17 +51,17 @@ export default function PostJobPage() {
 
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl -mt-4">
                 <div className="mb-10 pt-6">
-                    <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">Post a New Job</h1>
-                    <p className="text-lg text-slate-500">Fill out the role details. Our AI will automatically extract the required core skills from your description.</p>
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-black dark:text-white mb-4">Post a New Job</h1>
+                    <p className="text-[17px] text-neutral-500 dark:text-neutral-400 font-medium tracking-tight">Fill out the role details. Our AI will automatically extract the required core skills from your description.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {/* Form Column */}
                     <div className="md:col-span-2">
                         <form action={onSubmit}>
-                            <div className="bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100">
+                            <div className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 rounded-[2rem] p-8 shadow-sm">
                                 {error && (
-                                    <div className="p-4 mb-6 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm font-medium">
+                                    <div className="p-4 mb-6 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 text-black dark:text-white text-sm font-bold">
                                         {error}
                                     </div>
                                 )}
@@ -69,41 +69,43 @@ export default function PostJobPage() {
                                 <div className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="title" className="text-slate-700 font-bold">Job Title <span className="text-blue-600">*</span></Label>
-                                            <Input id="title" name="title" placeholder="e.g. Senior Frontend Engineer" required className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus:border-blue-500 focus:ring-blue-500/20" />
+                                            <Label htmlFor="title" className="text-black dark:text-white font-bold">Job Title *</Label>
+                                            <Input id="title" name="title" placeholder="e.g. Senior Frontend Engineer" required className="bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white h-12 rounded-xl focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400" />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="company" className="text-slate-700 font-bold">Company / Team <span className="text-blue-600">*</span></Label>
-                                            <Input id="company" name="company" placeholder="e.g. TechNova" required className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus:border-blue-500 focus:ring-blue-500/20" />
+                                            <Label htmlFor="company" className="text-black dark:text-white font-bold">Company / Team *</Label>
+                                            <Input id="company" name="company" placeholder="e.g. TechNova" required className="bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white h-12 rounded-xl focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400" />
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="location" className="text-slate-700 font-bold">Location</Label>
-                                            <Input id="location" name="location" placeholder="e.g. Remote, NY" defaultValue="Remote" className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus:border-blue-500 focus:ring-blue-500/20" />
+                                            <Label htmlFor="location" className="text-black dark:text-white font-bold">Location</Label>
+                                            <Input id="location" name="location" placeholder="e.g. Remote" defaultValue="Remote" className="bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white h-12 rounded-xl focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400" />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="type" className="text-slate-700 font-bold">Job Type</Label>
-                                            <Input id="type" name="type" placeholder="e.g. Full-time" defaultValue="Full-time" className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus:border-blue-500 focus:ring-blue-500/20" />
+                                            <Label htmlFor="type" className="text-black dark:text-white font-bold">Job Type</Label>
+                                            <Input id="type" name="type" placeholder="e.g. Full-time" defaultValue="Full-time" className="bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white h-12 rounded-xl focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400" />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="salary" className="text-slate-700 font-bold">Salary Range</Label>
-                                            <Input id="salary" name="salary" placeholder="e.g. $120k-$150k" className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus:border-blue-500 focus:ring-blue-500/20" />
+                                            <Label htmlFor="salary" className="text-black dark:text-white font-bold">Salary Range</Label>
+                                            <Input id="salary" name="salary" placeholder="e.g. $120k-$150k" className="bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white h-12 rounded-xl focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400" />
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2 pt-4 border-t border-slate-100">
+                                    <div className="space-y-2 pt-4 border-t border-neutral-200 dark:border-neutral-800">
                                         <div className="flex items-center justify-between mb-2">
-                                            <Label htmlFor="description" className="text-slate-700 font-bold">Job Description <span className="text-blue-600">*</span></Label>
-                                            <span className="text-xs font-semibold text-emerald-600 flex items-center bg-emerald-50 px-2 py-1 rounded-full"><Sparkles className="w-3 h-3 mr-1" /> AI Scanned</span>
+                                            <Label htmlFor="description" className="text-black dark:text-white font-bold">Job Description *</Label>
+                                            <span className="text-[11px] font-bold text-black dark:text-white flex items-center bg-neutral-100 dark:bg-neutral-800 px-2.5 py-1 rounded-full uppercase tracking-widest border border-neutral-200 dark:border-neutral-700">
+                                                <Sparkles className="w-3 h-3 mr-1.5" /> AI Scanned
+                                            </span>
                                         </div>
-                                        <p className="text-sm text-slate-500 mb-3">Aim for detail. Gemini AI will scan this to build the required skillset (AI Skill Fingerprint).</p>
+                                        <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-3 font-medium">Aim for detail. Gemini AI will scan this to build the required skillset (AI Skill Fingerprint).</p>
                                         <Textarea
                                             id="description"
                                             name="description"
                                             placeholder="Describe the role, responsibilities, and qualifications..."
-                                            className="min-h-[240px] bg-slate-50 border-slate-200 text-slate-900 rounded-xl resize-y text-base p-4 focus:border-blue-500 focus:ring-blue-500/20"
+                                            className="min-h-[240px] bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-black dark:text-white rounded-xl resize-y text-base p-4 focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white transition-all font-medium placeholder:text-neutral-400"
                                             required
                                         />
                                     </div>
@@ -112,7 +114,7 @@ export default function PostJobPage() {
                                         <Button
                                             type="submit"
                                             disabled={isSubmitting || !!success}
-                                            className="bg-slate-900 hover:bg-slate-800 text-white h-14 px-8 rounded-xl font-bold text-base shadow-sm transition-all hover:shadow-md min-w-[180px]"
+                                            className="bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 h-14 px-8 rounded-xl font-bold text-[15px] shadow-sm transition-all hover:shadow-md min-w-[180px]"
                                         >
                                             {isSubmitting ? (
                                                 <>
@@ -121,7 +123,7 @@ export default function PostJobPage() {
                                                 </>
                                             ) : success ? (
                                                 <>
-                                                    <CheckCircle2 className="mr-2 h-5 w-5 text-emerald-400" />
+                                                    <CheckCircle2 className="mr-2 h-5 w-5" />
                                                     Job Posted!
                                                 </>
                                             ) : (
@@ -136,32 +138,32 @@ export default function PostJobPage() {
 
                     {/* AI Info Sidebar */}
                     <div className="md:col-span-1 space-y-6">
-                        <div className="bg-indigo-50 rounded-[2rem] p-8 mt-8 lg:-mt-24 relative z-10 border border-indigo-100/50 shadow-sm">
+                        <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-[2rem] p-8 mt-8 lg:-mt-24 relative z-10 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <Sparkles className="h-5 w-5 text-indigo-600" />
+                                <div className="h-10 w-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
+                                    <Sparkles className="h-5 w-5 text-white dark:text-black" />
                                 </div>
-                                <h3 className="font-bold text-lg text-indigo-900">AI Auto-Extraction</h3>
+                                <h3 className="font-bold text-lg text-black dark:text-white tracking-tight">AI Auto-Extraction</h3>
                             </div>
 
-                            <p className="text-sm text-indigo-700/80 mb-6 leading-relaxed">
+                            <p className="text-[15px] font-medium text-neutral-500 dark:text-neutral-400 mb-6 leading-relaxed">
                                 You don't need to manually tag skills. Our Gemini integration reads the context of your job description and automatically generates an accurate, standardized list of required skills.
                             </p>
 
                             {success && (
-                                <div className="mt-6 p-5 bg-white border border-indigo-100 rounded-2xl animate-in slide-in-from-bottom-4 zoom-in-95 fade-in duration-500 shadow-sm">
-                                    <h4 className="text-sm font-bold text-slate-900 mb-3 flex items-center">
-                                        <CheckCircle2 className="w-4 h-4 text-emerald-500 mr-2" />
+                                <div className="mt-6 p-5 bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 rounded-2xl animate-in slide-in-from-bottom-4 zoom-in-95 fade-in duration-500 shadow-sm">
+                                    <h4 className="text-sm font-bold text-black dark:text-white mb-3 flex items-center">
+                                        <CheckCircle2 className="w-4 h-4 text-black dark:text-white mr-2" />
                                         Extracted Fingerprint
                                     </h4>
                                     <div className="flex flex-wrap gap-2">
                                         {success.skills.map(s => (
-                                            <span key={s} className="px-3 py-1 bg-slate-50 text-slate-700 text-xs font-semibold rounded-full border border-slate-200">
+                                            <span key={s} className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-black dark:text-white text-[11px] uppercase tracking-wider font-bold rounded-full border border-neutral-200 dark:border-neutral-700">
                                                 {s}
                                             </span>
                                         ))}
                                     </div>
-                                    <p className="text-xs font-semibold text-slate-400 mt-5 text-center flex items-center justify-center">
+                                    <p className="text-xs font-bold text-neutral-400 dark:text-neutral-500 mt-5 text-center flex items-center justify-center uppercase tracking-widest">
                                         <Loader2 className="w-3 h-3 mr-1.5 animate-spin" />
                                         Redirecting to dashboard...
                                     </p>
