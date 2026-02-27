@@ -91,7 +91,7 @@ export default async function RecruiterDashboard() {
 
     return (
         <div className="bg-white dark:bg-[#0a0a0a] min-h-screen pb-24 transition-colors">
-            <div className="h-48 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-10">
+            <div className="pt-12 pb-8 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end">
                 <div className="container max-w-6xl mx-auto px-4 lg:px-8">
                     {/* Header */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -109,7 +109,7 @@ export default async function RecruiterDashboard() {
                 </div>
             </div>
 
-            <div className="container max-w-6xl mx-auto px-4 lg:px-8 -mt-6">
+            <div className="container max-w-6xl mx-auto px-4 lg:px-8 mt-10">
                 {/* Top Stats Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                     <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem]">
