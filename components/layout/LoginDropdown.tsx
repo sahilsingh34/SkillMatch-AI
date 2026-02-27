@@ -39,14 +39,14 @@ export function LoginDropdown() {
                             localStorage.setItem("preferred_role", "SEEKER");
                             setIsOpen(false);
                         }}
-                        className="flex items-center gap-3 px-4 py-3.5 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors group"
+                        className="flex items-start gap-3 px-4 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all border-b border-neutral-100 dark:border-neutral-800 group"
                     >
-                        <div className="h-9 w-9 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-10 w-10 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-[10px] flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition-colors shrink-0">
                             <UserRoundSearch className="h-4 w-4" />
                         </div>
-                        <div>
-                            <p className="text-sm font-semibold text-black dark:text-white">Job Seeker</p>
-                            <p className="text-[11px] text-neutral-400">Find jobs matching your skills</p>
+                        <div className="flex-1 mt-0.5">
+                            <p className="text-sm font-semibold text-black dark:text-white group-hover:text-blue-600 transition-colors">Job Seeker</p>
+                            <p className="text-[11px] text-neutral-500 font-medium mt-0.5">Find jobs matching your skills</p>
                         </div>
                     </Link>
                     <Link
@@ -55,14 +55,14 @@ export function LoginDropdown() {
                             localStorage.setItem("preferred_role", "RECRUITER");
                             setIsOpen(false);
                         }}
-                        className="flex items-center gap-3 px-4 py-3.5 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors border-t border-neutral-100 dark:border-neutral-800 group"
+                        className="flex items-start gap-3 px-4 py-4 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all group"
                     >
-                        <div className="h-9 w-9 bg-violet-50 dark:bg-violet-950/50 text-violet-600 dark:text-violet-400 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <div className="h-10 w-10 bg-violet-50 dark:bg-violet-950/50 text-violet-600 dark:text-violet-400 rounded-[10px] flex items-center justify-center group-hover:bg-violet-100 dark:group-hover:bg-violet-900/50 transition-colors shrink-0">
                             <Briefcase className="h-4 w-4" />
                         </div>
-                        <div>
-                            <p className="text-sm font-semibold text-black dark:text-white">Recruiter</p>
-                            <p className="text-[11px] text-neutral-400">Post jobs & find talent</p>
+                        <div className="flex-1 mt-0.5">
+                            <p className="text-sm font-semibold text-black dark:text-white group-hover:text-violet-600 transition-colors">Recruiter</p>
+                            <p className="text-[11px] text-neutral-500 font-medium mt-0.5">Post jobs & find talent</p>
                         </div>
                     </Link>
                 </div>
