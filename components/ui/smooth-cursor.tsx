@@ -90,6 +90,44 @@ const DefaultCursorSVG: FC = () => {
   )
 }
 
+const PointerCursorSVG: FC = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const update = () => setIsDark(document.documentElement.classList.contains("dark"));
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const color = isDark ? "white" : "black";
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="38"
+      height="38"
+      viewBox="0 0 24 24"
+      style={{ marginLeft: '-12px', marginTop: '-4px' }}
+    >
+      {/* Click effect rays */}
+      <g stroke={color} strokeWidth="2.5" strokeLinecap="round">
+        <line x1="11" y1="1" x2="11" y2="3.5" />
+        <line x1="6" y1="3" x2="8" y2="5" />
+        <line x1="16" y1="3" x2="14" y2="5" />
+        <line x1="3" y1="8" x2="5.5" y2="8" />
+        <line x1="19" y1="8" x2="16.5" y2="8" />
+      </g>
+      {/* Solid hand */}
+      <path
+        fill={color}
+        d="M13.5 11.5V13h1.5V9.5A1.5 1.5 0 0 1 18 9.5V13h1V11.5A1.5 1.5 0 0 1 22 11.5V17.5C22 21 19.5 23.5 16 23.5H10.5C8 23.5 5 21 4 18.5L2.8 16.5C2.2 15.2 2.7 13.8 3.8 13.2C4.9 12.6 6.2 12.9 7 13.8L8.5 15.5V6.5C8.5 4.8 9.6 3.5 11 3.5C12.4 3.5 13.5 4.8 13.5 6.5V11.5Z"
+      />
+    </svg>
+  )
+}
+
 export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
   springConfig = {
@@ -106,6 +144,8 @@ export function SmoothCursor({
   const previousAngle = useRef(0)
   const accumulatedRotation = useRef(0)
   const [isDesktop, setIsDesktop] = useState(false)
+  // State for pointer hover
+  const [isPointer, setIsPointer] = useState(false)
 
   // Only run on desktop devices (with a precise pointer)
   useEffect(() => {
@@ -154,7 +194,7 @@ export function SmoothCursor({
       cursorX.set(currentPos.x)
       cursorY.set(currentPos.y)
 
-      if (speed > 0.1) {
+      if (speed > 0.1 && !isPointer) { // Disable rotation when it's a pointer hand
         const currentAngle =
           Math.atan2(velocity.current.y, velocity.current.x) * (180 / Math.PI) +
           90
@@ -175,6 +215,8 @@ export function SmoothCursor({
         }, 150)
 
         return () => clearTimeout(timeout)
+      } else if (isPointer) {
+        rotation.set(0); // Lock rotation to upright for the pointer hand
       }
     }
 
@@ -188,15 +230,37 @@ export function SmoothCursor({
       })
     }
 
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      try {
+        const hasCursorPointer = window.getComputedStyle(target).cursor === 'pointer';
+
+        // For custom UI components that might intercept standard pointer detection
+        const closestClickable = target.closest('a, button, [role="button"], input[type="submit"], input[type="button"], label, select, summary');
+
+        if (closestClickable || hasCursorPointer) {
+          setIsPointer(true);
+        } else {
+          setIsPointer(false);
+        }
+      } catch (err) {
+        // Handle cross-origin iframe computed style errors gracefully
+      }
+    };
+
     document.body.style.cursor = "none"
     window.addEventListener("mousemove", throttledMouseMove)
+    window.addEventListener("mouseover", handleMouseOver)
 
     return () => {
       window.removeEventListener("mousemove", throttledMouseMove)
+      window.removeEventListener("mouseover", handleMouseOver)
       document.body.style.cursor = "auto"
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [cursorX, cursorY, rotation, scale, isDesktop])
+  }, [cursorX, cursorY, rotation, scale, isDesktop, isPointer])
 
   if (!isDesktop) return null;
 
@@ -222,7 +286,7 @@ export function SmoothCursor({
         damping: 30,
       }}
     >
-      {cursor}
+      {isPointer ? <PointerCursorSVG /> : cursor}
     </motion.div>
   )
 }
