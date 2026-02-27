@@ -81,24 +81,9 @@ export async function Navbar() {
         {/* Right: Actions */}
         <div className="flex items-center space-x-1 sm:space-x-3">
 
-          {/* Message Icon - hidden on mobile */}
-          <button className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors bg-white shadow-sm">
-            <MessageSquare className="h-4 w-4" />
-          </button>
-
-          {/* Language Selector - hidden on mobile */}
-          <button className="hidden sm:flex h-10 px-3 items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm text-sm font-semibold">
-            EN <ChevronDown className="h-4 w-4 ml-1 opacity-50" />
-          </button>
-
           {/* Auth Actions */}
           <SignedIn>
             <div className="flex items-center space-x-2 sm:space-x-3 ml-1 sm:ml-2">
-              <Link href={userRole === "RECRUITER" ? "/dashboard/recruiter" : "/dashboard/profile"}>
-                <Button variant="outline" className="hidden md:flex h-10 border-slate-200 text-slate-700 font-bold hover:bg-slate-50 shadow-sm rounded-xl px-5">
-                  Dashboard
-                </Button>
-              </Link>
               <UserButton
                 afterSignOutUrl="/"
                 appearance={{
