@@ -273,63 +273,60 @@ export default async function JobsPage({
 
                         <div className="space-y-6">
                             {displayJobs.map((job) => (
-                                <div key={job.id} className="group rounded-[1.5rem] border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer relative">
-                                    <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                                <div key={job.id} className="group rounded-[1.5rem] border border-neutral-100 dark:border-neutral-800 bg-white dark:bg-[#0a0a0a] hover:border-neutral-200 dark:hover:border-neutral-700 transition-colors cursor-pointer relative shadow-sm hover:shadow-md">
+                                    <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start gap-6">
 
                                         {/* Company Logo Square */}
-                                        <div className="w-16 h-16 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 flex items-center justify-center shrink-0 shadow-sm overflow-hidden relative">
+                                        <div className="w-[72px] h-[72px] rounded-[1.25rem] border border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center shrink-0">
                                             {/* Placeholder for real logos, using initial for now */}
                                             <span className="text-2xl font-black text-neutral-300 dark:text-neutral-600 uppercase">{job.company.charAt(0)}</span>
-                                            {job.matchScore >= 80 && (
-                                                <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500 rounded-bl-lg"></div>
-                                            )}
                                         </div>
 
                                         {/* Core Job Info */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
+                                        <div className="flex-1 min-w-0 flex flex-col pt-1">
+                                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                                                 <div>
-                                                    <Link href={`/ jobs / ${job.id} `}>
-                                                        <h3 className="text-xl font-bold text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
+                                                    <Link href={`/jobs/${job.id}`}>
+                                                        <h3 className="text-[22px] font-bold text-blue-600 dark:text-blue-500 hover:underline decoration-2 underline-offset-4 tracking-tight leading-none mb-2 truncate">
                                                             {job.title}
                                                         </h3>
                                                     </Link>
-                                                    <div className="flex items-center text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-1">
+                                                    <div className="flex items-center text-[15px] font-medium text-neutral-500 dark:text-neutral-400">
                                                         <span>{job.company}</span>
                                                         <span className="mx-2 text-neutral-300 dark:text-neutral-600">•</span>
                                                         <span>{job.location}</span>
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center shrink-0 space-x-4">
+                                                <div className="flex items-center shrink-0 gap-3">
                                                     {/* AI Match Score Pill */}
-                                                    <div className={`px - 3 py - 1.5 rounded - full text - xs font - bold flex items - center gap - 1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400'} `}>
-                                                        <Sparkles className="h-3 w-3" />
+                                                    <div className={`px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'}`}>
+                                                        <Sparkles className="h-3.5 w-3.5" />
                                                         {job.matchScore}% Match
                                                     </div>
                                                     {/* Save Button */}
-                                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <div className="text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
                                                         <SaveJobButton jobId={job.id} initialSaved={job.isSaved} />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Structured Meta Data Grid */}
-                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-4 border-t border-neutral-100 dark:border-neutral-800">
-                                                <div>
-                                                    <div className="text-[11px] uppercase tracking-wider font-bold text-neutral-400 dark:text-neutral-500 mb-1">Experience</div>
-                                                    <div className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">1 to 3 Years</div>
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-5 border-t border-neutral-100/60 dark:border-neutral-800/60">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Experience</div>
+                                                    <div className="text-[15px] font-semibold text-[#111827] dark:text-neutral-200">1 to 3 Years</div>
                                                 </div>
-                                                <div>
-                                                    <div className="text-[11px] uppercase tracking-wider font-bold text-neutral-400 dark:text-neutral-500 mb-1">Job Type</div>
-                                                    <div className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">{job.type}</div>
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Job Type</div>
+                                                    <div className="text-[15px] font-semibold text-[#111827] dark:text-neutral-200">{job.type}</div>
                                                 </div>
-                                                <div>
-                                                    <div className="text-[11px] uppercase tracking-wider font-bold text-neutral-400 dark:text-neutral-500 mb-1">Salary</div>
-                                                    <div className="text-sm font-semibold text-black dark:text-white">{job.salary}</div>
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Salary</div>
+                                                    <div className="text-[15px] font-bold text-black dark:text-white">{job.salary}</div>
                                                 </div>
                                                 <div className="flex items-end justify-end">
-                                                    <div className="text-[11px] font-medium text-neutral-400 dark:text-neutral-500">
+                                                    <div className="text-[11px] font-semibold tracking-wide text-neutral-400 dark:text-neutral-500">
                                                         Posted {job.postedAt.toLocaleDateString()}
                                                     </div>
                                                 </div>
