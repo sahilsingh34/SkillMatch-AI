@@ -105,6 +105,12 @@ export function SmoothCursor({
   const lastUpdateTime = useRef(Date.now())
   const previousAngle = useRef(0)
   const accumulatedRotation = useRef(0)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  // Only run on desktop devices (with a precise pointer)
+  useEffect(() => {
+    setIsDesktop(window.matchMedia("(pointer: fine)").matches);
+  }, []);
 
   const cursorX = useSpring(0, springConfig)
   const cursorY = useSpring(0, springConfig)
@@ -120,6 +126,8 @@ export function SmoothCursor({
   })
 
   useEffect(() => {
+    if (!isDesktop) return;
+
     const updateVelocity = (currentPos: Position) => {
       const currentTime = Date.now()
       const deltaTime = currentTime - lastUpdateTime.current
@@ -188,7 +196,9 @@ export function SmoothCursor({
       document.body.style.cursor = "auto"
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [cursorX, cursorY, rotation, scale])
+  }, [cursorX, cursorY, rotation, scale, isDesktop])
+
+  if (!isDesktop) return null;
 
   return (
     <motion.div
