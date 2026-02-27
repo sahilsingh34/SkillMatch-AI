@@ -4,6 +4,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { MessageSquare, ChevronDown } from "lucide-react";
+import { MobileMenu } from "./MobileMenu";
 
 export async function Navbar() {
   const { userId } = await auth();
@@ -39,44 +40,62 @@ export async function Navbar() {
 
         {/* Center: Pill Navigation */}
         <nav className="hidden md:flex items-center bg-[#f3f4f6] rounded-full p-1 border border-black/[0.04] shadow-sm">
-          <Link
-            href="/"
-            className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-900 bg-[#e5e7eb] transition-colors"
-          >
+          <Link href="/" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
             Home
           </Link>
-          <Link
-            href="#jobs"
-            className="px-6 py-2 rounded-full text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors"
-          >
-            Jobs
-          </Link>
-          <Link
-            href="#companies"
-            className="px-6 py-2 rounded-full text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors"
-          >
-            Companies
-          </Link>
+
+          {userRole === "SEEKER" && (
+            <>
+              <Link href="/jobs" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                Find Jobs
+              </Link>
+              <Link href="/dashboard/profile/applications" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                My Applications
+              </Link>
+            </>
+          )}
+
+          {userRole === "RECRUITER" && (
+            <>
+              <Link href="/dashboard/recruiter/post-job" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                Post a Job
+              </Link>
+              <Link href="/dashboard/recruiter" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                My Listings
+              </Link>
+            </>
+          )}
+
+          {!userRole && (
+            <>
+              <Link href="/jobs" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                Jobs
+              </Link>
+              <Link href="#companies" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+                Companies
+              </Link>
+            </>
+          )}
         </nav>
 
         {/* Right: Actions */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-1 sm:space-x-3">
 
-          {/* Message Icon */}
-          <button className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors bg-white shadow-sm">
+          {/* Message Icon - hidden on mobile */}
+          <button className="hidden sm:flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors bg-white shadow-sm">
             <MessageSquare className="h-4 w-4" />
           </button>
 
-          {/* Language Selector */}
-          <button className="h-10 px-3 flex items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm text-sm font-semibold">
+          {/* Language Selector - hidden on mobile */}
+          <button className="hidden sm:flex h-10 px-3 items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm text-sm font-semibold">
             EN <ChevronDown className="h-4 w-4 ml-1 opacity-50" />
           </button>
 
           {/* Auth Actions */}
           <SignedIn>
-            <div className="flex items-center space-x-3 ml-2">
+            <div className="flex items-center space-x-2 sm:space-x-3 ml-1 sm:ml-2">
               <Link href={userRole === "RECRUITER" ? "/dashboard/recruiter" : "/dashboard/profile"}>
-                <Button variant="outline" className="h-10 border-slate-200 text-slate-700 font-bold hover:bg-slate-50 shadow-sm rounded-xl px-5">
+                <Button variant="outline" className="hidden md:flex h-10 border-slate-200 text-slate-700 font-bold hover:bg-slate-50 shadow-sm rounded-xl px-5">
                   Dashboard
                 </Button>
               </Link>
@@ -84,7 +103,7 @@ export async function Navbar() {
                 afterSignOutUrl="/"
                 appearance={{
                   elements: {
-                    userButtonBox: "h-10 w-10 border border-slate-200 shadow-sm rounded-xl overflow-hidden hover:scale-105 transition-transform"
+                    userButtonBox: "h-9 w-9 sm:h-10 sm:w-10 border border-slate-200 shadow-sm rounded-xl overflow-hidden hover:scale-105 transition-transform"
                   }
                 }}
               />
@@ -92,12 +111,15 @@ export async function Navbar() {
           </SignedIn>
 
           <SignedOut>
-            <Link href="/auth/login" className="ml-2">
-              <Button className="bg-[#111827] hover:bg-black text-white rounded-xl px-7 h-10 text-[14px] font-bold shadow-md shadow-black/10">
+            <Link href="/auth/login" className="ml-1 sm:ml-2">
+              <Button className="bg-[#111827] hover:bg-black text-white rounded-xl px-4 sm:px-7 h-9 sm:h-10 text-[13px] sm:text-[14px] font-bold shadow-md shadow-black/10">
                 Login
               </Button>
             </Link>
           </SignedOut>
+
+          {/* Mobile Menu Toggle */}
+          <MobileMenu userRole={userRole} />
         </div>
 
       </div>

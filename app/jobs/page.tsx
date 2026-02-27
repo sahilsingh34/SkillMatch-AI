@@ -196,7 +196,7 @@ export default async function JobsPage({
                 <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
                     {/* LEFT COLUMN: FILTERS */}
-                    <div className="w-full lg:w-64 shrink-0 space-y-10 lg:sticky lg:top-28 h-fit order-2 lg:order-1">
+                    <div className="w-full lg:w-[240px] xl:w-64 shrink-0 space-y-10 lg:sticky lg:top-28 h-fit order-2 lg:order-1">
 
                         <div className="flex items-center justify-between mb-2">
                             <h2 className="text-lg font-bold text-slate-900">Filters</h2>
@@ -374,7 +374,7 @@ export default async function JobsPage({
                     </div>
 
                     {/* RIGHT COLUMN: WIDGETS */}
-                    <div className="w-full xl:w-[320px] shrink-0 space-y-8 order-3 hidden lg:block">
+                    <div className="hidden lg:block lg:w-[280px] xl:w-[320px] shrink-0 space-y-8 order-3">
                         {/* Promo Block: Match / Upload */}
                         <div className="bg-[#111827] rounded-[28px] p-8 text-white relative overflow-hidden shadow-2xl shadow-black/10">
                             {/* Minimal geometric accents */}

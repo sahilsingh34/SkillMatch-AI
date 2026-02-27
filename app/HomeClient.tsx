@@ -35,62 +35,84 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
         }
     };
 
-    // --- HERO: Role Selection ---
-    if (userRole === null) {
-        return (
-            <div className="flex flex-col min-h-screen bg-white">
-                <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-20 max-w-3xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="w-full"
-                    >
-                        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 text-[#111827]">
-                            How do you want to use <span className="text-blue-600 italic">SkillMatch</span>?
-                        </h1>
-                        <p className="text-xl text-slate-500 mb-12">
-                            We&apos;ll customize your experience based on your choice.
-                        </p>
-
-                        <div className="grid md:grid-cols-2 gap-6 text-left">
-                            <motion.button
-                                onClick={() => handleRoleSelection("SEEKER")}
-                                disabled={isLoading}
-                                className="relative group w-full p-8 rounded-3xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 flex flex-col items-start gap-4 disabled:opacity-50 cursor-pointer overflow-hidden text-left shadow-sm"
-                            >
-                                <div className="h-16 w-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform border border-blue-100">
-                                    <UserRoundSearch className="h-8 w-8" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">I&apos;m looking for a job</h3>
-                                <p className="text-slate-500 text-sm leading-relaxed">
-                                    Find top roles matching your verified skills. Let AI connect you with employers who value what you can do.
-                                </p>
-                            </motion.button>
-
-                            <motion.button
-                                onClick={() => handleRoleSelection("RECRUITER")}
-                                disabled={isLoading}
-                                className="relative group w-full p-8 rounded-3xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 flex flex-col items-start gap-4 disabled:opacity-50 cursor-pointer overflow-hidden text-left shadow-sm"
-                            >
-                                <div className="h-16 w-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform border border-indigo-100">
-                                    <Briefcase className="h-8 w-8" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">I&apos;m hiring talent</h3>
-                                <p className="text-slate-500 text-sm leading-relaxed">
-                                    Post jobs, discover highly matched candidates, and manage your pipeline efficiently with AI.
-                                </p>
-                            </motion.button>
-                        </div>
-                    </motion.div>
-                </section>
-            </div>
-        );
-    }
-
     return (
-        <div className="flex flex-col min-h-screen bg-white relative">
+        <div className="flex flex-col min-h-screen bg-white">
             <Hero />
+
+            {/* Logo Cloud Section - Moved up for better social proof */}
+            <section className="py-12 border-b border-slate-100 bg-white">
+                <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
+                    <p className="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-8">
+                        Trusted by innovative teams worldwide
+                    </p>
+                    <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                        {["TechNova", "GlobalSystems", "InnovateCorp", "FutureLabs", "CloudWorks"].map((company) => (
+                            <div key={company} className="text-xl font-bold font-mono text-slate-800 flex items-center gap-2">
+                                <div className="w-6 h-6 rounded bg-slate-200"></div>
+                                {company}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Rest of the homepage content below (Features, CTA, Footer) */}
+            <section id="features" className="py-32 bg-slate-50 relative overflow-hidden">
+                <div className="container mx-auto px-6 text-center">
+                    <h2 className="text-4xl font-extrabold text-slate-900 mb-16 tracking-tight">
+                        Unlock Your Potential with <span className="text-blue-600 italic">SkillMatch</span>
+                    </h2>
+                    <div className="grid md:grid-cols-3 gap-12">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col items-center text-center p-8 bg-white rounded-3xl shadow-lg border border-slate-100"
+                        >
+                            <div className="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-6">
+                                <UserRoundSearch className="h-8 w-8" />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">AI-Powered Matching</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Our intelligent algorithms connect job seekers with roles that truly fit their skills and aspirations, and recruiters with the perfect candidates.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col items-center text-center p-8 bg-white rounded-3xl shadow-lg border border-slate-100"
+                        >
+                            <div className="h-16 w-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-6">
+                                <Briefcase className="h-8 w-8" />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">Verified Skills</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                Showcase your abilities with verified skill assessments, giving employers confidence in your capabilities.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col items-center text-center p-8 bg-white rounded-3xl shadow-lg border border-slate-100"
+                        >
+                            <div className="h-16 w-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L13.5 21.75 15 13.5H3.75z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-3">Streamlined Workflow</h3>
+                            <p className="text-slate-600 leading-relaxed">
+                                From application to hiring, our platform simplifies every step, saving time for both job seekers and recruiters.
+                            </p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
 
             {/* Keeping the CTA section but adapting to light theme */}
             <section className="py-24 border-t border-slate-100 bg-white">

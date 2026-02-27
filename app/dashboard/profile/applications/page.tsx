@@ -25,7 +25,11 @@ export default async function MyApplicationsPage() {
         }
     });
 
-    if (!user || user.role !== "SEEKER") {
+    if (!user?.role) {
+        redirect("/onboarding");
+    }
+
+    if (user.role !== "SEEKER") {
         redirect("/dashboard/recruiter");
     }
 

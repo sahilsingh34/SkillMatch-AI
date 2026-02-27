@@ -32,7 +32,7 @@ export function Hero() {
                             Post a Job
                         </Button>
                     </Link>
-                    <Link href="/auth/signup?role=SEEKER" className="w-full sm:w-auto">
+                    <Link href="/jobs" className="w-full sm:w-auto">
                         <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
                             Find a Job
                         </Button>

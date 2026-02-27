@@ -27,14 +27,12 @@ export default async function RecruiterDashboard() {
             where: { clerkId: userId }
         });
 
-        if (!recruiter) {
-            recruiter = await prisma.user.create({
-                data: {
-                    clerkId: userId,
-                    email: `user_${userId}@clerk.local`,
-                    role: 'RECRUITER'
-                }
-            });
+        recruiter = await prisma.user.findUnique({
+            where: { clerkId: userId }
+        });
+
+        if (!recruiter || recruiter.role !== 'RECRUITER') {
+            redirect('/onboarding');
         }
 
         jobs = await prisma.job.findMany({
@@ -113,7 +111,7 @@ export default async function RecruiterDashboard() {
 
             <div className="container max-w-6xl mx-auto px-4 lg:px-8 -mt-6">
                 {/* Top Stats Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                     <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>

@@ -24,7 +24,11 @@ export default async function ProfileLayout({
         redirect("/dashboard/profile"); // stay on page, let the page handle it
     }
 
-    if (user?.role !== "SEEKER") {
+    if (!user?.role) {
+        redirect("/onboarding");
+    }
+
+    if (user.role !== "SEEKER") {
         redirect("/dashboard/recruiter");
     }
 

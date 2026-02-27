@@ -37,7 +37,7 @@ export default function OnboardingPage() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-background">
+        <div className="flex flex-col items-center justify-center min-h-screen pt-24 pb-12 p-4 bg-background">
             <div className="max-w-3xl w-full text-center space-y-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
