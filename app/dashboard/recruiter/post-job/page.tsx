@@ -40,7 +40,7 @@ export default function PostJobPage() {
 
     return (
         <div className="bg-white dark:bg-[#0a0a0a] min-h-screen pb-24 transition-colors">
-            <div className="h-40 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-8">
+            <div className="pt-28 pb-8 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end">
                 <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
                     <Link href="/dashboard/recruiter" className="inline-flex items-center text-sm font-bold text-neutral-500 hover:text-black dark:hover:text-white transition-colors">
                         <ArrowLeft className="mr-2 h-4 w-4" />
