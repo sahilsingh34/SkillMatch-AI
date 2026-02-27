@@ -163,7 +163,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                                 </div>
                                 <div className="flex flex-col gap-1">
                                     <h3 className="font-bold text-[22px] tracking-tight text-black dark:text-white">{job.company}</h3>
-                                    <Link href="#" className="text-[15px] font-semibold text-blue-600 dark:text-blue-500 hover:underline decoration-2 underline-offset-4 group">
+                                    <Link href="#" className="text-[15px] font-semibold text-black dark:text-white hover:underline decoration-2 underline-offset-4 group">
                                         View Profile <ChevronRight className="h-3.5 w-3.5 inline group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </div>

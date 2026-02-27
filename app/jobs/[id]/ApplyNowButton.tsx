@@ -51,7 +51,7 @@ export function ApplyNowButton({ jobId, alreadyApplied = false }: { jobId: strin
     return (
         <Button
             size="lg"
-            className="w-full mb-4 font-semibold text-lg"
+            className="w-full mb-4 font-bold text-[15px] h-14 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-sm"
             onClick={handleApply}
             disabled={isApplying}
         >
