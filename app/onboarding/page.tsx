@@ -26,7 +26,7 @@ export default function OnboardingPage() {
             } else {
                 toast({
                     title: "Error",
-                    description: "Failed to set role. Please try again.",
+                    description: result.error || "Failed to set role. Please try again.",
                 });
                 setIsLoading(false);
             }
