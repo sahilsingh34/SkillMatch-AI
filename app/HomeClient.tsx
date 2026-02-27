@@ -72,7 +72,7 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
         <div className="flex flex-col min-h-screen bg-white dark:bg-neutral-950">
             <Hero userRole={userRole} />
 
-            {userRole !== "RECRUITER" && (
+            {!userRole && (
                 <>
                     {/* ===== SCROLL VELOCITY TEXT STRIP ===== */}
                     <section className="py-4 bg-neutral-950 dark:bg-neutral-900 overflow-hidden border-y border-neutral-800">
