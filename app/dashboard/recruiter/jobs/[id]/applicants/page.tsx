@@ -143,13 +143,11 @@ export default async function ApplicantsPage(props: { params: Promise<{ id: stri
                                         </div>
 
                                         {/* Actions */}
-                                        <div className="flex gap-3 mt-auto pt-2">
-                                            <Button variant="secondary" className="w-full bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-bold text-[15px] h-11 rounded-xl shadow-sm transition-all hover:shadow-md">
-                                                Review Profile
-                                            </Button>
-                                            <Button size="icon" variant="outline" className="bg-white dark:bg-[#0a0a0a] border-neutral-200 dark:border-neutral-800 text-black dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-900 flex-shrink-0 h-11 w-11 rounded-xl shadow-sm transition-all hover:shadow-md" asChild>
-                                                <a href={applicant.user?.profile?.resumeUrl || '#'} target="_blank" rel="noopener noreferrer">
-                                                    <ExternalLink className="h-5 w-5" />
+                                        <div className="mt-auto pt-2">
+                                            <Button className="w-full bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-bold text-[15px] h-11 rounded-xl shadow-sm transition-all hover:shadow-md" asChild>
+                                                <a href={applicant.user?.profile?.resumeUrl || '#'} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                                                    View Resume
+                                                    <ExternalLink className="ml-2 h-4 w-4" />
                                                 </a>
                                             </Button>
                                         </div>
