@@ -103,7 +103,7 @@ export async function Navbar() {
                 afterSignOutUrl="/"
                 appearance={{
                   elements: {
-                    userButtonBox: "h-9 w-9 sm:h-10 sm:w-10 border border-slate-200 shadow-sm rounded-xl overflow-hidden hover:scale-105 transition-transform"
+                    userButtonAvatarBox: "h-9 w-9 sm:h-10 sm:w-10 hover:scale-105 transition-transform"
                   }
                 }}
               />
