@@ -202,8 +202,8 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                             { icon: <Clock className="w-5 h-5" />, title: "Instant matching", desc: "Get matched with the right roles in seconds, not days." },
                             { icon: <Heart className="w-5 h-5" />, title: "Made with love", desc: "Crafted by a passionate team focused on your career success." },
                         ].map((item, i) => (
-                            <BlurFade key={i} delay={0.05 * i}>
-                                <div className="bg-white dark:bg-neutral-900 p-6 md:p-8 flex flex-col">
+                            <BlurFade key={i} delay={0.05 * i} className="h-full">
+                                <div className="bg-white dark:bg-neutral-900 p-6 md:p-8 flex flex-col h-full">
                                     <div className="text-neutral-700 dark:text-neutral-300 mb-4">{item.icon}</div>
                                     <h3 className="text-sm font-bold text-black dark:text-white mb-2">{item.title}</h3>
                                     <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
