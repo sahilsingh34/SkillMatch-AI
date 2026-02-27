@@ -4,7 +4,7 @@ import Link from "next/link";
 import { WordRotate } from "@/components/ui/word-rotate";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import BlurFade from "@/components/ui/blur-fade";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 export function Hero({ userRole }: { userRole?: string | null }) {
 
