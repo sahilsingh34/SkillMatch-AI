@@ -55,51 +55,37 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <div className="bg-white dark:bg-neutral-950 min-h-screen pb-24 transition-colors">
-            {/* Minimal Header Accent */}
-            <div className="h-40 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-8 relative overflow-hidden">
-                <div className="absolute inset-0 z-0 opacity-50"><Particles quantity={30} ease={80} color="#a78bfa" size={0.5} staticity={50} /></div>
-                <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
-                    <Link href="/jobs" className="inline-flex items-center text-sm font-semibold text-neutral-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        Back to Search
-                    </Link>
-                </div>
-            </div>
+        <div className="bg-white dark:bg-[#0a0a0a] min-h-screen pb-24 transition-colors">
+            <div className="container mx-auto px-4 lg:px-8 max-w-6xl pt-12">
+                <Link href="/jobs" className="inline-flex items-center text-sm font-semibold text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors mb-12">
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to Search
+                </Link>
 
-            <div className="container mx-auto px-4 lg:px-8 max-w-6xl -mt-4">
-                <div className="flex flex-col lg:flex-row gap-10">
+                <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
 
                     {/* Main Content Area */}
-                    <div className="flex-1 space-y-10">
+                    <div className="flex-1 space-y-12">
                         {/* Job Header Info */}
-                        <div className="pt-6">
-                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
-                                <div>
-                                    <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-black dark:text-white mb-3">{job.title}</h1>
-                                    <div className="flex items-center text-lg font-medium text-neutral-500 dark:text-neutral-400">
-                                        <Building className="mr-2 h-5 w-5 text-neutral-400 dark:text-neutral-500" />
-                                        {job.company}
-                                    </div>
+                        <div>
+                            <div className="flex flex-col gap-4 mb-8">
+                                <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.1] text-black dark:text-white">{job.title}</h1>
+                                <div className="flex items-center text-[17px] font-medium text-neutral-500 dark:text-neutral-400">
+                                    <Building className="mr-2 h-5 w-5 text-neutral-400 dark:text-neutral-500" />
+                                    {job.company}
                                 </div>
-                                {matchScore > 0 ? (
-                                    <div className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold mt-2 md:mt-0 self-start ${matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400'}`}>
-                                        <Sparkles className="h-4 w-4" />
-                                        {matchScore}% AI Match
-                                    </div>
-                                ) : null}
                             </div>
 
                             {/* Job Meta Flow */}
-                            <div className="flex flex-wrap gap-3 text-sm mt-8 border-t border-neutral-100 dark:border-neutral-800 pt-8">
-                                <div className="flex items-center font-semibold bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2 rounded-xl text-neutral-700 dark:text-neutral-300">
+                            <div className="flex flex-wrap gap-3 text-sm py-8 border-y border-neutral-100 dark:border-neutral-800">
+                                <div className="flex items-center font-semibold bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 px-5 py-2.5 rounded-full text-black dark:text-neutral-300">
                                     <MapPin className="mr-2 h-4 w-4 text-neutral-400 dark:text-neutral-500" /> {job.location}
                                 </div>
-                                <div className="flex items-center font-semibold bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2 rounded-xl text-neutral-700 dark:text-neutral-300">
+                                <div className="flex items-center font-semibold bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 px-5 py-2.5 rounded-full text-black dark:text-neutral-300">
                                     <Briefcase className="mr-2 h-4 w-4 text-neutral-400 dark:text-neutral-500" /> {job.type}
                                 </div>
-                                <div className="flex items-center font-semibold bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-100 dark:border-emerald-900/50 px-4 py-2 rounded-xl text-emerald-800 dark:text-emerald-400">
-                                    <DollarSign className="mr-1.5 h-4 w-4 text-emerald-600 dark:text-emerald-500" /> {job.salary}
+                                <div className="flex items-center font-bold bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/50 px-5 py-2.5 rounded-full text-emerald-700 dark:text-emerald-400">
+                                    <DollarSign className="mr-1 h-4 w-4 text-emerald-600 dark:text-emerald-500" /> {job.salary}
                                 </div>
                             </div>
                         </div>
@@ -139,28 +125,28 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                     </div>
 
                     {/* Right Sidebar */}
-                    <div className="w-full lg:w-[380px] shrink-0 space-y-8 mt-8 lg:-mt-24 relative z-10">
+                    <div className="w-full lg:w-[380px] shrink-0 space-y-8 mt-8 lg:mt-0 relative z-10">
 
                         {/* Action Card */}
-                        <div className="bg-white dark:bg-neutral-900 rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] border border-neutral-100 dark:border-neutral-800">
-                            <div className="flex items-center gap-2 w-full">
+                        <div className="bg-white dark:bg-[#0a0a0a] rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow border border-neutral-200 dark:border-neutral-800">
+                            <div className="flex flex-col gap-4 w-full">
                                 <ApplyNowButton jobId={job.id} alreadyApplied={alreadyApplied} />
+                                <Button variant="outline" className="w-full h-14 rounded-xl font-bold text-[15px] border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50 text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                                    Save Job
+                                </Button>
                             </div>
-                            <Button variant="outline" className="w-full mt-4 h-14 rounded-xl font-bold text-base border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:text-black dark:hover:text-white transition-colors">
-                                Save Job
-                            </Button>
 
-                            <div className="mt-8 pt-8 border-t border-neutral-100 dark:border-neutral-800 space-y-4">
+                            <div className="mt-8 pt-8 border-t border-neutral-100 dark:border-neutral-800 space-y-5">
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[11px]">Job ID</span>
-                                    <span className="font-bold text-black dark:text-white font-mono">{job.id.slice(-5).toUpperCase()}</span>
+                                    <span className="font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[10px]">Job ID</span>
+                                    <span className="font-bold text-black dark:text-white">{job.id.slice(-5).toUpperCase()}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[11px]">Applicants</span>
+                                    <span className="font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[10px]">Applicants</span>
                                     <span className="font-bold text-black dark:text-white">2 Active</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[11px]">Posted</span>
+                                    <span className="font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest text-[10px]">Posted</span>
                                     <div className="flex items-center font-bold text-black dark:text-white">
                                         <Clock className="w-3.5 h-3.5 mr-1.5 text-neutral-400 dark:text-neutral-500" />
                                         {job.postedAt.toLocaleDateString()}
@@ -170,23 +156,23 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                         </div>
 
                         {/* Company Card */}
-                        <div className="bg-white dark:bg-neutral-900 rounded-[2rem] p-8 border border-neutral-100 dark:border-neutral-800 shadow-sm">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="h-16 w-16 rounded-2xl bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center font-bold text-2xl text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50 shadow-inner">
+                        <div className="bg-white dark:bg-[#0a0a0a] rounded-[2rem] p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-6">
+                                <div className="w-[72px] h-[72px] rounded-[1.25rem] border border-neutral-100 dark:border-neutral-800 bg-blue-50/50 dark:bg-blue-950/20 flex items-center justify-center font-bold text-2xl text-blue-600 dark:text-blue-500 shrink-0">
                                     {job.company.charAt(0)}
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-xl text-black dark:text-white">{job.company}</h3>
-                                    <Link href="#" className="text-sm font-semibold text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 flex items-center mt-1 group">
-                                        View Profile <ChevronRight className="h-4 w-4 ml-0.5 group-hover:translate-x-1 transition-transform" />
+                                <div className="flex flex-col gap-1">
+                                    <h3 className="font-bold text-[22px] tracking-tight text-black dark:text-white">{job.company}</h3>
+                                    <Link href="#" className="text-[15px] font-semibold text-blue-600 dark:text-blue-500 hover:underline decoration-2 underline-offset-4 group">
+                                        View Profile <ChevronRight className="h-3.5 w-3.5 inline group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </div>
                             </div>
-                            <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400 leading-relaxed mb-6">
+                            <p className="text-[15px] font-medium text-neutral-500 dark:text-neutral-400 leading-relaxed mb-6">
                                 A leading technology company focused on delivering innovative solutions to complex industry problems.
                             </p>
-                            <div className="flex items-center text-sm font-semibold text-neutral-400 dark:text-neutral-500 group cursor-pointer hover:text-blue-600 dark:hover:text-blue-500 transition-colors">
-                                <Globe2 className="h-4 w-4 mr-2 group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors" />
+                            <div className="flex items-center text-[15px] font-bold text-neutral-400 dark:text-neutral-500 group cursor-pointer hover:text-black dark:hover:text-white transition-colors">
+                                <Globe2 className="h-4 w-4 mr-2 group-hover:text-black dark:text-white transition-colors" />
                                 {job.company.toLowerCase().replace(" ", "")}.com
                             </div>
                         </div>
