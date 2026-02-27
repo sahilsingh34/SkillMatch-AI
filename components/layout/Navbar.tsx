@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { MessageSquare, ChevronDown } from "lucide-react";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
+import { LoginDropdown } from "./LoginDropdown";
 
 export async function Navbar() {
   const { userId } = await auth();
@@ -100,11 +101,7 @@ export async function Navbar() {
           </SignedIn>
 
           <SignedOut>
-            <Link href="/auth/login" className="ml-1 sm:ml-2">
-              <Button className="bg-[#111827] hover:bg-black dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-black rounded-xl px-4 sm:px-7 h-9 sm:h-10 text-[13px] sm:text-[14px] font-bold shadow-md shadow-black/10">
-                Login
-              </Button>
-            </Link>
+            <LoginDropdown />
           </SignedOut>
 
           {/* Mobile Menu Toggle */}

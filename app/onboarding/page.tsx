@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { assignUserRoleAction } from "./actions";
 import { useRouter } from "next/navigation";
 import { Briefcase, UserRoundSearch, ArrowRight, Sparkles } from "lucide-react";
@@ -15,7 +15,18 @@ export default function OnboardingPage() {
     const router = useRouter();
     const { toast } = useToast();
 
-    const handleRoleSelection = async (role: "SEEKER" | "RECRUITER") => {
+    // Auto-select role if preferred_role is stored in localStorage
+    useEffect(() => {
+        const preferredRole = localStorage.getItem("preferred_role") as "SEEKER" | "RECRUITER" | null;
+        if (preferredRole === "SEEKER" || preferredRole === "RECRUITER") {
+            // Remove it right away so it doesn't run again if they navigate back
+            localStorage.removeItem("preferred_role");
+            // Automatically trigger the selection
+            handleRoleSelection(preferredRole, true);
+        }
+    }, []);
+
+    const handleRoleSelection = async (role: "SEEKER" | "RECRUITER", isAuto: boolean = false) => {
         setSelectedRole(role);
         setIsLoading(true);
         try {
@@ -27,10 +38,12 @@ export default function OnboardingPage() {
                 });
                 router.push(result.redirectTo);
             } else {
-                toast({
-                    title: "Error",
-                    description: result.error || "Failed to set role. Please try again.",
-                });
+                if (!isAuto) {
+                    toast({
+                        title: "Error",
+                        description: result.error || "Failed to set role. Please try again.",
+                    });
+                }
                 setIsLoading(false);
                 setSelectedRole(null);
             }
@@ -71,8 +84,8 @@ export default function OnboardingPage() {
                             onClick={() => handleRoleSelection("SEEKER")}
                             disabled={isLoading}
                             className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "SEEKER"
-                                    ? "border-blue-500 shadow-lg shadow-blue-500/10"
-                                    : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
+                                ? "border-blue-500 shadow-lg shadow-blue-500/10"
+                                : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
                                 }`}
                         >
                             {selectedRole === "SEEKER" && (
@@ -96,8 +109,8 @@ export default function OnboardingPage() {
                             onClick={() => handleRoleSelection("RECRUITER")}
                             disabled={isLoading}
                             className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "RECRUITER"
-                                    ? "border-violet-500 shadow-lg shadow-violet-500/10"
-                                    : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
+                                ? "border-violet-500 shadow-lg shadow-violet-500/10"
+                                : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
                                 }`}
                         >
                             {selectedRole === "RECRUITER" && (
