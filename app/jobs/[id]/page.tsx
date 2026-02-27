@@ -7,6 +7,7 @@ import { ArrowLeft, Briefcase, Building, ChevronRight, Clock, DollarSign, Globe2
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { ApplyNowButton } from "./ApplyNowButton";
+import { Particles } from "@/components/ui/particles";
 
 // Helper for Mock Vector Matching
 function calculateMatchScore(jobSkills: string, userSkills: string[]): number {
@@ -54,11 +55,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-    return (
         <div className="bg-white dark:bg-neutral-950 min-h-screen pb-24 transition-colors">
             {/* Minimal Header Accent */}
-            <div className="h-40 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-8">
-                <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
+            <div className="h-40 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-8 relative overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-50"><Particles quantity={30} ease={80} color="#a78bfa" size={0.5} staticity={50} /></div>
+                <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                     <Link href="/jobs" className="inline-flex items-center text-sm font-semibold text-neutral-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to Search

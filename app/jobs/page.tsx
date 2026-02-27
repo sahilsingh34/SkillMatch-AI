@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Particles } from "@/components/ui/particles";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Briefcase, MapPin, DollarSign, Clock, Search, Sparkles, ChevronLeft, ChevronRight, FileText, CheckCircle2 } from "lucide-react";
+import { Sparkles, Briefcase, MapPin, DollarSign, Building, Search, SlidersHorizontal, ChevronRight, ChevronLeft, FileText, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { prisma } from '@/lib/prisma';
 import { auth } from "@clerk/nextjs/server";
@@ -137,16 +138,16 @@ export default async function JobsPage({
         <div className="min-h-screen bg-white dark:bg-neutral-950">
 
             {/* HERO HEADER - Clean White Section */}
-            <section className="relative bg-white dark:bg-neutral-950 pt-36 pb-32 px-6 overflow-hidden border-b border-neutral-200 dark:border-neutral-800">
-                <RetroGrid className="opacity-40" />
+            <section className="relative flex flex-col items-center justify-center pt-36 pb-32 px-6 overflow-hidden border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
+                <Particles className="absolute inset-0 z-0" quantity={60} ease={80} color="#a78bfa" size={0.5} staticity={50} />
                 <div className="container mx-auto max-w-6xl relative z-10 text-center">
                     <BlurFade delay={0.1}>
-                        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-black dark:text-white mb-6">
-                            Find your <span className="text-blue-600 italic">dream job</span>
+                        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-black dark:text-white">
+                            Find your dream job
                         </h1>
                     </BlurFade>
                     <BlurFade delay={0.2}>
-                        <p className="text-lg text-neutral-500 dark:text-neutral-400 font-medium max-w-2xl mx-auto mb-12">
+                        <p className="text-lg text-neutral-500 dark:text-neutral-400 font-normal max-w-2xl mx-auto mb-12 leading-relaxed">
                             Discover highly-matched roles at top tech companies. Let AI connect you with opportunities perfectly aligned with your verified skills.
                         </p>
                     </BlurFade>
@@ -275,7 +276,7 @@ export default async function JobsPage({
                                         <div className="flex-1 min-w-0">
                                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
                                                 <div>
-                                                    <Link href={`/jobs/${job.id}`}>
+                                                    <Link href={`/ jobs / ${job.id} `}>
                                                         <h3 className="text-xl font-bold text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
                                                             {job.title}
                                                         </h3>
@@ -289,7 +290,7 @@ export default async function JobsPage({
 
                                                 <div className="flex items-center shrink-0 space-x-4">
                                                     {/* AI Match Score Pill */}
-                                                    <div className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400'}`}>
+                                                    <div className={`px - 3 py - 1.5 rounded - full text - xs font - bold flex items - center gap - 1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400'} `}>
                                                         <Sparkles className="h-3 w-3" />
                                                         {job.matchScore}% Match
                                                     </div>
@@ -404,7 +405,7 @@ export default async function JobsPage({
                             <h3 className="text-base font-bold text-black dark:text-white mb-6 tracking-tight">Popular Locations</h3>
                             <div className="space-y-4 relative z-10">
                                 {["San Francisco, CA", "New York, NY", "London, UK", "Remote", "Austin, TX"].map((loc) => (
-                                    <Link key={loc} href={`/jobs?location=${loc}`} className="flex items-center justify-between group">
+                                    <Link key={loc} href={`/ jobs ? location = ${loc} `} className="flex items-center justify-between group">
                                         <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                             {loc}
                                         </span>
