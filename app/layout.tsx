@@ -7,6 +7,8 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { Toaster } from "@/components/ui/toaster";
 
+import NextTopLoader from 'nextjs-toploader';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,9 +22,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang="en" className="dark">
+    <ClerkProvider>
+      <html lang="en">
         <body className={`${inter.className} min-h-screen bg-background text-foreground flex flex-col`}>
+          <NextTopLoader
+            color="#4f46e5"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #4f46e5,0 0 5px #4f46e5"
+          />
           <Navbar />
           <main className="flex-1">
             {children}

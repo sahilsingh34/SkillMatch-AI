@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { MessageSquare, ChevronDown } from "lucide-react";
 
 export async function Navbar() {
   const { userId } = await auth();
@@ -16,60 +17,91 @@ export async function Navbar() {
       });
       userRole = user?.role ?? null;
     } catch (e) {
-      // If DB is unreachable, degrade gracefully — show both nav options
       console.error("Navbar: failed to fetch user role", e);
     }
   }
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold tracking-tight text-primary">SkillMatch AI</span>
+    <header className="fixed top-0 z-[100] w-full mt-4 px-4 sm:px-6">
+      <div className="container mx-auto max-w-6xl h-16 flex items-center justify-between px-2 bg-transparent">
+
+        {/* Left: Logo */}
+        <Link href="/" className="flex items-center space-x-2 group">
+          <div className="h-10 px-3 bg-[#111827] rounded-xl flex items-center justify-center transition-transform duration-300 shadow-sm border border-black/[0.04]">
+            <span className="text-white font-mono font-bold text-lg tracking-tight">
+              {"<i/>"}
+            </span>
+          </div>
+          <span className="text-xl font-bold tracking-tight text-slate-900 ml-1">
+            SkillMatch
+          </span>
         </Link>
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          {userRole !== "RECRUITER" && (
-            <Link href="/jobs" className="transition-colors hover:text-foreground/80 text-foreground/60">Find Jobs</Link>
-          )}
+
+        {/* Center: Pill Navigation */}
+        <nav className="hidden md:flex items-center bg-[#f3f4f6] rounded-full p-1 border border-black/[0.04] shadow-sm">
           <Link
-            href={userRole === "RECRUITER" ? "/dashboard/recruiter" : "/dashboard/profile"}
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            href="/"
+            className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-900 bg-[#e5e7eb] transition-colors"
           >
-            Dashboard
+            Home
           </Link>
-          {userRole === "SEEKER" && (
-            <Link href="/dashboard/profile/saved" className="transition-colors hover:text-foreground/80 text-foreground/60">Saved Jobs</Link>
-          )}
+          <Link
+            href="#jobs"
+            className="px-6 py-2 rounded-full text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors"
+          >
+            Jobs
+          </Link>
+          <Link
+            href="#companies"
+            className="px-6 py-2 rounded-full text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors"
+          >
+            Companies
+          </Link>
         </nav>
-        <div className="flex items-center space-x-4">
+
+        {/* Right: Actions */}
+        <div className="flex items-center space-x-3">
+
+          {/* Message Icon */}
+          <button className="h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors bg-white shadow-sm">
+            <MessageSquare className="h-4 w-4" />
+          </button>
+
+          {/* Language Selector */}
+          <button className="h-10 px-3 flex items-center justify-center rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm text-sm font-semibold">
+            EN <ChevronDown className="h-4 w-4 ml-1 opacity-50" />
+          </button>
+
+          {/* Auth Actions */}
           <SignedIn>
-            <div className="flex items-center space-x-4">
-              {(!userRole || userRole === "SEEKER") && (
-                <Link href="/dashboard/profile">
-                  <Button variant="ghost" className="hidden sm:inline-flex text-indigo-400 hover:text-indigo-300">Seeker Profile</Button>
-                </Link>
-              )}
-              {(!userRole || userRole === "RECRUITER") && (
-                <Link href="/dashboard/recruiter">
-                  <Button variant="outline" className="border-indigo-500/50 text-indigo-300 hover:bg-indigo-950/30">Recruiter ATS</Button>
-                </Link>
-              )}
-              <div className="ml-4 border-l border-slate-800 pl-4">
-                <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonBox: "h-9 w-9" } }} />
-              </div>
+            <div className="flex items-center space-x-3 ml-2">
+              <Link href={userRole === "RECRUITER" ? "/dashboard/recruiter" : "/dashboard/profile"}>
+                <Button variant="outline" className="h-10 border-slate-200 text-slate-700 font-bold hover:bg-slate-50 shadow-sm rounded-xl px-5">
+                  Dashboard
+                </Button>
+              </Link>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    userButtonBox: "h-10 w-10 border border-slate-200 shadow-sm rounded-xl overflow-hidden hover:scale-105 transition-transform"
+                  }
+                }}
+              />
             </div>
           </SignedIn>
+
           <SignedOut>
-            <div className="flex items-center space-x-4">
-              <Link href="/auth/login">
-                <Button variant="ghost" className="hidden sm:inline-flex">Log in</Button>
-              </Link>
-              <Link href="/auth/signup">
-                <Button>Sign Up</Button>
-              </Link>
-            </div>
+            <Link href="/auth/login" className="ml-2">
+              <Button className="bg-[#111827] hover:bg-black text-white rounded-xl px-7 h-10 text-[14px] font-bold shadow-md shadow-black/10">
+                Login
+              </Button>
+            </Link>
           </SignedOut>
         </div>
+
       </div>
     </header>
   );
 }
+
