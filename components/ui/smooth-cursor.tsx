@@ -112,22 +112,6 @@ const PointerCursorSVG: FC = () => {
       viewBox="0 0 24 24"
       style={{ marginLeft: '-10px', marginTop: '-2px' }}
     >
-      {/* Click effect rays - outline */}
-      <g stroke={outline} strokeWidth="4" strokeLinecap="round">
-        <line x1="11" y1="1" x2="11" y2="3.5" />
-        <line x1="6" y1="3" x2="8" y2="5" />
-        <line x1="16" y1="3" x2="14" y2="5" />
-        <line x1="3" y1="8" x2="5.5" y2="8" />
-        <line x1="19" y1="8" x2="16.5" y2="8" />
-      </g>
-      {/* Click effect rays */}
-      <g stroke={color} strokeWidth="2" strokeLinecap="round">
-        <line x1="11" y1="1" x2="11" y2="3.5" />
-        <line x1="6" y1="3" x2="8" y2="5" />
-        <line x1="16" y1="3" x2="14" y2="5" />
-        <line x1="3" y1="8" x2="5.5" y2="8" />
-        <line x1="19" y1="8" x2="16.5" y2="8" />
-      </g>
       {/* Solid hand */}
       <path
         fill={color}
