@@ -23,8 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} min-h-screen bg-background text-foreground flex flex-col`}>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`
+            }}
+          />
           <NextTopLoader
             color="#4f46e5"
             initialPosition={0.08}
