@@ -211,10 +211,10 @@ export default async function JobsPage({
                                     return (
                                         <Link key={type} href={`/jobs?type=${type}&sort=${sort}&search=${search}&location=${locationFilter}`}>
                                             <div className="flex items-center group cursor-pointer">
-                                                <div className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${isActive ? 'bg-[#111827] dark:bg-white border-[#111827] dark:border-white' : 'bg-white dark:bg-neutral-900 border-neutral-300 dark:border-neutral-700 group-hover:border-neutral-500'}`}>
-                                                    {isActive && <CheckCircle2 className="h-3.5 w-3.5 text-white dark:text-black" />}
+                                                <div className={`w-[18px] h-[18px] rounded-[4px] border ${isActive ? 'bg-[#111827] dark:bg-white border-[#111827] dark:border-white' : 'bg-white dark:bg-transparent border-neutral-300 dark:border-neutral-700 group-hover:border-neutral-400'} flex items-center justify-center transition-colors`}>
+                                                    {isActive && <CheckCircle2 className="h-3 w-3 text-white dark:text-black opacity-100" />}
                                                 </div>
-                                                <span className={`ml-3 text-sm font-medium transition-colors ${isActive ? 'text-black dark:text-white font-bold' : 'text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white'}`}>
+                                                <span className={`ml-3 text-[15px] font-medium transition-colors ${isActive ? 'text-black dark:text-white' : 'text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white'}`}>
                                                     {type}
                                                 </span>
                                             </div>
@@ -379,26 +379,28 @@ export default async function JobsPage({
 
                     {/* RIGHT COLUMN: WIDGETS */}
                     <div className="hidden lg:block lg:w-[280px] xl:w-[320px] shrink-0 space-y-8 order-3">
-                        {/* Promo Block: Match / Upload (Big Minimalist Redesign) */}
-                        <div className="bg-neutral-50 dark:bg-neutral-900 rounded-[2.5rem] p-10 border border-neutral-200 dark:border-neutral-800 flex flex-col items-center text-center shadow-sm">
-                            <div className="w-20 h-20 bg-white dark:bg-neutral-950 rounded-full flex items-center justify-center mb-6 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-                                <FileText className="h-8 w-8 text-black dark:text-white" />
+                        {/* Promo Block: Match / Upload (Shrunk Minimalist Version) */}
+                        <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-2xl p-6 border border-neutral-200 dark:border-neutral-800 flex flex-col shadow-sm">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white dark:bg-neutral-950 rounded-[14px] flex items-center justify-center border border-neutral-200 dark:border-neutral-800 shadow-sm shrink-0">
+                                    <FileText className="h-5 w-5 text-black dark:text-white" />
+                                </div>
+                                <h3 className="text-lg font-bold text-black dark:text-white tracking-tight leading-tight">Match with<br />your resume</h3>
                             </div>
-                            <h3 className="text-2xl font-bold text-black dark:text-white mb-3 tracking-tight">Upload your resume</h3>
-                            <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-8">
-                                We'll extract your skills and instantly match you with the right jobs. Right job, right away.
+                            <p className="text-neutral-500 dark:text-neutral-400 text-xs leading-relaxed mb-6">
+                                We'll extract your skills and instantly match you with jobs.
                             </p>
 
-                            <div className="w-full">
+                            <div className="w-full mt-auto">
                                 {isSeeker ? (
                                     <Link href="/dashboard/profile" className="block w-full">
-                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-2xl h-14 shadow-sm transition-transform active:scale-95 text-base">
+                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-xl shadow-sm transition-transform active:scale-95 text-sm h-11">
                                             Update Profile
                                         </Button>
                                     </Link>
                                 ) : (
                                     <Link href="/auth/signup" className="block w-full">
-                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-2xl h-14 shadow-sm transition-transform active:scale-95 text-base">
+                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-xl shadow-sm transition-transform active:scale-95 text-sm h-11">
                                             Sign up to match
                                         </Button>
                                     </Link>
