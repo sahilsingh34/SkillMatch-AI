@@ -23,8 +23,8 @@ export async function Navbar() {
   }
 
   return (
-    <header className="fixed top-0 z-[100] w-full mt-4 px-4 sm:px-6">
-      <div className="container mx-auto max-w-6xl h-16 flex items-center justify-between px-2 bg-transparent">
+    <header className="fixed top-0 z-[100] w-full border-b border-slate-200/50 bg-white/60 backdrop-blur-lg shadow-sm">
+      <div className="container mx-auto max-w-6xl h-16 flex items-center justify-between px-4 sm:px-6">
 
         {/* Left: Logo */}
         <Link href="/" className="flex items-center space-x-2 group">
