@@ -11,19 +11,23 @@ export async function assignUserRoleAction(role: "SEEKER" | "RECRUITER") {
         throw new Error("Unauthorized");
     }
 
-    // Fetch the Clerk user to get their real email for the DB record
+    // Fetch the Clerk user to get their real email and names for the DB record
     const clerkUser = await currentUser();
     const email = clerkUser?.emailAddresses?.[0]?.emailAddress ?? `user_${userId}@clerk.local`;
+    const firstName = clerkUser?.firstName;
+    const lastName = clerkUser?.lastName;
 
     try {
         // Use upsert to handle brand-new users who have no DB record yet
         await prisma.user.upsert({
             where: { clerkId: userId },
-            update: { role },
+            update: { role, firstName, lastName },
             create: {
                 clerkId: userId,
                 email,
                 role,
+                firstName,
+                lastName,
             },
         });
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { supabaseAdmin } from "@/lib/supabase";
 import { generateText } from "ai";
@@ -28,12 +28,20 @@ export async function POST(req: NextRequest) {
         });
 
         if (!user) {
+            // Fetch Clerk user details for auto-creation
+            const clerkUser = await currentUser();
+            const email = clerkUser?.emailAddresses?.[0]?.emailAddress ?? `seeker_${clerkId}@clerk.local`;
+            const firstName = clerkUser?.firstName;
+            const lastName = clerkUser?.lastName;
+
             // Auto-create the Seeker's core record if this is their first action
             user = await prisma.user.create({
                 data: {
                     clerkId,
-                    email: `seeker_${clerkId}@clerk.local`, // Fallback for OAuth
-                    role: "SEEKER"
+                    email,
+                    role: "SEEKER",
+                    firstName,
+                    lastName
                 }
             });
         }
