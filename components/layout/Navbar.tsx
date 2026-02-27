@@ -38,18 +38,18 @@ export async function Navbar() {
           </span>
         </Link>
 
-        {/* Center: Pill Navigation */}
-        <nav className="hidden md:flex items-center bg-[#f3f4f6] rounded-full p-1 border border-black/[0.04] shadow-sm">
-          <Link href="/" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+        {/* Center: Navigation */}
+        <nav className="hidden md:flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-full px-1.5 py-1 border border-slate-200/60 shadow-sm">
+          <Link href="/" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
             Home
           </Link>
 
           {userRole === "SEEKER" && (
             <>
-              <Link href="/jobs" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="/jobs" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 Find Jobs
               </Link>
-              <Link href="/dashboard/profile/applications" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="/dashboard/profile/applications" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 My Applications
               </Link>
             </>
@@ -57,10 +57,10 @@ export async function Navbar() {
 
           {userRole === "RECRUITER" && (
             <>
-              <Link href="/dashboard/recruiter/post-job" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="/dashboard/recruiter/post-job" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 Post a Job
               </Link>
-              <Link href="/dashboard/recruiter" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="/dashboard/recruiter" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 My Listings
               </Link>
             </>
@@ -68,10 +68,10 @@ export async function Navbar() {
 
           {!userRole && (
             <>
-              <Link href="/jobs" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="/jobs" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 Jobs
               </Link>
-              <Link href="#companies" className="px-6 py-2 rounded-full text-[14px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-black/[0.03] transition-colors">
+              <Link href="#companies" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
                 Companies
               </Link>
             </>
