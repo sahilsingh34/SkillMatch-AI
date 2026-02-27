@@ -74,71 +74,79 @@ export function Hero({ userRole }: { userRole?: string | null }) {
         );
     }
 
-    // --- DEFAULT (Logged Out / Marketing) Layout ---
+    // --- DEFAULT (Logged Out / Premium Marketing) Layout ---
     return (
-        <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-20 bg-white overflow-hidden selection:bg-slate-200">
-            <div className="text-center max-w-4xl px-4 z-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                <h1 className="text-6xl md:text-[5.5rem] font-bold tracking-[-0.03em] text-[#111827] leading-[1.1] mb-6">
-                    Good jobs &ndash; <br className="hidden md:block" />
-                    Great talent in one place
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-24 bg-[#030712] overflow-hidden selection:bg-violet-900">
+
+            {/* Animated gradient background orbs */}
+            <div className="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-violet-600/15 rounded-full blur-[150px] pointer-events-none animate-pulse"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[150px] pointer-events-none animate-pulse [animation-delay:1s]"></div>
+            <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse [animation-delay:2s]"></div>
+
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:72px_72px] pointer-events-none"></div>
+
+            <div className="relative z-10 text-center max-w-5xl px-4 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+
+                {/* Top badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-sm font-semibold text-violet-300 bg-violet-500/10 border border-violet-500/20 rounded-full backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-400"></span>
+                    </span>
+                    AI-Powered Talent Platform
+                </div>
+
+                {/* Main headline with gradient */}
+                <h1 className="text-5xl sm:text-6xl md:text-[5.5rem] lg:text-[6.5rem] font-extrabold tracking-[-0.04em] leading-[1.05] mb-8">
+                    <span className="text-white">Where </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400">talent</span>
+                    <br className="hidden sm:block" />
+                    <span className="text-white"> meets </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400">opportunity</span>
                 </h1>
-                <p className="text-lg md:text-xl text-slate-500 font-medium tracking-tight mb-12 max-w-2xl mx-auto">
-                    The platform connecting top developers and companies
+
+                <p className="text-lg md:text-xl text-slate-400 font-medium tracking-tight mb-12 max-w-2xl mx-auto leading-relaxed">
+                    The next-gen platform that uses AI to match the right people to the right roles. Whether you&apos;re hiring or job-hunting, we make it effortless.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0">
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0 mb-16">
+                    <Link href="/auth/signup?role=SEEKER" className="w-full sm:w-auto">
+                        <Button size="lg" className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white rounded-xl px-10 h-14 text-base font-bold shadow-2xl shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-violet-500/40 w-full border-0">
+                            Find Your Dream Job
+                        </Button>
+                    </Link>
                     <Link href="/auth/signup?role=RECRUITER" className="w-full sm:w-auto">
-                        <Button size="lg" className="bg-[#111827] hover:bg-black text-white rounded-xl px-10 h-14 text-base font-bold shadow-xl shadow-black/10 transition-transform hover:-translate-y-0.5 w-full">
-                            Post a Job
-                        </Button>
-                    </Link>
-                    <Link href="/jobs" className="w-full sm:w-auto">
-                        <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
-                            Find a Job
+                        <Button size="lg" variant="outline" className="bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 hover:border-white/20 text-white rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-all hover:-translate-y-0.5 w-full">
+                            I&apos;m Hiring
                         </Button>
                     </Link>
                 </div>
-            </div>
 
-            {/* Trusted Companies Strip */}
-            <div className="mt-32 w-full max-w-6xl mx-auto px-6 z-10 animate-in fade-in duration-1000 delay-500 fill-mode-both">
-                <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
-                    <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded-full bg-blue-500"></div>
-                        <span className="font-bold text-slate-700 text-lg tracking-tight">Google</span>
+                {/* Stats row */}
+                <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 pt-8 border-t border-white/[0.06]">
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">10K+</div>
+                        <div className="text-sm text-slate-500 font-medium mt-1">Active Jobs</div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="grid grid-cols-2 gap-[2px] w-5 h-5">
-                            <div className="bg-[#f25022]"></div><div className="bg-[#7fba00]"></div>
-                            <div className="bg-[#00a4ef]"></div><div className="bg-[#ffb900]"></div>
-                        </div>
-                        <span className="font-bold text-slate-700 text-lg tracking-tight">Microsoft</span>
+                    <div className="hidden sm:block w-px h-10 bg-white/10"></div>
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">50K+</div>
+                        <div className="text-sm text-slate-500 font-medium mt-1">Candidates</div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 border-2 border-[#111827] flex items-center justify-center font-bold text-xs">tcs</div>
-                        <span className="font-bold text-slate-800 text-lg tracking-tight">TCS</span>
+                    <div className="hidden sm:block w-px h-10 bg-white/10"></div>
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">95%</div>
+                        <div className="text-sm text-slate-500 font-medium mt-1">Match Accuracy</div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="h-4 w-4 rounded-full bg-slate-800 relative overflow-hidden"><div className="absolute top-1 left-2 w-3 h-3 bg-white rounded-full"></div></div>
-                        <span className="font-bold text-slate-800 text-lg">Apple</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <span className="font-black text-slate-700 text-2xl tracking-tighter">a</span>
-                        <span className="font-bold text-slate-700 text-lg">amazon</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <div className="h-4 w-6 border-4 border-blue-600 rounded-full"></div>
-                        <span className="font-bold text-slate-800 text-lg">Meta</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <span className="font-bold text-red-600 text-2xl tracking-tighter">N</span>
-                        <span className="font-bold text-slate-800 text-lg">NETFLIX</span>
+                    <div className="hidden sm:block w-px h-10 bg-white/10"></div>
+                    <div className="text-center">
+                        <div className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">2K+</div>
+                        <div className="text-sm text-slate-500 font-medium mt-1">Companies</div>
                     </div>
                 </div>
             </div>
-
-            {/* Subtle light leak effects */}
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-slate-50/50 rounded-full blur-[120px] -z-10 pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-slate-50/80 rounded-full blur-[100px] -z-10 pointer-events-none -translate-x-1/2 translate-y-1/3"></div>
         </section>
     );
 }
