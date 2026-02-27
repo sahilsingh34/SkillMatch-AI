@@ -3,17 +3,28 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Briefcase, UserRoundSearch } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
 import { assignUserRoleAction } from "./onboarding/actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Hero } from "@/components/landing/Hero";
+import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
 export function HomeClient({ userRole }: { userRole: string | null | undefined }) {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const { toast } = useToast();
+    const geminiRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: geminiRef,
+        offset: ["start end", "end start"],
+    });
+    const pathLength1 = useTransform(scrollYProgress, [0, 0.8], [0.2, 1.2]);
+    const pathLength2 = useTransform(scrollYProgress, [0, 0.8], [0.15, 1.2]);
+    const pathLength3 = useTransform(scrollYProgress, [0, 0.8], [0.1, 1.2]);
+    const pathLength4 = useTransform(scrollYProgress, [0, 0.8], [0.05, 1.2]);
+    const pathLength5 = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
     const handleRoleSelection = async (role: "SEEKER" | "RECRUITER") => {
         setIsLoading(true);
@@ -85,6 +96,23 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                             <span className="font-bold text-slate-800 text-base tracking-tight">Spotify</span>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Google Gemini Effect Section */}
+            <section className="relative bg-[#0a0a0a] overflow-hidden" ref={geminiRef}>
+                <div className="h-[60rem] w-full relative">
+                    <GoogleGeminiEffect
+                        pathLengths={[pathLength1, pathLength2, pathLength3, pathLength4, pathLength5]}
+                        title="Powered by AI Intelligence"
+                        description="Watch how our intelligent matching engine connects talent with opportunity in real-time"
+                    >
+                        <Link href="/auth/signup">
+                            <button className="font-bold bg-white rounded-full md:px-6 md:py-3 px-4 py-2 md:text-base text-black text-xs shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
+                                Get Started Free
+                            </button>
+                        </Link>
+                    </GoogleGeminiEffect>
                 </div>
             </section>
 
