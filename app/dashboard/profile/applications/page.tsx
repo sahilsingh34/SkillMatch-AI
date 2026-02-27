@@ -37,7 +37,7 @@ export default async function MyApplicationsPage() {
 
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
-            <div className="h-40 bg-white border-b border-slate-100 flex items-end pb-8">
+            <div className="bg-white border-b border-slate-100 flex items-end pt-24 pb-8 min-h-[160px]">
                 <div className="container max-w-5xl mx-auto px-4 lg:px-8">
                     <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
                         My Applications
