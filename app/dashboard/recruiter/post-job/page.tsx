@@ -138,7 +138,7 @@ export default function PostJobPage() {
 
                     {/* AI Info Sidebar */}
                     <div className="md:col-span-1 space-y-6">
-                        <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-[2rem] p-8 mt-8 lg:-mt-24 relative z-10 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+                        <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-[2rem] p-8 mt-8 md:mt-0 relative z-10 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="h-10 w-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
                                     <Sparkles className="h-5 w-5 text-white dark:text-black" />
