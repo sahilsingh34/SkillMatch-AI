@@ -65,13 +65,13 @@ export default async function RecruiterDashboard() {
     // Pipeline chart data
     const stages = ["Applied", "Screening", "Interview", "Offered", "Rejected"];
     const stageColors: Record<string, string> = {
-        Applied: "#6366f1", Screening: "#3b82f6", Interview: "#f59e0b",
-        Offered: "#22c55e", Rejected: "#ef4444"
+        Applied: "#171717", Screening: "#404040", Interview: "#737373",
+        Offered: "#000000", Rejected: "#a3a3a3"
     };
     const pipelineData = stages.map(stage => ({
         stage,
         count: allApplicants.filter((a: Applicant) => a.status === stage).length,
-        fill: stageColors[stage] || "#6366f1"
+        fill: stageColors[stage] || "#171717"
     }));
 
     // Timeline chart data (last 14 days)
@@ -90,17 +90,17 @@ export default async function RecruiterDashboard() {
     }
 
     return (
-        <div className="bg-slate-50 min-h-screen pb-24">
-            <div className="h-48 bg-white border-b border-slate-100 flex items-end pb-10">
+        <div className="bg-white dark:bg-[#0a0a0a] min-h-screen pb-24 transition-colors">
+            <div className="h-48 bg-neutral-50/50 dark:bg-neutral-900/20 border-b border-neutral-200 dark:border-neutral-800 flex items-end pb-10">
                 <div className="container max-w-6xl mx-auto px-4 lg:px-8">
                     {/* Header */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
-                            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-2">Recruiter Dashboard</h1>
-                            <p className="text-lg text-slate-500 font-medium">Manage your active job postings and AI-matched candidates.</p>
+                            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-black dark:text-white mb-2">Recruiter Dashboard</h1>
+                            <p className="text-[17px] text-neutral-500 dark:text-neutral-400 font-medium tracking-tight">Manage your active job postings and AI-matched candidates.</p>
                         </div>
                         <Link href="/dashboard/recruiter/post-job">
-                            <Button className="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold h-12 px-6 rounded-xl shadow-sm transition-all">
+                            <Button className="w-full md:w-auto bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-bold h-12 px-6 rounded-xl shadow-sm transition-all text-[15px]">
                                 <PlusCircle className="mr-2 h-5 w-5" />
                                 Post New Job
                             </Button>
@@ -112,50 +112,50 @@ export default async function RecruiterDashboard() {
             <div className="container max-w-6xl mx-auto px-4 lg:px-8 -mt-6">
                 {/* Top Stats Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem]">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Active Postings</p>
-                                <h3 className="text-3xl font-extrabold text-slate-900">{activeJobsCount}</h3>
+                                <p className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-2">Active Postings</p>
+                                <h3 className="text-3xl font-extrabold text-black dark:text-white tracking-tight">{activeJobsCount}</h3>
                             </div>
-                            <div className="h-12 w-12 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100">
-                                <Briefcase className="h-6 w-6 text-blue-600" />
+                            <div className="h-12 w-12 bg-neutral-50 dark:bg-neutral-900 rounded-xl flex items-center justify-center border border-neutral-200 dark:border-neutral-800">
+                                <Briefcase className="h-5 w-5 text-black dark:text-white" />
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem]">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Total Candidates</p>
-                                <h3 className="text-3xl font-extrabold text-slate-900">{totalApplicantsCount}</h3>
+                                <p className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-2">Total Candidates</p>
+                                <h3 className="text-3xl font-extrabold text-black dark:text-white tracking-tight">{totalApplicantsCount}</h3>
                             </div>
-                            <div className="h-12 w-12 bg-indigo-50 rounded-xl flex items-center justify-center border border-indigo-100">
-                                <Users className="h-6 w-6 text-indigo-600" />
+                            <div className="h-12 w-12 bg-neutral-50 dark:bg-neutral-900 rounded-xl flex items-center justify-center border border-neutral-200 dark:border-neutral-800">
+                                <Users className="h-5 w-5 text-black dark:text-white" />
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem]">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Avg Match Score</p>
-                                <h3 className={`text-3xl font-extrabold ${avgMatchScore > 70 ? 'text-emerald-600' : 'text-amber-500'}`}>{avgMatchScore}%</h3>
+                                <p className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-2">Avg Match Score</p>
+                                <h3 className="text-3xl font-extrabold text-black dark:text-white tracking-tight">{avgMatchScore}%</h3>
                             </div>
-                            <div className="h-12 w-12 bg-emerald-50 rounded-xl flex items-center justify-center border border-emerald-100">
-                                <Target className="h-6 w-6 text-emerald-600" />
+                            <div className="h-12 w-12 bg-neutral-50 dark:bg-neutral-900 rounded-xl flex items-center justify-center border border-neutral-200 dark:border-neutral-800">
+                                <Target className="h-5 w-5 text-black dark:text-white" />
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem]">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Conversion Rate</p>
-                                <h3 className="text-3xl font-extrabold text-slate-900">{conversionRate}%</h3>
+                                <p className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-2">Conversion Rate</p>
+                                <h3 className="text-3xl font-extrabold text-black dark:text-white tracking-tight">{conversionRate}%</h3>
                             </div>
-                            <div className="h-12 w-12 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100">
-                                <TrendingUp className="h-6 w-6 text-slate-600" />
+                            <div className="h-12 w-12 bg-neutral-50 dark:bg-neutral-900 rounded-xl flex items-center justify-center border border-neutral-200 dark:border-neutral-800">
+                                <TrendingUp className="h-5 w-5 text-black dark:text-white" />
                             </div>
                         </CardContent>
                     </Card>
@@ -163,42 +163,42 @@ export default async function RecruiterDashboard() {
 
                 {/* Charts Row */}
                 <div className="grid md:grid-cols-2 gap-6 mb-10">
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl p-2">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem] p-2">
                         <CardHeader className="pb-4">
-                            <CardTitle className="text-lg font-bold flex items-center gap-3 text-slate-900">
-                                <div className="p-2 bg-indigo-50 rounded-lg">
-                                    <BarChart3 className="h-5 w-5 text-indigo-600" />
+                            <CardTitle className="text-lg font-bold flex items-center gap-3 text-black dark:text-white tracking-tight">
+                                <div className="p-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg">
+                                    <BarChart3 className="h-5 w-5 text-black dark:text-white" />
                                 </div>
                                 Candidate Pipeline
                             </CardTitle>
-                            <CardDescription className="text-sm font-medium text-slate-500 mt-1">Applicants by stage across all jobs</CardDescription>
+                            <CardDescription className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-1">Applicants by stage across all jobs</CardDescription>
                         </CardHeader>
                         <CardContent>
                             {totalApplicantsCount > 0 ? (
                                 <PipelineChart data={pipelineData} />
                             ) : (
-                                <div className="flex items-center justify-center h-[280px] text-slate-400 font-medium text-sm border-2 border-dashed border-slate-100 rounded-xl m-2 bg-slate-50/50">
+                                <div className="flex items-center justify-center h-[280px] text-neutral-400 dark:text-neutral-500 font-medium text-sm border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl m-2 bg-neutral-50/50 dark:bg-neutral-900/20">
                                     No applicant data yet. Post a job to get started.
                                 </div>
                             )}
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-white border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl p-2">
+                    <Card className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 shadow-sm hover:shadow-md transition-shadow rounded-[2rem] p-2">
                         <CardHeader className="pb-4">
-                            <CardTitle className="text-lg font-bold flex items-center gap-3 text-slate-900">
-                                <div className="p-2 bg-emerald-50 rounded-lg">
-                                    <CalendarDays className="h-5 w-5 text-emerald-600" />
+                            <CardTitle className="text-lg font-bold flex items-center gap-3 text-black dark:text-white tracking-tight">
+                                <div className="p-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg">
+                                    <CalendarDays className="h-5 w-5 text-black dark:text-white" />
                                 </div>
                                 Applications Over Time
                             </CardTitle>
-                            <CardDescription className="text-sm font-medium text-slate-500 mt-1">Application trends — last 14 days</CardDescription>
+                            <CardDescription className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-1">Application trends — last 14 days</CardDescription>
                         </CardHeader>
                         <CardContent>
                             {totalApplicantsCount > 0 ? (
                                 <TimelineChart data={timelineData} />
                             ) : (
-                                <div className="flex items-center justify-center h-[280px] text-slate-400 font-medium text-sm border-2 border-dashed border-slate-100 rounded-xl m-2 bg-slate-50/50">
+                                <div className="flex items-center justify-center h-[280px] text-neutral-400 dark:text-neutral-500 font-medium text-sm border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl m-2 bg-neutral-50/50 dark:bg-neutral-900/20">
                                     No application data yet.
                                 </div>
                             )}
@@ -207,7 +207,7 @@ export default async function RecruiterDashboard() {
                 </div>
 
                 {/* Active Jobs List */}
-                <h2 className="text-2xl font-extrabold text-slate-900 mb-6 mt-14">Your Active Jobs</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-black dark:text-white mb-6 mt-14">Your Active Jobs</h2>
                 <div className="flex flex-col gap-5">
                     {jobs.map((job: Job) => {
                         const jobApplicants = allApplicants.filter((a: Applicant) => a.jobId === job.id);
@@ -216,38 +216,38 @@ export default async function RecruiterDashboard() {
                             : 0;
 
                         return (
-                            <Card key={job.id} className="bg-white border border-slate-100 hover:border-blue-200 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5 rounded-2xl overflow-hidden group">
+                            <Card key={job.id} className="bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 hover:border-black dark:hover:border-white transition-all duration-300 hover:shadow-md rounded-[2rem] overflow-hidden group">
                                 <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-3">
-                                            <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{job.title}</h3>
-                                            <Badge variant="outline" className="border-slate-200 text-slate-500 bg-slate-50 px-2.5 py-0.5 font-semibold">
+                                            <h3 className="text-[22px] font-bold tracking-tight text-black dark:text-white group-hover:underline decoration-2 underline-offset-4 transition-all">{job.title}</h3>
+                                            <Badge variant="outline" className="border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 bg-neutral-50 dark:bg-neutral-900/50 px-2.5 py-0.5 font-bold">
                                                 {job.type}
                                             </Badge>
                                         </div>
-                                        <div className="text-sm font-semibold text-slate-500 flex flex-wrap items-center gap-x-4 gap-y-2">
-                                            <span className="flex items-center justify-center bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-xs border border-emerald-100">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+                                        <div className="text-sm font-semibold text-neutral-500 dark:text-neutral-400 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                            <span className="flex items-center justify-center bg-neutral-50 dark:bg-neutral-900/50 text-black dark:text-white px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border border-neutral-200 dark:border-neutral-800">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white mr-1.5 animate-pulse"></span>
                                                 Active
                                             </span>
-                                            <span className="flex items-center"><MapPin className="w-3.5 h-3.5 mr-1 text-slate-400" /> {job.location}</span>
-                                            <span className="flex items-center"><CalendarDays className="w-3.5 h-3.5 mr-1 text-slate-400" /> Posted {job.postedAt.toLocaleDateString()}</span>
+                                            <span className="flex items-center"><MapPin className="w-3.5 h-3.5 mr-1.5 text-neutral-400 dark:text-neutral-500" /> {job.location}</span>
+                                            <span className="flex items-center"><CalendarDays className="w-3.5 h-3.5 mr-1.5 text-neutral-400 dark:text-neutral-500" /> Posted {job.postedAt.toLocaleDateString()}</span>
                                         </div>
                                     </div>
 
                                     <div className="flex gap-4 md:gap-8 items-center justify-between md:justify-end w-full md:w-auto">
-                                        <div className="flex items-center gap-6 px-6 py-4 bg-slate-50 rounded-xl border border-slate-100 shadow-inner">
+                                        <div className="flex items-center gap-6 px-6 py-4 bg-neutral-50/50 dark:bg-neutral-900/20 rounded-2xl border border-neutral-200 dark:border-neutral-800">
                                             <div className="text-center">
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Candidates</p>
-                                                <p className="text-2xl font-extrabold text-slate-900">{jobApplicants.length}</p>
+                                                <p className="text-[10px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1">Candidates</p>
+                                                <p className="text-[22px] font-extrabold text-black dark:text-white">{jobApplicants.length}</p>
                                             </div>
-                                            <div className="w-px h-10 bg-slate-200"></div>
+                                            <div className="w-px h-10 bg-neutral-200 dark:bg-neutral-800"></div>
                                             <div className="text-center flex flex-col items-center">
-                                                <p className="text-[10px] font-bold flex items-center gap-1 text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    <Sparkles className="w-3 h-3 text-emerald-500 relative -top-px" />
+                                                <p className="text-[10px] font-bold flex items-center gap-1 text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1">
+                                                    <Sparkles className="w-3 h-3 text-black dark:text-white relative -top-px" />
                                                     Top Match
                                                 </p>
-                                                <p className={`text-2xl font-extrabold ${topMatch > 85 ? 'text-emerald-600' : 'text-amber-500'}`}>
+                                                <p className={`text-[22px] font-extrabold text-black dark:text-white`}>
                                                     {topMatch > 0 ? `${topMatch}%` : '--'}
                                                 </p>
                                             </div>
@@ -255,7 +255,7 @@ export default async function RecruiterDashboard() {
 
                                         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center shrink-0">
                                             <Link href={`/dashboard/recruiter/jobs/${job.id}/applicants`} className="w-full sm:w-auto">
-                                                <Button variant="secondary" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold h-11 px-5 rounded-lg shadow-sm">
+                                                <Button variant="secondary" className="w-full bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-bold h-12 px-6 rounded-xl shadow-sm border border-transparent">
                                                     View Pipeline
                                                 </Button>
                                             </Link>
@@ -268,14 +268,14 @@ export default async function RecruiterDashboard() {
                     })}
 
                     {jobs.length === 0 && (
-                        <div className="text-center py-20 bg-white shadow-sm border border-slate-100 rounded-[2rem] border-dashed">
-                            <div className="h-16 w-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-5 border border-blue-100">
-                                <Briefcase className="h-8 w-8 text-blue-500" />
+                        <div className="text-center py-20 bg-white dark:bg-[#0a0a0a] shadow-sm border border-neutral-200 dark:border-neutral-800 rounded-[2rem] border-dashed">
+                            <div className="h-16 w-16 bg-neutral-50 dark:bg-neutral-900 rounded-2xl flex items-center justify-center mx-auto mb-5 border border-neutral-200 dark:border-neutral-800">
+                                <Briefcase className="h-7 w-7 text-black dark:text-white" />
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2">No active jobs</h3>
-                            <p className="text-slate-500 font-medium max-w-sm mx-auto mb-8">You haven&apos;t posted any jobs yet. Create your first listing to start finding AI-matched candidates.</p>
+                            <h3 className="text-xl font-bold tracking-tight text-black dark:text-white mb-2">No active jobs</h3>
+                            <p className="text-neutral-500 dark:text-neutral-400 font-medium max-w-sm mx-auto mb-8">You haven&apos;t posted any jobs yet. Create your first listing to start finding AI-matched candidates.</p>
                             <Link href="/dashboard/recruiter/post-job">
-                                <Button className="bg-slate-900 hover:bg-slate-800 text-white font-bold h-12 px-8 rounded-xl shadow-sm">
+                                <Button className="bg-black hover:bg-neutral-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-bold h-12 px-8 rounded-xl shadow-sm">
                                     Post a Job Now
                                 </Button>
                             </Link>
