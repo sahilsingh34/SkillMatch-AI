@@ -1,25 +1,28 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { assignUserRoleAction } from "./actions";
 import { useRouter } from "next/navigation";
-import { Briefcase, UserRoundSearch } from "lucide-react";
-import { motion } from "framer-motion";
+import { Briefcase, UserRoundSearch, ArrowRight, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { Particles } from "@/components/ui/particles";
 
 export default function OnboardingPage() {
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedRole, setSelectedRole] = useState<"SEEKER" | "RECRUITER" | null>(null);
     const router = useRouter();
     const { toast } = useToast();
 
     const handleRoleSelection = async (role: "SEEKER" | "RECRUITER") => {
+        setSelectedRole(role);
         setIsLoading(true);
         try {
             const result = await assignUserRoleAction(role);
             if (result.success && result.redirectTo) {
                 toast({
-                    title: "Welcome aboard! \uD83C\uDF89",
+                    title: "Welcome aboard! 🎉",
                     description: "Your " + (role === "SEEKER" ? "Job Seeker" : "Recruiter") + " profile is ready.",
                 });
                 router.push(result.redirectTo);
@@ -29,70 +32,96 @@ export default function OnboardingPage() {
                     description: result.error || "Failed to set role. Please try again.",
                 });
                 setIsLoading(false);
+                setSelectedRole(null);
             }
         } catch (error) {
             console.error(error);
             setIsLoading(false);
+            setSelectedRole(null);
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen pt-24 pb-12 p-4 bg-background">
-            <div className="max-w-3xl w-full text-center space-y-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">
-                        How do you want to use SkillMatch AI?
-                    </h1>
-                    <p className="text-xl text-muted-foreground">
-                        We'll customize your experience based on your choice. You can't change this later.
-                    </p>
-                </motion.div>
+        <div className="relative flex flex-col items-center justify-center min-h-screen bg-white overflow-hidden">
+            <Particles className="absolute inset-0 z-0" quantity={50} ease={80} color="#a78bfa" size={0.4} staticity={50} />
 
-                <div className="grid md:grid-cols-2 gap-6 mt-12 text-left">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
+            <div className="relative z-10 max-w-2xl w-full text-center px-6">
+                <BlurFade delay={0.1}>
+                    <div className="inline-flex items-center gap-1.5 px-4 py-1.5 mb-6 text-sm font-medium text-neutral-700 bg-neutral-100 rounded-full border border-neutral-200">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        One last step
+                    </div>
+                </BlurFade>
+
+                <BlurFade delay={0.2}>
+                    <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-black leading-[1.1] mb-4">
+                        How will you use<br />SkillMatch AI?
+                    </h1>
+                </BlurFade>
+
+                <BlurFade delay={0.3}>
+                    <p className="text-neutral-500 text-base mb-12 max-w-md mx-auto">
+                        We'll customize your entire experience based on your choice. Pick the one that best describes you.
+                    </p>
+                </BlurFade>
+
+                <div className="grid sm:grid-cols-2 gap-5">
+                    <BlurFade delay={0.4}>
                         <button
                             onClick={() => handleRoleSelection("SEEKER")}
                             disabled={isLoading}
-                            className="w-full relative group h-full p-8 rounded-3xl border-2 border-muted bg-card hover:border-primary hover:shadow-lg transition-all duration-300 flex flex-col items-start gap-4 disabled:opacity-50"
+                            className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "SEEKER"
+                                    ? "border-blue-500 shadow-lg shadow-blue-500/10"
+                                    : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
+                                }`}
                         >
-                            <div className="h-16 w-16 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <UserRoundSearch className="h-8 w-8" />
+                            {selectedRole === "SEEKER" && (
+                                <BorderBeam size={150} duration={6} colorFrom="#3b82f6" colorTo="#8b5cf6" />
+                            )}
+                            <div className="h-12 w-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                                <UserRoundSearch className="h-6 w-6" />
                             </div>
-                            <h3 className="text-2xl font-bold">I'm looking for a job</h3>
-                            <p className="text-muted-foreground text-sm">
-                                Find top roles matching your verified skills. Let AI connect you with employers who value what you can actually do.
+                            <h3 className="text-lg font-bold text-black mb-1.5">I'm looking for a job</h3>
+                            <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                                Find top roles matching your verified skills. Let AI connect you with the right employers.
                             </p>
+                            <div className="flex items-center gap-1 text-xs font-medium text-blue-600">
+                                Get started <ArrowRight className="w-3 h-3" />
+                            </div>
                         </button>
-                    </motion.div>
+                    </BlurFade>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                    >
+                    <BlurFade delay={0.5}>
                         <button
                             onClick={() => handleRoleSelection("RECRUITER")}
                             disabled={isLoading}
-                            className="w-full relative group h-full p-8 rounded-3xl border-2 border-muted bg-card hover:border-primary hover:shadow-lg transition-all duration-300 flex flex-col items-start gap-4 disabled:opacity-50"
+                            className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "RECRUITER"
+                                    ? "border-violet-500 shadow-lg shadow-violet-500/10"
+                                    : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
+                                }`}
                         >
-                            <div className="h-16 w-16 bg-purple-500/10 text-purple-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <Briefcase className="h-8 w-8" />
+                            {selectedRole === "RECRUITER" && (
+                                <BorderBeam size={150} duration={6} colorFrom="#8b5cf6" colorTo="#ec4899" />
+                            )}
+                            <div className="h-12 w-12 bg-violet-50 text-violet-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                                <Briefcase className="h-6 w-6" />
                             </div>
-                            <h3 className="text-2xl font-bold">I'm hiring talent</h3>
-                            <p className="text-muted-foreground text-sm">
-                                Post jobs, discover highly matched candidates, and manage your pipeline efficiently with AI.
+                            <h3 className="text-lg font-bold text-black mb-1.5">I'm hiring talent</h3>
+                            <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                                Post jobs, discover AI-matched candidates, and manage your pipeline efficiently.
                             </p>
+                            <div className="flex items-center gap-1 text-xs font-medium text-violet-600">
+                                Get started <ArrowRight className="w-3 h-3" />
+                            </div>
                         </button>
-                    </motion.div>
+                    </BlurFade>
                 </div>
+
+                <BlurFade delay={0.6}>
+                    <p className="text-xs text-neutral-400 mt-8">
+                        This choice cannot be changed later. Choose carefully.
+                    </p>
+                </BlurFade>
             </div>
         </div>
     );
