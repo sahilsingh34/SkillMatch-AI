@@ -178,17 +178,6 @@ export default async function JobsPage({
                         Search
                     </Button>
                 </form>
-
-                {/* Horizontal Quick Filters Array */}
-                <div className="flex items-center gap-3 overflow-x-auto pb-4 pt-8 md:pt-10 no-scrollbar scroll-smooth -mx-4 px-4 md:mx-0 md:px-0 scroll-ps-4 md:scroll-ps-0 select-none">
-                    {hotSkills.map((skill) => (
-                        <Link key={skill} href={`/jobs?search=${skill}`} className="shrink-0">
-                            <Badge variant="outline" className="px-5 py-2.5 rounded-full bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 transition-colors duration-300 text-sm font-semibold cursor-pointer shadow-sm">
-                                {skill}
-                            </Badge>
-                        </Link>
-                    ))}
-                </div>
             </div>
 
             {/* MAIN 3-COLUMN LAYOUT */}
