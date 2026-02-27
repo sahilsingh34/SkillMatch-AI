@@ -287,7 +287,7 @@ export default async function JobsPage({
                                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                                                 <div>
                                                     <Link href={`/jobs/${job.id}`}>
-                                                        <h3 className="text-[22px] font-bold text-blue-600 dark:text-blue-500 hover:underline decoration-2 underline-offset-4 tracking-tight leading-none mb-2 truncate">
+                                                        <h3 className="text-[22px] font-bold text-black dark:text-white hover:underline decoration-2 underline-offset-4 tracking-tight leading-none mb-2 truncate">
                                                             {job.title}
                                                         </h3>
                                                     </Link>
