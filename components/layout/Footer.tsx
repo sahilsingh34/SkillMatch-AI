@@ -1,41 +1,107 @@
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma";
 
-export function Footer() {
+export async function Footer() {
+    let userRole: string | null = null;
+
+    try {
+        const { userId } = await auth();
+        if (userId) {
+            const user = await prisma.user.findUnique({
+                where: { clerkId: userId },
+                select: { role: true },
+            });
+            userRole = user?.role ?? null;
+        }
+    } catch (e) {
+        // Silently fail for footer
+    }
+
     return (
-        <footer className="border-t bg-background">
-            <div className="container mx-auto px-4 py-8 md:py-12">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div className="col-span-2">
-                        <Link href="/" className="inline-block mb-4">
-                            <span className="text-2xl font-bold tracking-tight text-primary">SkillMatch AI</span>
+        <footer className="border-t border-slate-200/60 bg-slate-50">
+            <div className="container mx-auto max-w-6xl px-6 py-12 md:py-16">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+
+                    {/* Brand Column */}
+                    <div className="md:col-span-5">
+                        <Link href="/" className="inline-flex items-center space-x-2 mb-4 group">
+                            <div className="h-8 px-3 bg-[#0f172a] rounded-full flex items-center justify-center">
+                                <span className="text-white font-mono font-bold text-sm">{"</>"}</span>
+                            </div>
+                            <span className="text-xl font-extrabold tracking-tight text-slate-900">SkillMatch</span>
                         </Link>
-                        <p className="text-sm text-muted-foreground w-full max-w-sm">
-                            Connecting top talent with leading companies through intelligent, AI-driven skill matching.
+                        <p className="text-sm text-slate-500 leading-relaxed max-w-sm mt-2">
+                            AI-powered talent matching that connects the right people with the right opportunities. Built for the modern workforce.
                         </p>
                     </div>
-                    <div>
-                        <h4 className="font-semibold mb-4">For Candidates</h4>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link href="/jobs" className="hover:text-primary">Browse Jobs</Link></li>
-                            <li><Link href="/dashboard/profile" className="hover:text-primary">Resume Builder</Link></li>
-                            <li><Link href="/dashboard/profile/applications" className="hover:text-primary">My Applications</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold mb-4">For Employers</h4>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link href="/dashboard/recruiter/post-job" className="hover:text-primary">Post a Job</Link></li>
-                            <li><Link href="/dashboard/recruiter" className="hover:text-primary">Manage Postings</Link></li>
-                        </ul>
-                    </div>
+
+                    {/* Dynamic Links based on Role */}
+                    {userRole === "SEEKER" ? (
+                        <>
+                            <div className="md:col-span-3">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Discover</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/jobs" className="text-slate-600 hover:text-slate-900 transition-colors">Browse Jobs</Link></li>
+                                    <li><Link href="/dashboard/profile/applications" className="text-slate-600 hover:text-slate-900 transition-colors">My Applications</Link></li>
+                                    <li><Link href="/dashboard/profile" className="text-slate-600 hover:text-slate-900 transition-colors">My Profile</Link></li>
+                                </ul>
+                            </div>
+                            <div className="md:col-span-4">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Resources</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/dashboard/profile" className="text-slate-600 hover:text-slate-900 transition-colors">Resume Builder</Link></li>
+                                    <li><Link href="/jobs" className="text-slate-600 hover:text-slate-900 transition-colors">AI Skill Matching</Link></li>
+                                </ul>
+                            </div>
+                        </>
+                    ) : userRole === "RECRUITER" ? (
+                        <>
+                            <div className="md:col-span-3">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Recruiting</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/dashboard/recruiter/post-job" className="text-slate-600 hover:text-slate-900 transition-colors">Post a Job</Link></li>
+                                    <li><Link href="/dashboard/recruiter" className="text-slate-600 hover:text-slate-900 transition-colors">My Job Listings</Link></li>
+                                    <li><Link href="/dashboard/recruiter" className="text-slate-600 hover:text-slate-900 transition-colors">Applicant Pipeline</Link></li>
+                                </ul>
+                            </div>
+                            <div className="md:col-span-4">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Employer Tools</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/dashboard/recruiter" className="text-slate-600 hover:text-slate-900 transition-colors">Dashboard</Link></li>
+                                    <li><Link href="/dashboard/recruiter/post-job" className="text-slate-600 hover:text-slate-900 transition-colors">AI Candidate Matching</Link></li>
+                                </ul>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="md:col-span-3">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">For Candidates</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/jobs" className="text-slate-600 hover:text-slate-900 transition-colors">Browse Jobs</Link></li>
+                                    <li><Link href="/auth/signup?role=SEEKER" className="text-slate-600 hover:text-slate-900 transition-colors">Create Profile</Link></li>
+                                    <li><Link href="/auth/signup?role=SEEKER" className="text-slate-600 hover:text-slate-900 transition-colors">AI Matching</Link></li>
+                                </ul>
+                            </div>
+                            <div className="md:col-span-4">
+                                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">For Employers</h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li><Link href="/auth/signup?role=RECRUITER" className="text-slate-600 hover:text-slate-900 transition-colors">Post a Job</Link></li>
+                                    <li><Link href="/auth/signup?role=RECRUITER" className="text-slate-600 hover:text-slate-900 transition-colors">Find Talent</Link></li>
+                                </ul>
+                            </div>
+                        </>
+                    )}
                 </div>
-                <div className="border-t mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-xs text-muted-foreground">
+
+                {/* Bottom Bar */}
+                <div className="border-t border-slate-200/60 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p className="text-xs text-slate-400">
                         &copy; {new Date().getFullYear()} SkillMatch AI. All rights reserved.
                     </p>
-                    <div className="flex space-x-4 text-xs text-muted-foreground">
-                        <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-primary">Terms of Service</Link>
+                    <div className="flex items-center gap-6 text-xs text-slate-400">
+                        <Link href="/privacy" className="hover:text-slate-600 transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-slate-600 transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>
