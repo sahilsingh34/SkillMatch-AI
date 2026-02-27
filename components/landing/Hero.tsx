@@ -5,6 +5,7 @@ import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ArrowRight } from "lucide-react";
+import { Particles } from "@/components/ui/particles";
 
 export function Hero({ userRole }: { userRole?: string | null }) {
 
@@ -90,6 +91,7 @@ export function Hero({ userRole }: { userRole?: string | null }) {
     // --- DEFAULT (Guest) Layout - Every AI Style ---
     return (
         <section className="relative flex flex-col items-center justify-center pt-36 pb-24 bg-white overflow-hidden">
+            <Particles className="absolute inset-0 z-0" quantity={60} ease={80} color="#a78bfa" size={0.5} staticity={50} />
             <div className="relative z-10 text-center max-w-4xl px-4">
 
                 {/* Pill badge */}
