@@ -220,9 +220,9 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                 <div className="container mx-auto px-6 max-w-4xl relative z-10">
                     <BlurFade delay={0.1}>
                         <div className="text-center mb-12">
-                            <SparklesText className="text-3xl md:text-4xl font-bold text-black dark:text-white" colors={{ first: "#9E7AFF", second: "#FE8BBB" }}>
+                            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight">
                                 Numbers speak louder
-                            </SparklesText>
+                            </h2>
                         </div>
                     </BlurFade>
                     <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20">
