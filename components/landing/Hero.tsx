@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-export function Hero() {
+export function Hero({ userRole }: { userRole?: string | null }) {
     return (
         <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-20 bg-white overflow-hidden selection:bg-slate-200">
             {/* Top Text / Category Label */}
@@ -27,16 +27,46 @@ export function Hero() {
 
                 {/* Call to Action Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0">
-                    <Link href="/auth/signup?role=RECRUITER" className="w-full sm:w-auto">
-                        <Button size="lg" className="bg-[#111827] hover:bg-black text-white rounded-xl px-10 h-14 text-base font-bold shadow-xl shadow-black/10 transition-transform hover:-translate-y-0.5 w-full">
-                            Post a Job
-                        </Button>
-                    </Link>
-                    <Link href="/jobs" className="w-full sm:w-auto">
-                        <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
-                            Find a Job
-                        </Button>
-                    </Link>
+                    {userRole === "SEEKER" ? (
+                        <>
+                            <Link href="/jobs" className="w-full sm:w-auto">
+                                <Button size="lg" className="bg-[#111827] hover:bg-black text-white rounded-xl px-10 h-14 text-base font-bold shadow-xl shadow-black/10 transition-transform hover:-translate-y-0.5 w-full">
+                                    Browse Jobs
+                                </Button>
+                            </Link>
+                            <Link href="/dashboard/profile/applications" className="w-full sm:w-auto">
+                                <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
+                                    My Applications
+                                </Button>
+                            </Link>
+                        </>
+                    ) : userRole === "RECRUITER" ? (
+                        <>
+                            <Link href="/dashboard/recruiter/post-job" className="w-full sm:w-auto">
+                                <Button size="lg" className="bg-[#111827] hover:bg-black text-white rounded-xl px-10 h-14 text-base font-bold shadow-xl shadow-black/10 transition-transform hover:-translate-y-0.5 w-full">
+                                    Post a New Job
+                                </Button>
+                            </Link>
+                            <Link href="/dashboard/recruiter" className="w-full sm:w-auto">
+                                <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
+                                    Recruiter Dashboard
+                                </Button>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link href="/auth/signup?role=RECRUITER" className="w-full sm:w-auto">
+                                <Button size="lg" className="bg-[#111827] hover:bg-black text-white rounded-xl px-10 h-14 text-base font-bold shadow-xl shadow-black/10 transition-transform hover:-translate-y-0.5 w-full">
+                                    Post a Job
+                                </Button>
+                            </Link>
+                            <Link href="/jobs" className="w-full sm:w-auto">
+                                <Button size="lg" variant="outline" className="bg-white border-slate-200 hover:bg-slate-50 text-slate-900 rounded-xl px-10 h-14 text-base font-bold shadow-sm transition-transform hover:-translate-y-0.5 w-full">
+                                    Find a Job
+                                </Button>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
 

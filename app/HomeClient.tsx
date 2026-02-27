@@ -37,7 +37,7 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
 
     return (
         <div className="flex flex-col min-h-screen bg-white">
-            <Hero />
+            <Hero userRole={userRole} />
 
             {/* Logo Cloud Section - Moved up for better social proof */}
             <section className="py-12 border-b border-slate-100 bg-white">
