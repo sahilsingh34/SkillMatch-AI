@@ -230,9 +230,22 @@ export default async function JobsPage({
                             <div className="flex flex-col gap-3">
                                 {["Under $50k", "$50k - $100k", "$100k - $150k", "Over $150k"].map((range) => (
                                     <div key={range} className="flex items-center group cursor-not-allowed opacity-50">
-                                        <div className="w-5 h-5 rounded border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50"></div>
-                                        <span className="ml-3 text-sm font-medium text-neutral-500 dark:text-neutral-400">{range}</span>
+                                        <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 transition-colors">{range}</span>
                                     </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Popular Locations Widget (Moved to Left) */}
+                        <div className="space-y-4 border-t border-neutral-100 dark:border-neutral-800 pt-8">
+                            <h3 className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">Popular Locations</h3>
+                            <div className="flex flex-col gap-3">
+                                {["San Francisco, CA", "New York, NY", "London, UK", "Remote", "Austin, TX"].map((loc) => (
+                                    <Link key={loc} href={`/jobs?location=${loc}`} className="flex items-center justify-between group">
+                                        <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                                            {loc}
+                                        </span>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -369,52 +382,31 @@ export default async function JobsPage({
 
                     {/* RIGHT COLUMN: WIDGETS */}
                     <div className="hidden lg:block lg:w-[280px] xl:w-[320px] shrink-0 space-y-8 order-3">
-                        {/* Promo Block: Match / Upload */}
-                        <div className="bg-[#111827] dark:bg-neutral-900 rounded-[28px] p-8 text-white relative overflow-hidden shadow-2xl shadow-black/10">
-                            {/* Minimal geometric accents */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-xl"></div>
-                            <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full -ml-8 -mb-8 blur-2xl"></div>
+                        {/* Promo Block: Match / Upload (Big Minimalist Redesign) */}
+                        <div className="bg-neutral-50 dark:bg-neutral-900 rounded-[2.5rem] p-10 border border-neutral-200 dark:border-neutral-800 flex flex-col items-center text-center shadow-sm">
+                            <div className="w-20 h-20 bg-white dark:bg-neutral-950 rounded-full flex items-center justify-center mb-6 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+                                <FileText className="h-8 w-8 text-black dark:text-white" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-black dark:text-white mb-3 tracking-tight">Upload your resume</h3>
+                            <p className="text-neutral-500 dark:text-neutral-400 text-sm leading-relaxed mb-8">
+                                We'll extract your skills and instantly match you with the right jobs. Right job, right away.
+                            </p>
 
-                            <div className="relative z-10">
-                                <div className="w-14 h-14 bg-white/10 dark:bg-neutral-800/80 rounded-2xl flex items-center justify-center mb-6 border border-white/10 dark:border-neutral-700 backdrop-blur-sm shadow-inner">
-                                    <FileText className="h-6 w-6 text-white" />
-                                </div>
-                                <h3 className="text-xl font-bold mb-3 tracking-tight">Upload your resume</h3>
-                                <p className="text-neutral-300 dark:text-neutral-400 text-sm leading-relaxed mb-6 font-medium">
-                                    We'll extract your skills and instantly match you with the right jobs. Right job, right away!
-                                </p>
-
+                            <div className="w-full">
                                 {isSeeker ? (
-                                    <Link href="/dashboard/profile">
-                                        <Button className="w-full bg-white dark:bg-blue-600 text-[#111827] dark:text-white hover:bg-neutral-100 dark:hover:bg-blue-700 font-bold rounded-xl h-12 shadow-sm transition-colors">
+                                    <Link href="/dashboard/profile" className="block w-full">
+                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-2xl h-14 shadow-sm transition-transform active:scale-95 text-base">
                                             Update Profile
                                         </Button>
                                     </Link>
                                 ) : (
-                                    <Link href="/auth/signup">
-                                        <Button className="w-full bg-white dark:bg-blue-600 text-[#111827] dark:text-white hover:bg-neutral-100 dark:hover:bg-blue-700 font-bold rounded-xl h-12 shadow-sm transition-colors">
+                                    <Link href="/auth/signup" className="block w-full">
+                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-2xl h-14 shadow-sm transition-transform active:scale-95 text-base">
                                             Sign up to match
                                         </Button>
                                     </Link>
                                 )}
                             </div>
-                        </div>
-
-                        {/* Popular Locations Widget */}
-                        <div className="bg-white dark:bg-neutral-900 rounded-[28px] p-8 border border-neutral-200 dark:border-neutral-800 shadow-sm relative overflow-hidden">
-                            <h3 className="text-base font-bold text-black dark:text-white mb-6 tracking-tight">Popular Locations</h3>
-                            <div className="space-y-4 relative z-10">
-                                {["San Francisco, CA", "New York, NY", "London, UK", "Remote", "Austin, TX"].map((loc) => (
-                                    <Link key={loc} href={`/ jobs ? location = ${loc} `} className="flex items-center justify-between group">
-                                        <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                            {loc}
-                                        </span>
-                                        <ChevronRight className="h-4 w-4 text-neutral-300 dark:text-neutral-600 group-hover:border-blue-200 dark:group-hover:border-neutral-700 group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors" />
-                                    </Link>
-                                ))}
-                            </div>
-                            {/* Decorative background element */}
-                            <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-neutral-50 dark:bg-neutral-800/50 rounded-full border border-neutral-100/50 dark:border-neutral-800/50 pointer-events-none"></div>
                         </div>
                     </div>
                 </div>
