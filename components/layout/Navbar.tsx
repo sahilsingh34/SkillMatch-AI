@@ -39,17 +39,17 @@ export async function Navbar() {
         </Link>
 
         {/* Center: Navigation */}
-        <nav className="hidden md:flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-full px-1.5 py-1 border border-slate-200/60 shadow-sm">
-          <Link href="/" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+        <nav className="hidden md:flex items-center gap-1">
+          <Link href="/" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
             Home
           </Link>
 
           {userRole === "SEEKER" && (
             <>
-              <Link href="/jobs" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="/jobs" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 Find Jobs
               </Link>
-              <Link href="/dashboard/profile/applications" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="/dashboard/profile/applications" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 My Applications
               </Link>
             </>
@@ -57,10 +57,10 @@ export async function Navbar() {
 
           {userRole === "RECRUITER" && (
             <>
-              <Link href="/dashboard/recruiter/post-job" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="/dashboard/recruiter/post-job" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 Post a Job
               </Link>
-              <Link href="/dashboard/recruiter" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="/dashboard/recruiter" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 My Listings
               </Link>
             </>
@@ -68,10 +68,10 @@ export async function Navbar() {
 
           {!userRole && (
             <>
-              <Link href="/jobs" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="/jobs" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 Jobs
               </Link>
-              <Link href="#companies" className="px-5 py-2 rounded-full text-[13px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-colors">
+              <Link href="#companies" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
                 Companies
               </Link>
             </>
