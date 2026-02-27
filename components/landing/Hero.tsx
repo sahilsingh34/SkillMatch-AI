@@ -45,36 +45,36 @@ export function Hero() {
                 className="mt-32 w-full max-w-6xl mx-auto px-6 z-10 animate-in fade-in duration-1000 delay-500 fill-mode-both"
             >
                 <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
-                    {/* Simulated Company Logos - In reality, use actual SVG/PNG logos */}
                     <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 bg-slate-300 rounded-sm"></div>
-                        <span className="font-bold text-slate-400 text-lg tracking-tight">kmarket</span>
+                        <div className="h-6 w-6 rounded-full bg-blue-500"></div>
+                        <span className="font-bold text-slate-700 text-lg tracking-tight">Google</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="h-0 w-0 border-l-[12px] border-l-transparent border-b-[20px] border-b-slate-400 border-r-[12px] border-r-transparent"></div>
-                        <span className="font-bold text-slate-800 text-lg tracking-tight">TBC BANK</span>
+                        <div className="grid grid-cols-2 gap-[2px] w-5 h-5">
+                            <div className="bg-[#f25022]"></div><div className="bg-[#7fba00]"></div>
+                            <div className="bg-[#00a4ef]"></div><div className="bg-[#ffb900]"></div>
+                        </div>
+                        <span className="font-bold text-slate-700 text-lg tracking-tight">Microsoft</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="h-6 w-6 border-2 border-[#111827] flex items-center justify-center font-bold text-xs">tcs</div>
+                        <span className="font-bold text-slate-800 text-lg tracking-tight">TCS</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="h-4 w-4 rounded-full bg-slate-800 relative overflow-hidden"><div className="absolute top-1 left-2 w-3 h-3 bg-white rounded-full"></div></div>
+                        <span className="font-bold text-slate-800 text-lg">Apple</span>
                     </div>
                     <div className="flex items-center gap-1">
-                        <div className="h-6 w-6 rounded-full border-2 border-slate-400"></div>
-                        <span className="font-bold text-slate-600 text-lg">alif</span>
-                    </div>
-                    <div className="flex items-center">
-                        <span className="font-black text-slate-400 text-2xl tracking-tighter">U</span>
+                        <span className="font-black text-slate-700 text-2xl tracking-tighter">a</span>
+                        <span className="font-bold text-slate-700 text-lg">amazon</span>
                     </div>
                     <div className="flex items-center gap-1">
-                        <div className="h-6 w-6 rounded-full bg-slate-300"></div>
-                        <span className="font-bold text-slate-700 text-xl tracking-tight">uzum</span>
+                        <div className="h-4 w-6 border-4 border-blue-600 rounded-full"></div>
+                        <span className="font-bold text-slate-800 text-lg">Meta</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 bg-slate-800 rounded-bl-xl rounded-tr-xl"></div>
-                        <span className="font-bold text-slate-800 text-lg">mahalla</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="h-5 w-5 bg-slate-700 rotate-45"></div>
-                        <span className="font-bold text-slate-900 text-xl tracking-tight">Chakana</span>
-                    </div>
-                    <div className="flex items-center">
-                        <span className="font-bold text-slate-300 text-2xl tracking-tight">Pay</span>
+                        <span className="font-bold text-red-600 text-2xl tracking-tighter">N</span>
+                        <span className="font-bold text-slate-800 text-lg">NETFLIX</span>
                     </div>
                 </div>
             </div>

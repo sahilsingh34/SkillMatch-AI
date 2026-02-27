@@ -27,12 +27,12 @@ export async function Navbar() {
 
         {/* Left: Logo */}
         <Link href="/" className="flex items-center space-x-2 group">
-          <div className="h-10 px-3 bg-[#111827] rounded-xl flex items-center justify-center transition-transform duration-300 shadow-sm border border-black/[0.04]">
-            <span className="text-white font-mono font-bold text-lg tracking-tight">
-              {"<i/>"}
+          <div className="h-9 px-4 bg-[#0f172a] rounded-full flex items-center justify-center transition-transform duration-300 shadow-sm border border-slate-800">
+            <span className="text-white font-mono font-bold text-[17px] tracking-tight mt-[1px]">
+              {"</>"}
             </span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900 ml-1">
+          <span className="text-xl font-extrabold tracking-tight text-slate-900 ml-1">
             SkillMatch
           </span>
         </Link>
