@@ -50,7 +50,7 @@ export async function Navbar() {
               <Link href="/jobs" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 Find Jobs
               </Link>
-              <Link href="/dashboard/profile/applications" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
+              <Link href="/dashboard/profile/applications" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 My Applications
               </Link>
             </>
@@ -58,10 +58,10 @@ export async function Navbar() {
 
           {userRole === "RECRUITER" && (
             <>
-              <Link href="/dashboard/recruiter/post-job" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
+              <Link href="/dashboard/recruiter/post-job" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 Post a Job
               </Link>
-              <Link href="/dashboard/recruiter" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
+              <Link href="/dashboard/recruiter" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 My Listings
               </Link>
             </>
@@ -69,10 +69,10 @@ export async function Navbar() {
 
           {!userRole && (
             <>
-              <Link href="/jobs" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
+              <Link href="/jobs" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 Jobs
               </Link>
-              <Link href="#companies" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 hover:text-slate-900 hover:bg-white/80 hover:shadow-sm transition-all duration-200">
+              <Link href="#companies" className="px-5 py-2 rounded-lg text-[13px] font-semibold text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-sm transition-all duration-200">
                 Companies
               </Link>
             </>
