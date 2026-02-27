@@ -253,9 +253,9 @@ export default async function JobsPage({
                             </div>
                         </div>
 
-                        <div className="space-y-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[2rem] overflow-hidden bg-white border border-slate-200 p-2 md:p-3">
+                        <div className="space-y-6">
                             {displayJobs.map((job) => (
-                                <div key={job.id} className="group rounded-[1.5rem] border border-transparent hover:border-slate-100 bg-white hover:bg-slate-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer relative">
+                                <div key={job.id} className="group rounded-[1.5rem] border border-slate-200 bg-white hover:bg-slate-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer relative">
                                     <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
 
                                         {/* Company Logo Square */}
