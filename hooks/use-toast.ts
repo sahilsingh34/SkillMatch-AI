@@ -4,6 +4,7 @@ import * as React from "react"
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
+const DEFAULT_DURATION = 3000
 
 type ToasterToast = ToastProps & {
     id: string
@@ -155,6 +156,11 @@ function toast({ ...props }: Toast) {
             },
         },
     })
+
+    // Auto-dismissal logic
+    setTimeout(() => {
+        dismiss()
+    }, DEFAULT_DURATION)
 
     return {
         id: id,
