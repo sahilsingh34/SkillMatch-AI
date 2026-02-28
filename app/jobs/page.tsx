@@ -314,7 +314,7 @@ export default async function JobsPage({
                                                 </div>
                                                 <div className="flex items-end justify-end">
                                                     <div className="text-[11px] font-semibold tracking-wide text-neutral-400 dark:text-neutral-500">
-                                                        Posted {job.postedAt.toLocaleDateString()}
+                                                        Posted {new Date(job.postedAt).toLocaleDateString()}
                                                     </div>
                                                 </div>
                                             </div>

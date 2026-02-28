@@ -3,15 +3,14 @@ import { prisma } from "./prisma";
 
 /**
  * Cached function to fetch a user's role by their Clerk ID.
- * Revalidates every 1 hour (3600 seconds) or when the 'user-role' tag is invalidated.
  */
 export const getCachedUserRole = (clerkId: string) =>
     unstable_cache(
-        async () => {
-            if (!clerkId) return null;
+        async (id: string) => {
+            if (!id) return null;
             try {
                 const user = await prisma.user.findUnique({
-                    where: { clerkId },
+                    where: { clerkId: id },
                     select: { role: true },
                 });
                 return user?.role ?? null;
@@ -25,26 +24,30 @@ export const getCachedUserRole = (clerkId: string) =>
             revalidate: 3600, // 1 hour
             tags: ["user-role"],
         }
-    )();
+    )(clerkId);
 
 /**
  * Cached function to fetch jobs with filters and pagination.
- * Revalidates every 1 minute (60 seconds).
  */
 export const getCachedJobs = (where: any, orderBy: any, skip: number, take: number) =>
     unstable_cache(
-        async () => {
+        async (w: any, o: any, s: number, t: number) => {
             try {
                 const [jobs, total] = await Promise.all([
                     prisma.job.findMany({
-                        where,
-                        orderBy,
-                        skip,
-                        take,
+                        where: w,
+                        orderBy: o,
+                        skip: s,
+                        take: t,
                     }),
-                    prisma.job.count({ where })
+                    prisma.job.count({ where: w })
                 ]);
-                return { jobs, total };
+
+                // Ensure dates are stringified for consistent caching but handled later
+                return {
+                    jobs: JSON.parse(JSON.stringify(jobs)), // Serialize immediately to POJO
+                    total
+                };
             } catch (e) {
                 console.error("getCachedJobs: failed to fetch jobs", e);
                 return { jobs: [], total: 0 };
@@ -55,4 +58,4 @@ export const getCachedJobs = (where: any, orderBy: any, skip: number, take: numb
             revalidate: 60, // 1 minute
             tags: ["jobs-list"],
         }
-    )();
+    )(where, orderBy, skip, take);
