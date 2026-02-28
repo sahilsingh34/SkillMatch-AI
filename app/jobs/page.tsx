@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Sparkles, Briefcase, MapPin, DollarSign, Building, Search, SlidersHorizontal, ChevronRight, ChevronLeft, FileText, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { prisma } from '@/lib/prisma';
+import { getCachedJobs } from '@/lib/cache';
 import { auth } from "@clerk/nextjs/server";
 import { SaveJobButton } from './SaveJobButton';
 import Image from 'next/image';
@@ -99,22 +100,8 @@ export default async function JobsPage({
     let orderBy: any = { postedAt: 'desc' };
     if (sort === 'salary_desc') orderBy = { salary: 'desc' };
 
-    // Fetch jobs with pagination
-    let dbJobs: any[] = [];
-    let totalJobs = 0;
-    try {
-        [dbJobs, totalJobs] = await Promise.all([
-            prisma.job.findMany({
-                where,
-                orderBy,
-                skip,
-                take: limit,
-            }),
-            prisma.job.count({ where })
-        ]);
-    } catch (e) {
-        console.error("Jobs: failed to fetch jobs from DB", e);
-    }
+    // Fetch jobs with pagination (cached)
+    const { jobs: dbJobs, total: totalJobs } = await getCachedJobs(where, orderBy, skip, limit);
 
     const totalPages = Math.ceil(totalJobs / limit);
 
@@ -128,7 +115,7 @@ export default async function JobsPage({
     });
 
     if (sort === 'match') {
-        displayJobs.sort((a, b) => b.matchScore - a.matchScore);
+        displayJobs.sort((a: any, b: any) => b.matchScore - a.matchScore);
     }
 
     // Quick horizontal filters (Skills)
@@ -272,7 +259,7 @@ export default async function JobsPage({
                         </div>
 
                         <div className="space-y-6">
-                            {displayJobs.map((job) => (
+                            {displayJobs.map((job: any) => (
                                 <div key={job.id} className="group rounded-[1.5rem] border border-neutral-100 dark:border-neutral-800 bg-white dark:bg-[#0a0a0a] hover:border-neutral-200 dark:hover:border-neutral-700 transition-colors cursor-pointer relative shadow-sm hover:shadow-md">
                                     <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start gap-6">
 

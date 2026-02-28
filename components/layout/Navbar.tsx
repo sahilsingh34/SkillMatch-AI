@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/prisma";
+import { getCachedUserRole } from "@/lib/cache";
 import { MessageSquare, ChevronDown } from "lucide-react";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "./ThemeToggle";
@@ -13,15 +13,7 @@ export async function Navbar() {
   let userRole = null;
 
   if (userId) {
-    try {
-      const user = await prisma.user.findUnique({
-        where: { clerkId: userId },
-        select: { role: true },
-      });
-      userRole = user?.role ?? null;
-    } catch (e) {
-      console.error("Navbar: failed to fetch user role", e);
-    }
+    userRole = await getCachedUserRole(userId);
   }
 
   return (
