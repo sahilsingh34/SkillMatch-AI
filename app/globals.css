@@ -196,8 +196,3 @@ html {
     animation: none;
     mix-blend-mode: normal;
 }
-
-/* Hide native cursor globally so the custom SmoothCursor is the only one visible */
-*, *::before, *::after {
-    cursor: none !important;
-}

@@ -6,7 +6,6 @@ import { Footer } from "@/components/layout/Footer";
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { Toaster } from "@/components/ui/toaster";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 import NextTopLoader from 'nextjs-toploader';
 
@@ -48,7 +47,6 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster />
-          <SmoothCursor />
         </body>
       </html>
     </ClerkProvider>
