@@ -27,10 +27,6 @@ export default async function RecruiterDashboard() {
             where: { clerkId: userId }
         });
 
-        recruiter = await prisma.user.findUnique({
-            where: { clerkId: userId }
-        });
-
         if (!recruiter || recruiter.role !== 'RECRUITER') {
             redirect('/onboarding');
         }
@@ -235,19 +231,19 @@ export default async function RecruiterDashboard() {
                                         </div>
                                     </div>
 
-                                    <div className="flex gap-4 md:gap-8 items-center justify-between md:justify-end w-full md:w-auto">
-                                        <div className="flex items-center gap-6 px-6 py-4 bg-neutral-50/50 dark:bg-neutral-900/20 rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                                    <div className="flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-between md:justify-end w-full md:w-auto">
+                                        <div className="flex items-center justify-around md:justify-center gap-4 md:gap-6 px-4 md:px-6 py-4 bg-neutral-50/50 dark:bg-neutral-900/20 rounded-2xl border border-neutral-200 dark:border-neutral-800 w-full md:w-auto">
                                             <div className="text-center">
                                                 <p className="text-[10px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1">Candidates</p>
-                                                <p className="text-[22px] font-extrabold text-black dark:text-white">{jobApplicants.length}</p>
+                                                <p className="text-xl md:text-[22px] font-extrabold text-black dark:text-white">{jobApplicants.length}</p>
                                             </div>
-                                            <div className="w-px h-10 bg-neutral-200 dark:bg-neutral-800"></div>
+                                            <div className="w-px h-10 bg-neutral-200 dark:bg-neutral-800 hidden sm:block"></div>
                                             <div className="text-center flex flex-col items-center">
                                                 <p className="text-[10px] font-bold flex items-center gap-1 text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1">
                                                     <Sparkles className="w-3 h-3 text-black dark:text-white relative -top-px" />
                                                     Top Match
                                                 </p>
-                                                <p className={`text-[22px] font-extrabold text-black dark:text-white`}>
+                                                <p className={`text-xl md:text-[22px] font-extrabold text-black dark:text-white`}>
                                                     {topMatch > 0 ? `${topMatch}%` : '--'}
                                                 </p>
                                             </div>

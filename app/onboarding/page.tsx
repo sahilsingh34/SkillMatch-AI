@@ -83,7 +83,7 @@ export default function OnboardingPage() {
                         <button
                             onClick={() => handleRoleSelection("SEEKER")}
                             disabled={isLoading}
-                            className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "SEEKER"
+                            className={`relative group w-full text-left p-5 sm:p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "SEEKER"
                                 ? "border-blue-500 shadow-lg shadow-blue-500/10"
                                 : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
                                 }`}
@@ -108,7 +108,7 @@ export default function OnboardingPage() {
                         <button
                             onClick={() => handleRoleSelection("RECRUITER")}
                             disabled={isLoading}
-                            className={`relative group w-full text-left p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "RECRUITER"
+                            className={`relative group w-full text-left p-5 sm:p-7 rounded-2xl border-2 bg-white transition-all duration-300 disabled:opacity-60 ${selectedRole === "RECRUITER"
                                 ? "border-violet-500 shadow-lg shadow-violet-500/10"
                                 : "border-neutral-200 hover:border-neutral-300 hover:shadow-md"
                                 }`}

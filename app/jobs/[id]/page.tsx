@@ -11,15 +11,17 @@ import { Particles } from "@/components/ui/particles";
 
 // Helper for Mock Vector Matching
 function calculateMatchScore(jobSkills: string, userSkills: string[]): number {
-    if (!userSkills || userSkills.length === 0) return 0;
+    if (!userSkills || userSkills.length === 0) return 30; // Base score for effort
 
-    const formattedJobSkills = jobSkills.split(',').map(s => s.trim().toLowerCase());
-    const formattedUserSkills = userSkills.map(s => s.toLowerCase());
+    const formattedJobSkills = jobSkills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+    const formattedUserSkills = userSkills.map(s => s.toLowerCase().trim()).filter(Boolean);
+
+    if (formattedJobSkills.length === 0) return 100;
 
     const matches = formattedJobSkills.filter((skill: string) => formattedUserSkills.includes(skill));
     const score = Math.round((matches.length / formattedJobSkills.length) * 100);
 
-    return Math.max(40, score + (formattedJobSkills.length < 3 ? 20 : 0));
+    return Math.max(10, score);
 }
 
 export default async function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -69,8 +71,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                         {/* Job Header Info */}
                         <div>
                             <div className="flex flex-col gap-4 mb-8">
-                                <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.1] text-black dark:text-white">{job.title}</h1>
-                                <div className="flex items-center text-[17px] font-medium text-neutral-500 dark:text-neutral-400">
+                                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.1] text-black dark:text-white">{job.title}</h1>
+                                <div className="flex items-center text-[15px] md:text-[17px] font-medium text-neutral-500 dark:text-neutral-400">
                                     <Building className="mr-2 h-5 w-5 text-neutral-400 dark:text-neutral-500" />
                                     {job.company}
                                 </div>

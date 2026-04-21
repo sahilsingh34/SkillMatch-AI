@@ -47,7 +47,8 @@ export default function ProfileDashboard() {
     useEffect(() => {
         getJobSeekerProfileAction().then((result: any) => {
             if (result.profile) {
-                setSkills(result.profile.skills ? result.profile.skills.split(',').map((s: string) => s.trim()) : []);
+                const fetchedSkills = result.profile.skills ? result.profile.skills.split(',').map((s: string) => s.trim()).filter((s: string) => s.toLowerCase() !== "unable to extract") : [];
+                setSkills(fetchedSkills);
                 setSummary(`Profile successfully extracted and saved. Experience: ${result.profile.experience} years.`);
                 setResumeUrl(result.profile.resumeUrl);
             }
@@ -79,7 +80,8 @@ export default function ProfileDashboard() {
                 throw new Error(data.error || "Failed to read resume file");
             }
 
-            setSkills(data.skills ? data.skills.split(',').map((s: string) => s.trim()) : []);
+            const extractedSkills = data.skills ? data.skills.split(',').map((s: string) => s.trim()).filter((s: string) => s.toLowerCase() !== "unable to extract") : [];
+            setSkills(extractedSkills);
             setSummary(data.message || "Resume processed successfully.");
             if (data.resumeUrl) setResumeUrl(data.resumeUrl);
 
@@ -270,6 +272,7 @@ export default function ProfileDashboard() {
                                     </div>
                                 </div>
                             )}
+
                         </CardContent>
                     </Card>
                 </div>

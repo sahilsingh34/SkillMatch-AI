@@ -20,7 +20,7 @@ export function MobileMenu({ userRole }: { userRole: string | null }) {
             </button>
 
             {isOpen && (
-                <div className="absolute top-16 left-0 right-0 bg-white border-b border-slate-100 shadow-lg p-4 flex flex-col space-y-4 z-50">
+                <div className="absolute top-16 left-0 right-0 bg-white dark:bg-neutral-900 border-b border-slate-100 dark:border-neutral-800 shadow-xl p-6 flex flex-col space-y-5 z-[101] animate-in slide-in-from-top-2 duration-200">
                     <Link
                         href="/"
                         onClick={toggleMenu}

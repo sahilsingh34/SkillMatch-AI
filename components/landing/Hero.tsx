@@ -20,7 +20,7 @@ export function Hero({ userRole }: { userRole?: string | null }) {
                         </div>
                     </BlurFade>
                     <BlurFade delay={0.2}>
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black dark:text-white leading-[1.1] mb-6">
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-black dark:text-white leading-[1.1] mb-6">
                             Find your next{" "}
                             <WordRotate
                                 words={["dream role", "perfect job", "next career", "ideal match"]}
@@ -61,7 +61,7 @@ export function Hero({ userRole }: { userRole?: string | null }) {
                         </div>
                     </BlurFade>
                     <BlurFade delay={0.2}>
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-black dark:text-white leading-[1.1] mb-6">
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-black dark:text-white leading-[1.1] mb-6">
                             Hire the top{" "}
                             <span className="text-black dark:text-white">1% of talent</span>
                         </h1>
@@ -106,7 +106,7 @@ export function Hero({ userRole }: { userRole?: string | null }) {
 
                 {/* Main headline */}
                 <BlurFade delay={0.2}>
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold tracking-tight leading-[1.1] mb-6 text-black dark:text-white">
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold tracking-tight leading-[1.1] mb-6 text-black dark:text-white">
                         Find Jobs, Talent<br />
                         and Skills with AI
                     </h1>

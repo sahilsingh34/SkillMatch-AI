@@ -367,37 +367,6 @@ export default async function JobsPage({
                         )}
                     </div>
 
-                    {/* RIGHT COLUMN: WIDGETS */}
-                    <div className="hidden lg:block lg:w-[280px] xl:w-[320px] shrink-0 space-y-8 order-3">
-                        {/* Promo Block: Match / Upload (Shrunk Minimalist Version) */}
-                        <div className="bg-neutral-50 dark:bg-neutral-900/50 rounded-2xl p-6 border border-neutral-200 dark:border-neutral-800 flex flex-col shadow-sm">
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 bg-white dark:bg-neutral-950 rounded-[14px] flex items-center justify-center border border-neutral-200 dark:border-neutral-800 shadow-sm shrink-0">
-                                    <FileText className="h-5 w-5 text-black dark:text-white" />
-                                </div>
-                                <h3 className="text-lg font-bold text-black dark:text-white tracking-tight leading-tight">Match with<br />your resume</h3>
-                            </div>
-                            <p className="text-neutral-500 dark:text-neutral-400 text-xs leading-relaxed mb-6">
-                                We'll extract your skills and instantly match you with jobs.
-                            </p>
-
-                            <div className="w-full mt-auto">
-                                {isSeeker ? (
-                                    <Link href="/dashboard/profile" className="block w-full">
-                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-xl shadow-sm transition-transform active:scale-95 text-sm h-11">
-                                            Update Profile
-                                        </Button>
-                                    </Link>
-                                ) : (
-                                    <Link href="/auth/signup" className="block w-full">
-                                        <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 font-bold rounded-xl shadow-sm transition-transform active:scale-95 text-sm h-11">
-                                            Sign up to match
-                                        </Button>
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div >
         </div >

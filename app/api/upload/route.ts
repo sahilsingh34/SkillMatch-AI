@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { supabaseAdmin } from "@/lib/supabase";
-import { generateText } from "ai";
+import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
-const PDFParser = require("pdf2json");
+import { z } from "zod";
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+    // Use pdf-parse for more robust text extraction
+    const pdf = require("pdf-parse");
     try {
         const { userId: clerkId } = await auth();
         if (!clerkId) {
@@ -28,13 +32,11 @@ export async function POST(req: NextRequest) {
         });
 
         if (!user) {
-            // Fetch Clerk user details for auto-creation
             const clerkUser = await currentUser();
             const email = clerkUser?.emailAddresses?.[0]?.emailAddress ?? `seeker_${clerkId}@clerk.local`;
             const firstName = clerkUser?.firstName;
             const lastName = clerkUser?.lastName;
 
-            // Auto-create the Seeker's core record if this is their first action
             user = await prisma.user.create({
                 data: {
                     clerkId,
@@ -54,7 +56,7 @@ export async function POST(req: NextRequest) {
         const { data: uploadData, error: uploadError } = await supabaseAdmin
             .storage
             .from('resumes')
-            .upload(filePath, buffer, { // USE BUFFER, NOT FILE OBJECT
+            .upload(filePath, buffer, {
                 contentType: file.type,
                 upsert: true
             });
@@ -73,58 +75,52 @@ export async function POST(req: NextRequest) {
         let extractedText = "";
 
         if (file.type === "application/pdf") {
-            extractedText = await new Promise((resolve, reject) => {
-                const pdfParser = new PDFParser(null, 1);
-
-                pdfParser.on("pdfParser_dataError", (errData: any) => reject(new Error(errData.parserError)));
-                pdfParser.on("pdfParser_dataReady", () => {
-                    resolve(pdfParser.getRawTextContent());
-                });
-
-                pdfParser.parseBuffer(buffer);
-            });
+            try {
+                const data = await pdf(buffer);
+                extractedText = data.text;
+            } catch (err) {
+                console.error("PDF Parse error:", err);
+                return NextResponse.json({ error: "Failed to parse PDF content" }, { status: 500 });
+            }
         } else {
             return NextResponse.json({ error: "Unsupported file type for MVP" }, { status: 400 });
         }
 
-        // 3. Extract core skills & experience using Google Gemini
+        // 3. Extract core skills & experience using Google Gemini with structured output
         let skills = "Unable to extract";
         let experience = 0;
 
         if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-            const prompt = `
-            You are an expert HR API. Extract the following from this resume text:
-            1. A comma-separated list of the top 5-10 technical/professional skills.
-            2. Give me a single integer representing the total years of professional experience across all roles.
-
-            Format your response EXACTLY like this with no markdown or intro:
-            SKILLS: React, Node.js, TypeScript, Next.js, Python
-            EXPERIENCE: 4
-
-            Resume Text:
-            ${extractedText.substring(0, 15000)} // Truncate to save tokens
-            `;
-
             try {
-                const { text: aiResponse } = await generateText({
+                const { object } = await generateObject({
                     model: google("gemini-1.5-flash"),
-                    prompt: prompt,
+                    schema: z.object({
+                        skills: z.array(z.string()).describe("A list of 5-15 technical and professional skills mentioned in the resume"),
+                        experience: z.number().describe("Total years of professional experience as an integer"),
+                    }),
+                    prompt: `
+                    You are an expert HR extraction API. Extract the following from this resume text:
+                    1. A list of technical and professional skills (e.g., React, Project Management, Docker).
+                    2. The total number of years of professional experience.
+
+                    Resume Text:
+                    ${extractedText.substring(0, 15000)}
+                    `,
                 });
 
-                const skillsMatch = aiResponse.match(/SKILLS:\s*(.+)/i);
-                const expMatch = aiResponse.match(/EXPERIENCE:\s*(\d+)/i);
-
-                if (skillsMatch) {
-                    // Normalize skills: lowercase, trim, and unique
-                    const rawSkills = skillsMatch[1].split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
-                    skills = Array.from(new Set(rawSkills)).join(', ');
+                if (object.skills && object.skills.length > 0) {
+                    // Normalize skills: trim, unique (case-insensitive deduplication)
+                    const normalized = Array.from(new Set(
+                        object.skills.map(s => s.trim()).filter(Boolean)
+                    ));
+                    skills = normalized.join(', ');
                 }
                 
-                if (expMatch) {
-                    experience = parseInt(expMatch[1].trim(), 10);
-                }
+                experience = object.experience || 0;
+
             } catch (err) {
                 console.error("Gemini Extraction failed:", err);
+                // Fallback to previous defaults already set if AI fails
             }
         }
 
@@ -157,3 +153,4 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Failed to process resume pipeline" }, { status: 500 });
     }
 }
+

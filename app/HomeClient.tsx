@@ -69,7 +69,7 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-white dark:bg-neutral-950">
+        <div className="flex flex-col min-h-screen bg-background text-foreground">
             <Hero userRole={userRole} />
 
             {!userRole && (
@@ -95,18 +95,18 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== TRUSTED BY SECTION ===== */}
-                    <section className="py-20 bg-white dark:bg-neutral-950">
+                    <section className="py-20 bg-background border-t border-border/50">
                         <div className="container mx-auto px-6 max-w-5xl">
                             <BlurFade delay={0.1}>
-                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-black dark:text-white text-center mb-3 tracking-tight">
+                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-foreground text-center mb-3 tracking-tight">
                                     Trusted by the best companies
                                 </TextAnimate>
-                                <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm mb-14">
+                                <p className="text-center text-muted-foreground text-sm mb-14">
                                     SkillMatch AI is the choice of all the Fortune 500 companies.
                                 </p>
                             </BlurFade>
                             <BlurFade delay={0.2}>
-                                <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-10">
+                                <div className="flex flex-wrap justify-center items-center gap-x-8 md:gap-x-16 gap-y-10">
                                     <div className="flex items-center gap-1">
                                         <svg viewBox="0 0 24 24" className="w-6 h-6" fill="#E50914"><path d="M5.398 0v.006c3.028 8.556 5.37 15.175 8.348 23.596 2.344.058 4.85.398 4.854.398-2.8-7.924-5.923-16.747-8.487-24zm8.489 0v9.63L18.6 22.951c-.043-7.86-.004-15.913.002-22.95zM5.398 1.05V24c1.873-.225 2.81-.312 4.715-.398v-9.22z" /></svg>
                                         <span className="font-black text-xl tracking-tighter text-[#E50914]">NETFLIX</span>
@@ -116,11 +116,11 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                                     </div>
                                     <div className="flex items-center gap-1.5">
                                         <svg viewBox="0 0 24 24" className="w-7 h-7" fill="#0081FB"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a4.892 4.892 0 0 0 1.547 2.57c.675.59 1.509.882 2.4.882 1.077 0 2.076-.404 3.078-1.36.734-.7 1.49-1.717 2.29-3.085l.727-1.233.426.73c.96 1.636 2.06 2.87 3.282 3.517.89.47 1.81.657 2.694.657h.003c1.263 0 2.347-.554 3.16-1.53.823-.988 1.36-2.42 1.36-4.13 0-2.706-.757-5.478-2.08-7.46C17.822 3.332 16.1 2.07 14.116 2.07c-1.106 0-2.136.4-3.142 1.37-.734.71-1.49 1.727-2.29 3.1l-.726 1.24-.427-.73C6.565 5.41 5.457 4.15 4.236 3.503 3.695 3.21 3.105 3.03 2.496 3.03h-.003c-.283 0-.538.027-.578.027z" /></svg>
-                                        <span className="text-xl font-semibold text-black dark:text-white">Meta</span>
+                                        <span className="text-xl font-semibold text-foreground">Meta</span>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-black dark:fill-white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83z" /><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" /></svg>
-                                        <span className="text-xl font-semibold text-black dark:text-white">Apple</span>
+                                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-foreground"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83z" /><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" /></svg>
+                                        <span className="text-xl font-semibold text-foreground">Apple</span>
                                     </div>
                                 </div>
                             </BlurFade>
@@ -128,27 +128,27 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== BENTO FEATURES ===== */}
-                    <section className="py-20 bg-white dark:bg-neutral-950">
+                    <section className="py-20 bg-background">
                         <div className="container mx-auto px-6 max-w-5xl">
                             <BlurFade delay={0.1}>
-                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-black dark:text-white text-center mb-3 tracking-tight">
+                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-foreground text-center mb-3 tracking-tight">
                                     Packed with thousands of features
                                 </TextAnimate>
-                                <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm mb-14 max-w-xl mx-auto">
+                                <p className="text-center text-muted-foreground text-sm mb-14 max-w-xl mx-auto">
                                     From AI skill matching to resume parsing, SkillMatch AI has tools for literally everything.
                                 </p>
                             </BlurFade>
 
                             <div className="grid md:grid-cols-2 gap-6">
                                 <BlurFade delay={0.2}>
-                                    <div className="relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-8 overflow-hidden hover:shadow-lg transition-shadow">
+                                    <div className="relative rounded-2xl border border-border bg-card p-8 overflow-hidden hover:shadow-lg transition-shadow">
                                         <BorderBeam size={200} duration={8} colorFrom="#9E7AFF" colorTo="#FE8BBB" />
-                                        <h3 className="text-lg font-bold text-black dark:text-white mb-2">AI-Powered Skill Matching</h3>
-                                        <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6 leading-relaxed">
+                                        <h3 className="text-lg font-bold text-foreground mb-2">AI-Powered Skill Matching</h3>
+                                        <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                                             Match candidates with jobs based on verified skills, not just keywords. Our deep learning models achieve 95% accuracy.
                                         </p>
-                                        <div className="relative flex h-[220px] w-full items-center justify-center overflow-hidden bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-100 dark:border-neutral-700">
-                                            <span className="text-2xl font-bold text-black dark:text-white z-10">AI</span>
+                                        <div className="relative flex h-[220px] w-full items-center justify-center overflow-hidden bg-muted/30 rounded-xl border border-border/50">
+                                            <span className="text-2xl font-bold text-foreground z-10">AI</span>
                                             <OrbitingCircles radius={60} duration={15} iconSize={32}>
                                                 <div className="px-2 py-1 rounded-full bg-violet-100 dark:bg-violet-900/50 text-violet-700 dark:text-violet-300 text-[10px] font-bold">React</div>
                                                 <div className="px-2 py-1 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] font-bold">TypeScript</div>
@@ -165,13 +165,13 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                                 </BlurFade>
 
                                 <BlurFade delay={0.3}>
-                                    <div className="relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-8 overflow-hidden hover:shadow-lg transition-shadow">
+                                    <div className="relative rounded-2xl border border-border bg-card p-8 overflow-hidden hover:shadow-lg transition-shadow">
                                         <BorderBeam size={200} duration={8} delay={3} colorFrom="#FFB7C5" colorTo="#4FABFF" />
-                                        <h3 className="text-lg font-bold text-black dark:text-white mb-2">Real-Time Activity Feed</h3>
-                                        <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6 leading-relaxed">
+                                        <h3 className="text-lg font-bold text-foreground mb-2">Real-Time Activity Feed</h3>
+                                        <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                                             Watch as matches happen live. Our platform processes thousands of connections every minute.
                                         </p>
-                                        <div className="relative h-[220px] w-full overflow-hidden bg-neutral-50 dark:bg-neutral-800/50 rounded-xl border border-neutral-100 dark:border-neutral-700 p-4">
+                                        <div className="relative h-[220px] w-full overflow-hidden bg-muted/30 rounded-xl border border-border/50 p-4">
                                             <AnimatedList delay={2000} className="gap-2">
                                                 {liveNotifications.map((n, i) => (
                                                     <div key={i} className={`flex items-center gap-3 ${n.color} rounded-lg p-3 border border-neutral-100 dark:border-neutral-700 w-full`}>
@@ -191,9 +191,9 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== 4x2 FEATURE GRID ===== */}
-                    <section className="py-20 bg-neutral-50 dark:bg-neutral-900">
+                    <section className="py-20 bg-muted/50 border-y border-border">
                         <div className="container mx-auto px-6 max-w-5xl">
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200 dark:bg-neutral-700 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden border border-border">
                                 {[
                                     { icon: <Layers className="w-5 h-5" />, title: "Built for scale", desc: "Built for enterprises, startups, dreamers, thinkers and doers." },
                                     { icon: <Zap className="w-5 h-5" />, title: "Ease of use", desc: "It's as easy as uploading a resume — and just as powerful." },
@@ -205,10 +205,10 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                                     { icon: <Heart className="w-5 h-5" />, title: "Made with love", desc: "Crafted by a passionate team focused on your career success." },
                                 ].map((item, i) => (
                                     <BlurFade key={i} delay={0.05 * i} className="h-full">
-                                        <div className="bg-white dark:bg-neutral-900 p-6 md:p-8 flex flex-col h-full">
-                                            <div className="text-neutral-700 dark:text-neutral-300 mb-4">{item.icon}</div>
-                                            <h3 className="text-sm font-bold text-black dark:text-white mb-2">{item.title}</h3>
-                                            <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">{item.desc}</p>
+                                        <div className="bg-card p-6 md:p-8 flex flex-col h-full hover:bg-muted/50 transition-colors">
+                                            <div className="text-muted-foreground mb-4">{item.icon}</div>
+                                            <h3 className="text-sm font-bold text-foreground mb-2">{item.title}</h3>
+                                            <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
                                         </div>
                                     </BlurFade>
                                 ))}
@@ -217,12 +217,12 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== STATS WITH RIPPLE ===== */}
-                    <section className="relative py-20 bg-white dark:bg-neutral-950 overflow-hidden">
+                    <section className="relative py-20 bg-background overflow-hidden border-b border-border">
                         <Ripple mainCircleSize={300} mainCircleOpacity={0.08} numCircles={6} />
                         <div className="container mx-auto px-6 max-w-4xl relative z-10">
                             <BlurFade delay={0.1}>
                                 <div className="text-center mb-12">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white tracking-tight">
+                                    <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
                                         Numbers speak louder
                                     </h2>
                                 </div>
@@ -254,10 +254,10 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                                 </BlurFade>
                                 <BlurFade delay={0.5}>
                                     <div className="text-center">
-                                        <div className="text-4xl md:text-5xl font-bold text-black dark:text-white tracking-tight">
-                                            <NumberTicker value={2000} className="text-black dark:text-white" />+
+                                        <div className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                                            <NumberTicker value={2000} className="text-foreground" />+
                                         </div>
-                                        <div className="text-sm text-neutral-500 dark:text-neutral-400 font-medium mt-1">Companies</div>
+                                        <div className="text-sm text-muted-foreground font-medium mt-1">Companies</div>
                                     </div>
                                 </BlurFade>
                             </div>
@@ -265,13 +265,13 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== TESTIMONIALS ===== */}
-                    <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-t border-neutral-100 dark:border-neutral-800">
+                    <section className="py-20 bg-muted/30 border-t border-border">
                         <div className="container mx-auto px-6 max-w-5xl">
                             <BlurFade delay={0.1}>
-                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-black dark:text-white text-center mb-3 tracking-tight">
+                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-4xl font-bold text-foreground text-center mb-3 tracking-tight">
                                     Loved by people all over the universe
                                 </TextAnimate>
-                                <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm mb-14 max-w-xl mx-auto">
+                                <p className="text-center text-muted-foreground text-sm mb-14 max-w-xl mx-auto">
                                     SkillMatch AI is used by thousands of professionals around the globe.
                                 </p>
                             </BlurFade>
@@ -282,17 +282,17 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                                         {testimonials
                                             .filter((_, i) => i % 3 === colIdx)
                                             .map((t, i) => (
-                                                <div key={i} className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-5 mb-4 hover:shadow-sm transition-shadow">
+                                                <div key={i} className="rounded-xl border border-border bg-card p-5 mb-4 hover:shadow-sm transition-shadow">
                                                     <div className="flex items-center gap-3 mb-3">
-                                                        <div className="w-9 h-9 rounded-full bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center text-xs font-bold text-neutral-600 dark:text-neutral-300">
+                                                        <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground">
                                                             {t.name.split(" ").map(n => n[0]).join("")}
                                                         </div>
                                                         <div>
-                                                            <p className="text-sm font-semibold text-black dark:text-white">{t.name}</p>
-                                                            <p className="text-xs text-neutral-400">{t.role}</p>
+                                                            <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                                                            <p className="text-xs text-muted-foreground">{t.role}</p>
                                                         </div>
                                                     </div>
-                                                    <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">{t.text}</p>
+                                                    <p className="text-sm text-muted-foreground leading-relaxed">{t.text}</p>
                                                 </div>
                                             ))
                                         }
@@ -303,23 +303,23 @@ export function HomeClient({ userRole }: { userRole: string | null | undefined }
                     </section>
 
                     {/* ===== CTA WITH RETRO GRID ===== */}
-                    <section className="relative py-24 bg-white dark:bg-neutral-950 overflow-hidden border-t border-neutral-100 dark:border-neutral-800">
+                    <section className="relative py-24 bg-background overflow-hidden border-t border-border">
                         <RetroGrid angle={65} cellSize={60} opacity={0.3} />
                         <div className="container mx-auto px-6 text-center max-w-3xl relative z-10">
                             <BlurFade delay={0.1}>
-                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 tracking-tight">
+                                <TextAnimate animation="blurInUp" by="word" className="text-3xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
                                     Ready to find your perfect match?
                                 </TextAnimate>
-                                <p className="text-neutral-500 dark:text-neutral-400 text-sm mb-8 max-w-md mx-auto">
+                                <p className="text-muted-foreground text-sm mb-8 max-w-md mx-auto">
                                     Join thousands of professionals and companies already using AI to connect smarter.
                                 </p>
                                 <div className="flex items-center justify-center gap-4">
                                     <Link href="/auth/signup">
-                                        <Button size="lg" className="bg-black dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-black rounded-lg px-8 h-12 text-sm font-medium shadow-lg shadow-black/10 hover:shadow-xl transition-all hover:-translate-y-0.5">
+                                        <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-lg px-8 h-12 text-sm font-medium shadow-lg shadow-black/10 hover:shadow-xl transition-all hover:-translate-y-0.5">
                                             Get started for free
                                         </Button>
                                     </Link>
-                                    <Link href="/jobs" className="text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-1 transition-colors">
+                                    <Link href="/jobs" className="text-sm font-medium text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors">
                                         Browse Jobs <ArrowRight className="w-4 h-4" />
                                     </Link>
                                 </div>
