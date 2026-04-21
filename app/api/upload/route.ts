@@ -10,26 +10,34 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
     try {
+        console.log("[Resume Pipeline] Starting request...");
+        
         const { userId: clerkId } = await auth();
         if (!clerkId) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            console.error("[Resume Pipeline] Unauthorized: No clerkId found");
+            return NextResponse.json({ error: "Unauthorized: Please log in again." }, { status: 401 });
         }
 
         const formData = await req.formData();
         const file = formData.get("file") as File;
 
         if (!file) {
+            console.error("[Resume Pipeline] Bad Request: No file provided");
             return NextResponse.json({ error: "No file provided" }, { status: 400 });
         }
+
+        console.log(`[Resume Pipeline] Processing file: ${file.name} (${file.size} bytes)`);
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
+        console.log("[Resume Pipeline] Checking user in database...");
         let user = await prisma.user.findUnique({
             where: { clerkId }
         });
 
         if (!user) {
+            console.log("[Resume Pipeline] User not found, creating new user record...");
             const clerkUser = await currentUser();
             const email = clerkUser?.emailAddresses?.[0]?.emailAddress ?? `seeker_${clerkId}@clerk.local`;
             const firstName = clerkUser?.firstName;
@@ -47,6 +55,7 @@ export async function POST(req: NextRequest) {
         }
 
         // 1. Upload the raw PDF to Supabase Storage
+        console.log("[Resume Pipeline] Uploading to Supabase Storage...");
         const fileExt = file.name.split('.').pop() || 'pdf';
         const fileName = `${user.id}-${Date.now()}.${fileExt}`;
         const filePath = `resumes/${fileName}`;
@@ -60,8 +69,8 @@ export async function POST(req: NextRequest) {
             });
 
         if (uploadError) {
-            console.error("Supabase upload error:", uploadError);
-            return NextResponse.json({ error: "Failed to upload resume to storage engine" }, { status: 500 });
+            console.error("[Resume Pipeline] Supabase Storage Error:", uploadError);
+            return NextResponse.json({ error: `Storage Error: ${uploadError.message}` }, { status: 500 });
         }
 
         const { data: { publicUrl: resumeUrl } } = supabaseAdmin
@@ -69,26 +78,13 @@ export async function POST(req: NextRequest) {
             .from('resumes')
             .getPublicUrl(filePath);
 
-        // 2. Parse the PDF text for Gemini
-        const pdf = require("pdf-parse");
-        let extractedText = "";
+        console.log(`[Resume Pipeline] File uploaded successfully. Public URL: ${resumeUrl}`);
 
-        if (file.type === "application/pdf") {
-            try {
-                const data = await pdf(buffer);
-                extractedText = data.text;
-            } catch (err) {
-                console.error("PDF Parse error:", err);
-                return NextResponse.json({ error: "Failed to parse PDF content" }, { status: 500 });
-            }
-        } else {
-            return NextResponse.json({ error: "Unsupported file type for MVP" }, { status: 400 });
-        }
-
-        // 3. Extract core skills & experience using Google Gemini
+        // 2. Extract core skills & experience using Google Gemini (Native Multimodal)
+        console.log("[Resume Pipeline] Starting Gemini Native Extraction...");
         let skills = "Unable to extract";
         let experience = 0;
-        let summary = "Profile successfully extracted and saved.";
+        let summary = "Your profile has been successfully processed.";
 
         if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
             try {
@@ -99,15 +95,22 @@ export async function POST(req: NextRequest) {
                         experience: z.number().describe("Total years of professional experience as an integer"),
                         summary: z.string().describe("A brief 1-2 sentence professional summary of the candidate"),
                     }),
-                    prompt: `
-                    You are an expert HR extraction API. Analyze the following resume text and extract:
-                    1. A list of technical and professional skills.
-                    2. Total years of professional experience (integer).
-                    3. A brief professional summary.
-
-                    Resume Text:
-                    ${extractedText.substring(0, 15000)}
-                    `,
+                    messages: [
+                        {
+                            role: "user",
+                            content: [
+                                {
+                                    type: "text",
+                                    text: "You are an expert HR extraction API. Analyze the attached resume PDF and extract: 1. A list of technical and professional skills. 2. Total years of professional experience (integer). 3. A brief professional summary.",
+                                },
+                                {
+                                    type: "file",
+                                    data: buffer,
+                                    mimeType: "application/pdf",
+                                },
+                            ],
+                        },
+                    ],
                 });
 
                 if (object.skills && object.skills.length > 0) {
@@ -119,19 +122,21 @@ export async function POST(req: NextRequest) {
                 
                 experience = object.experience || 0;
                 summary = object.summary || summary;
+                console.log("[Resume Pipeline] Gemini extraction successful.");
 
             } catch (err) {
-                console.error("Gemini Native Extraction failed:", err);
+                console.error("[Resume Pipeline] Gemini Native Extraction failed:", err);
                 return NextResponse.json({ 
-                    error: "AI extraction failed. Please try a different PDF or ensure it is not password protected." 
+                    error: "AI extraction failed. The PDF might be too large or complex for the current model." 
                 }, { status: 500 });
             }
         } else {
-            console.error("GOOGLE_GENERATIVE_AI_API_KEY is missing");
+            console.error("[Resume Pipeline] Configuration Error: GOOGLE_GENERATIVE_AI_API_KEY missing");
             return NextResponse.json({ error: "AI Service not configured" }, { status: 500 });
         }
 
-        // 4. Upsert the Profile record into Prisma
+        // 3. Upsert the Profile record into Prisma
+        console.log("[Resume Pipeline] Saving profile to database...");
         await prisma.profile.upsert({
             where: { userId: user.id },
             update: {
@@ -147,6 +152,7 @@ export async function POST(req: NextRequest) {
             }
         });
 
+        console.log("[Resume Pipeline] Pipeline completed successfully.");
         return NextResponse.json({
             success: true,
             skills,
@@ -155,9 +161,12 @@ export async function POST(req: NextRequest) {
             message: summary
         });
 
-    } catch (error) {
-        console.error("Upload error:", error);
-        return NextResponse.json({ error: "Failed to process resume pipeline" }, { status: 500 });
+    } catch (error: any) {
+        console.error("[Resume Pipeline] Global Error:", error);
+        return NextResponse.json({ 
+            error: `Pipeline Failed: ${error.message || "Unknown error during processing"}`,
+            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        }, { status: 500 });
     }
 }
 
