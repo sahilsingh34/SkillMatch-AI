@@ -20,7 +20,7 @@ async function calculateAIMatchScore(
 ): Promise<number> {
     try {
         const { text } = await generateText({
-            model: google("gemini-2.0-flash"),
+            model: google("gemini-1.5-flash"),
             prompt: `You are a recruitment AI. Calculate the match score between this candidate and job.
 
 JOB TITLE: ${jobTitle}
