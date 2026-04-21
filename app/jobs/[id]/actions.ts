@@ -51,21 +51,26 @@ Respond with ONLY a single integer number between 10 and 100. Nothing else.`
     }
 }
 
-/** Basic string-matching fallback */
+/** Basic exact word-matching fallback */
 function fallbackMatchScore(jobSkills: string, userSkills: string): number {
-    const jobArr = jobSkills.toLowerCase().split(',').map((s: string) => s.trim());
-    const userArr = userSkills.toLowerCase().split(',').map((s: string) => s.trim());
+    const normalize = (s: string) => s.toLowerCase().split(',').map(item => item.trim()).filter(Boolean);
+    
+    const jobArr = normalize(jobSkills);
+    const userArr = normalize(userSkills);
+
+    if (jobArr.length === 0) return 100;
 
     let matchCount = 0;
-    jobArr.forEach((reqSkill: string) => {
-        if (userArr.some((us: string) => us.includes(reqSkill) || reqSkill.includes(us))) {
+    jobArr.forEach((reqSkill) => {
+        // Use a set-based or exact match approach to avoid "Java" matching "JavaScript"
+        if (userArr.includes(reqSkill)) {
             matchCount++;
         }
     });
 
-    let score = jobArr.length > 0 ? Math.round((matchCount / jobArr.length) * 100) : 100;
-    if (score < 10) score = 10;
-    return score;
+    let score = Math.round((matchCount / jobArr.length) * 100);
+    // Ensure a minimum score of 10 for effort
+    return Math.max(10, score);
 }
 
 export async function createApplicationAction(jobId: string) {

@@ -18,12 +18,15 @@ import { RetroGrid } from "@/components/ui/retro-grid";
 function calculateMatchScore(jobSkills: string, userSkills: string[]): number {
     if (!userSkills || userSkills.length === 0) return 30; // Base score for effort
 
-    const formattedJobSkills = jobSkills.split(',').map((s: string) => s.trim().toLowerCase());
-    const formattedUserSkills = userSkills.map((s: string) => s.toLowerCase());
+    const formattedJobSkills = jobSkills.split(',').map((s: string) => s.trim().toLowerCase()).filter(Boolean);
+    const formattedUserSkills = userSkills.map((s: string) => s.toLowerCase().trim()).filter(Boolean);
+
+    if (formattedJobSkills.length === 0) return 100;
 
     const matches = formattedJobSkills.filter((skill: string) =>
-        formattedUserSkills.some((us: string) => us.includes(skill) || skill.includes(us))
+        formattedUserSkills.includes(skill)
     );
+    
     const score = Math.round((matches.length / formattedJobSkills.length) * 100);
 
     return Math.max(10, score);

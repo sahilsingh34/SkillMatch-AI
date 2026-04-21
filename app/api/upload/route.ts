@@ -88,29 +88,45 @@ export async function POST(req: NextRequest) {
         }
 
         // 3. Extract core skills & experience using Google Gemini
-        const prompt = `
-        You are an expert HR API. Extract the following from this resume text:
-        1. A comma-separated list of the top 5-10 technical/professional skills.
-        2. Give me a single integer representing the total years of professional experience across all roles.
+        let skills = "Unable to extract";
+        let experience = 0;
 
-        Format your response EXACTLY like this with no markdown or intro:
-        SKILLS: React, Node.js, TypeScript, Next.js, Python
-        EXPERIENCE: 4
+        if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+            const prompt = `
+            You are an expert HR API. Extract the following from this resume text:
+            1. A comma-separated list of the top 5-10 technical/professional skills.
+            2. Give me a single integer representing the total years of professional experience across all roles.
 
-        Resume Text:
-        ${extractedText.substring(0, 15000)} // Truncate to save tokens
-        `;
+            Format your response EXACTLY like this with no markdown or intro:
+            SKILLS: React, Node.js, TypeScript, Next.js, Python
+            EXPERIENCE: 4
 
-        const { text: aiResponse } = await generateText({
-            model: google("gemini-2.5-flash"),
-            prompt: prompt,
-        });
+            Resume Text:
+            ${extractedText.substring(0, 15000)} // Truncate to save tokens
+            `;
 
-        const skillsMatch = aiResponse.match(/SKILLS:\s*(.+)/i);
-        const expMatch = aiResponse.match(/EXPERIENCE:\s*(\d+)/i);
+            try {
+                const { text: aiResponse } = await generateText({
+                    model: google("gemini-1.5-flash"),
+                    prompt: prompt,
+                });
 
-        const skills = skillsMatch ? skillsMatch[1].trim() : "Unable to extract";
-        const experience = expMatch ? parseInt(expMatch[1].trim(), 10) : 0;
+                const skillsMatch = aiResponse.match(/SKILLS:\s*(.+)/i);
+                const expMatch = aiResponse.match(/EXPERIENCE:\s*(\d+)/i);
+
+                if (skillsMatch) {
+                    // Normalize skills: lowercase, trim, and unique
+                    const rawSkills = skillsMatch[1].split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+                    skills = Array.from(new Set(rawSkills)).join(', ');
+                }
+                
+                if (expMatch) {
+                    experience = parseInt(expMatch[1].trim(), 10);
+                }
+            } catch (err) {
+                console.error("Gemini Extraction failed:", err);
+            }
+        }
 
         // 4. Upsert the Profile record into Prisma
         await prisma.profile.upsert({

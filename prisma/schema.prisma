@@ -1,11 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
-// Using Supabase Cloud PostgreSQL
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -13,50 +9,45 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  clerkId   String   @unique // Integration hook for Clerk Auth
-  email     String   @unique
-  firstName String?
-  lastName  String?
-  role      String   @default("SEEKER") // Defines RBAC: "SEEKER" or "RECRUITER"
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  profile      Profile?
-  jobsPosted   Job[]       @relation("RecruiterJobs")
+  id           String      @id @default(uuid())
+  clerkId      String      @unique
+  email        String      @unique
+  firstName    String?
+  lastName     String?
+  role         String      @default("SEEKER")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   applications Applicant[]
+  jobsPosted   Job[]       @relation("RecruiterJobs")
+  profile      Profile?
   savedJobs    SavedJob[]
 }
 
 model Profile {
   id         String   @id @default(uuid())
   userId     String   @unique
-  skills     String   // Stored as a comma-separated string
+  skills     String
   experience Int      @default(0)
-  resumeUrl  String?  // Public URL to the PDF stored in Supabase Storage
+  resumeUrl  String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Job {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   title       String
   company     String
   location    String
   type        String
   salary      String
   description String
-  skills      String   // Stored as a comma-separated string
-  postedAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
+  skills      String
+  postedAt    DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   recruiterId String
-  recruiter   User        @relation("RecruiterJobs", fields: [recruiterId], references: [id])
   applicants  Applicant[]
+  recruiter   User        @relation("RecruiterJobs", fields: [recruiterId], references: [id])
   savedBy     SavedJob[]
 }
 
@@ -65,29 +56,24 @@ model Applicant {
   jobId      String
   userId     String
   matchScore Int
-  skills     String   // Stored as comma-separated string
+  skills     String
   experience Int
-  status     String   @default("Applied") // Stages: Applied, Screening, Interview, Offered, Rejected
+  status     String   @default("Applied")
   appliedAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
-  // Relations
   job        Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Prevent multiple applications to the same job
-  @@unique([jobId, userId]) 
+  @@unique([jobId, userId])
 }
 
 model SavedJob {
-  id        String   @id @default(uuid())
-  userId    String
-  jobId     String
-  savedAt   DateTime @default(now())
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  id      String   @id @default(uuid())
+  userId  String
+  jobId   String
+  savedAt DateTime @default(now())
+  job     Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, jobId])
 }
-

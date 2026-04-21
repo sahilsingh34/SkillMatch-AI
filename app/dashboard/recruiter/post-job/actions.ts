@@ -58,7 +58,7 @@ export async function createJobAction(formData: FormData) {
                 };
 
                 const model = genAI.getGenerativeModel({
-                    model: "gemini-2.5-flash",
+                    model: "gemini-1.5-flash",
                     generationConfig: {
                         responseMimeType: "application/json",
                         responseSchema: schema as any,
@@ -68,16 +68,19 @@ export async function createJobAction(formData: FormData) {
                 const prompt = `You are an expert technical recruiter. Analyze the following job description and extract 5 to 10 core skills (e.g. 'React', 'Project Management') required for this role.\n\nDescription:\n${description}`;
                 const result = await model.generateContent(prompt);
                 const parsedResult = JSON.parse(result.response.text());
-                extractedSkills = parsedResult.skills || [];
+                
+                // Normalize skills: lowercase and unique
+                const rawSkills = (parsedResult.skills || []).map((s: string) => s.trim().toLowerCase()).filter(Boolean);
+                extractedSkills = Array.from(new Set(rawSkills)) as string[];
             } catch (aiError) {
                 console.error("Failed to extract skills via Gemini:", aiError);
-                extractedSkills = ["Communication", "Problem Solving"];
+                extractedSkills = ["communication", "problem solving"];
             }
         } else {
-            extractedSkills = ["Communication", "Problem Solving"];
+            extractedSkills = ["communication", "problem solving"];
         }
 
-        const skillsString = extractedSkills.length > 0 ? extractedSkills.join(', ') : "Generalist";
+        const skillsString = extractedSkills.length > 0 ? extractedSkills.join(', ') : "generalist";
 
         // Create Job in Prisma SQLite
         const newJob = await prisma.job.create({
