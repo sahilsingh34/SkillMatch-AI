@@ -1,5 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+console.log("[Proxy] Initializing with ENV check:", {
+  has_clerk_key: !!process.env.CLERK_SECRET_KEY,
+  has_publishable_key: !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+});
+
 // Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
   "/",
