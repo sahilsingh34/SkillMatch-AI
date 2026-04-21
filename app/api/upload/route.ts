@@ -80,8 +80,22 @@ export async function POST(req: NextRequest) {
 
         console.log(`[Resume Pipeline] File uploaded successfully. Public URL: ${resumeUrl}`);
 
-        // 2. Extract core skills & experience using Google Gemini (Native Multimodal)
-        console.log("[Resume Pipeline] Starting Gemini Native Extraction...");
+        // 2. Parse the PDF text for Gemini
+        const pdf = require("pdf-parse");
+        let extractedText = "";
+
+        try {
+            console.log("[Resume Pipeline] Parsing PDF text...");
+            const data = await pdf(buffer);
+            extractedText = data.text;
+            console.log(`[Resume Pipeline] PDF parsed. Text length: ${extractedText.length}`);
+        } catch (err) {
+            console.error("[Resume Pipeline] PDF Parse error:", err);
+            return NextResponse.json({ error: "Failed to parse PDF content" }, { status: 500 });
+        }
+
+        // 3. Extract core skills & experience using Google Gemini
+        console.log("[Resume Pipeline] Starting Gemini Extraction...");
         let skills = "Unable to extract";
         let experience = 0;
         let summary = "Your profile has been successfully processed.";
@@ -95,22 +109,15 @@ export async function POST(req: NextRequest) {
                         experience: z.number().describe("Total years of professional experience as an integer"),
                         summary: z.string().describe("A brief 1-2 sentence professional summary of the candidate"),
                     }),
-                    messages: [
-                        {
-                            role: "user",
-                            content: [
-                                {
-                                    type: "text",
-                                    text: "You are an expert HR extraction API. Analyze the attached resume PDF and extract: 1. A list of technical and professional skills. 2. Total years of professional experience (integer). 3. A brief professional summary.",
-                                },
-                                {
-                                    type: "file",
-                                    data: buffer,
-                                    mimeType: "application/pdf",
-                                },
-                            ],
-                        },
-                    ],
+                    prompt: `
+                    You are an expert HR extraction API. Analyze the following resume text and extract:
+                    1. A list of technical and professional skills.
+                    2. Total years of professional experience (integer).
+                    3. A brief professional summary.
+
+                    Resume Text:
+                    ${extractedText.substring(0, 15000)}
+                    `,
                 });
 
                 if (object.skills && object.skills.length > 0) {
