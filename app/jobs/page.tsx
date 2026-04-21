@@ -128,16 +128,16 @@ export default async function JobsPage({
         <div className="min-h-screen bg-white dark:bg-neutral-950">
 
             {/* HERO HEADER - Clean White Section */}
-            <section className="relative flex flex-col items-center justify-center pt-36 pb-32 px-6 overflow-hidden border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
+            <section className="relative flex flex-col items-center justify-center pt-36 pb-32 px-6 overflow-hidden border-b border-border bg-background">
                 <Particles className="absolute inset-0 z-0" quantity={60} ease={80} color="#a78bfa" size={0.5} staticity={50} />
                 <div className="container mx-auto max-w-6xl relative z-10 text-center">
                     <BlurFade delay={0.1}>
-                        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-black dark:text-white">
+                        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 text-foreground">
                             Find your dream job
                         </h1>
                     </BlurFade>
                     <BlurFade delay={0.2}>
-                        <p className="text-lg text-neutral-500 dark:text-neutral-400 font-normal max-w-2xl mx-auto mb-12 leading-relaxed">
+                        <p className="text-lg text-muted-foreground font-normal max-w-2xl mx-auto mb-12 leading-relaxed">
                             Discover highly-matched roles at top tech companies. Let AI connect you with opportunities perfectly aligned with your verified skills.
                         </p>
                     </BlurFade>
@@ -147,28 +147,28 @@ export default async function JobsPage({
             {/* FLOATING PILL SEARCH BAR */}
             <div className="container mx-auto max-w-6xl px-4 relative z-20 -mt-16 md:-mt-10 mb-12 lg:mb-16">
                 <BlurFade delay={0.3}>
-                    <form className="bg-white dark:bg-neutral-900 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] p-2 md:p-3 flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4 border border-neutral-200 dark:border-neutral-700 transition-all focus-within:ring-4 focus-within:ring-blue-500/20 focus-within:border-blue-400 dark:focus-within:border-blue-500">
-                        <div className="flex-1 flex items-center px-4 py-3 md:py-0 w-full border-b md:border-b-0 md:border-r border-neutral-100 dark:border-neutral-800">
-                            <Search className="h-5 w-5 text-neutral-400 shrink-0 mr-3" />
+                    <form className="bg-card rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none p-2 md:p-3 flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4 border border-border transition-all focus-within:ring-4 focus-within:ring-blue-500/20 focus-within:border-blue-400 dark:focus-within:border-blue-500">
+                        <div className="flex-1 flex items-center px-4 py-3 md:py-0 w-full border-b md:border-b-0 md:border-r border-border">
+                            <Search className="h-5 w-5 text-muted-foreground shrink-0 mr-3" />
                             <Input
                                 name="search"
                                 defaultValue={search}
                                 placeholder="Job title, keywords, or company"
-                                className="bg-transparent border-none focus-visible:ring-0 text-base shadow-none px-0 h-10 w-full placeholder:text-neutral-400 text-black dark:text-white font-medium"
+                                className="bg-transparent border-none focus-visible:ring-0 text-base shadow-none px-0 h-10 w-full placeholder:text-muted-foreground text-foreground font-medium"
                             />
                         </div>
 
                         <div className="flex-1 flex items-center px-4 py-3 md:py-0 w-full">
-                            <MapPin className="h-5 w-5 text-neutral-400 shrink-0 mr-3" />
+                            <MapPin className="h-5 w-5 text-muted-foreground shrink-0 mr-3" />
                             <Input
                                 name="location"
                                 defaultValue={locationFilter}
                                 placeholder="Add country or city"
-                                className="bg-transparent border-none focus-visible:ring-0 text-base shadow-none px-0 h-10 w-full placeholder:text-neutral-400 text-black dark:text-white font-medium"
+                                className="bg-transparent border-none focus-visible:ring-0 text-base shadow-none px-0 h-10 w-full placeholder:text-muted-foreground text-foreground font-medium"
                             />
                         </div>
 
-                        <Button type="submit" size="lg" className="w-full md:w-auto bg-[#111827] hover:bg-black dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-black rounded-full px-10 h-14 mt-2 md:mt-0 text-base font-bold shadow-lg shadow-black/10 shrink-0 transition-transform active:scale-95">
+                        <Button type="submit" size="lg" className="w-full md:w-auto bg-foreground text-background hover:bg-foreground/90 rounded-full px-10 h-14 mt-2 md:mt-0 text-base font-bold shadow-lg shadow-black/10 shrink-0 transition-transform active:scale-95">
                             Search
                         </Button>
                     </form>
@@ -183,7 +183,7 @@ export default async function JobsPage({
                     <div className="w-full lg:w-[240px] xl:w-64 shrink-0 space-y-10 lg:sticky lg:top-28 h-fit order-2 lg:order-1">
 
                         <div className="flex items-center justify-between mb-2">
-                            <h2 className="text-lg font-bold text-black dark:text-white">Filters</h2>
+                            <h2 className="text-lg font-bold text-foreground">Filters</h2>
                             {(typeFilter || locationFilter || search) && (
                                 <Link href="/jobs" className="text-sm font-semibold text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">Clear all</Link>
                             )}
@@ -192,7 +192,7 @@ export default async function JobsPage({
                         {/* Job Type Filter */}
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                                <h3 className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">Employment Type</h3>
+                                <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Employment Type</h3>
                                 {typeFilter && <Link href={`/jobs?search=${search}&location=${locationFilter}`} className="text-xs text-neutral-400 dark:text-neutral-500 hover:text-blue-600 dark:hover:text-blue-500 font-medium">Clear</Link>}
                             </div>
                             <div className="flex flex-col gap-3">
@@ -201,10 +201,10 @@ export default async function JobsPage({
                                     return (
                                         <Link key={type} href={`/jobs?type=${type}&sort=${sort}&search=${search}&location=${locationFilter}`}>
                                             <div className="flex items-center group cursor-pointer">
-                                                <div className={`w-[18px] h-[18px] rounded-[4px] border ${isActive ? 'bg-[#111827] dark:bg-white border-[#111827] dark:border-white' : 'bg-white dark:bg-transparent border-neutral-300 dark:border-neutral-700 group-hover:border-neutral-400'} flex items-center justify-center transition-colors`}>
-                                                    {isActive && <CheckCircle2 className="h-3 w-3 text-white dark:text-black opacity-100" />}
+                                                <div className={`w-[18px] h-[18px] rounded-[4px] border ${isActive ? 'bg-foreground border-foreground' : 'bg-card border-border group-hover:border-muted-foreground'} flex items-center justify-center transition-colors`}>
+                                                    {isActive && <CheckCircle2 className="h-3 w-3 text-background opacity-100" />}
                                                 </div>
-                                                <span className={`ml-3 text-[15px] font-medium transition-colors ${isActive ? 'text-black dark:text-white' : 'text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white'}`}>
+                                                <span className={`ml-3 text-[15px] font-medium transition-colors ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
                                                     {type}
                                                 </span>
                                             </div>
@@ -215,24 +215,24 @@ export default async function JobsPage({
                         </div>
 
                         {/* Salary Type (Mock) */}
-                        <div className="space-y-4 border-t border-neutral-100 dark:border-neutral-800 pt-8">
-                            <h3 className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">Salary Range</h3>
+                        <div className="space-y-4 border-t border-border pt-8">
+                            <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Salary Range</h3>
                             <div className="flex flex-col gap-3">
                                 {["Under $50k", "$50k - $100k", "$100k - $150k", "Over $150k"].map((range) => (
                                     <div key={range} className="flex items-center group cursor-not-allowed opacity-50">
-                                        <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 transition-colors">{range}</span>
+                                        <span className="text-sm font-semibold text-muted-foreground transition-colors">{range}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Popular Locations Widget (Moved to Left) */}
-                        <div className="space-y-4 border-t border-neutral-100 dark:border-neutral-800 pt-8">
-                            <h3 className="text-[11px] font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">Popular Locations</h3>
+                        <div className="space-y-4 border-t border-border pt-8">
+                            <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Popular Locations</h3>
                             <div className="flex flex-col gap-3">
                                 {["San Francisco, CA", "New York, NY", "London, UK", "Remote", "Austin, TX"].map((loc) => (
                                     <Link key={loc} href={`/jobs?location=${loc}`} className="flex items-center justify-between group">
-                                        <span className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                                        <span className="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">
                                             {loc}
                                         </span>
                                     </Link>
@@ -244,13 +244,13 @@ export default async function JobsPage({
                     {/* CENTER COLUMN: JOB FEED */}
                     <div className="flex-1 min-w-0 order-1 lg:order-2">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-base font-semibold text-neutral-500 dark:text-neutral-400">
-                                Showing <span className="text-black dark:text-white font-bold">{totalJobs}</span> results found
+                            <h2 className="text-base font-semibold text-muted-foreground">
+                                Showing <span className="text-foreground font-bold">{totalJobs}</span> results found
                             </h2>
                             <div className="flex items-center gap-2 text-sm">
-                                <span className="text-neutral-500 dark:text-neutral-400">Sort By:</span>
+                                <span className="text-muted-foreground">Sort By:</span>
                                 <select
-                                    className="bg-transparent font-semibold text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-md px-2 py-1 focus:outline-none cursor-pointer border-none transition-colors"
+                                    className="bg-transparent font-semibold text-foreground hover:bg-muted rounded-md px-2 py-1 focus:outline-none cursor-pointer border-none transition-colors"
                                     defaultValue={sort}
                                 // Normally handled by client-side router, but using poor-man's form approach for SSR simplicity without client wrapper
                                 >
@@ -263,13 +263,13 @@ export default async function JobsPage({
 
                         <div className="space-y-6">
                             {displayJobs.map((job: any) => (
-                                <div key={job.id} className="group rounded-[1.5rem] border border-neutral-100 dark:border-neutral-800 bg-white dark:bg-[#0a0a0a] hover:border-neutral-200 dark:hover:border-neutral-700 transition-colors cursor-pointer relative shadow-sm hover:shadow-md">
+                                <div key={job.id} className="group rounded-[1.5rem] border border-border bg-card hover:border-muted transition-colors cursor-pointer relative shadow-sm hover:shadow-md">
                                     <div className="p-6 md:p-8 flex flex-col sm:flex-row items-start gap-6">
 
                                         {/* Company Logo Square */}
-                                        <div className="w-[72px] h-[72px] rounded-[1.25rem] border border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center shrink-0">
+                                        <div className="w-[72px] h-[72px] rounded-[1.25rem] border border-border bg-muted flex items-center justify-center shrink-0">
                                             {/* Placeholder for real logos, using initial for now */}
-                                            <span className="text-2xl font-black text-neutral-300 dark:text-neutral-600 uppercase">{job.company.charAt(0)}</span>
+                                            <span className="text-2xl font-black text-muted-foreground uppercase">{job.company.charAt(0)}</span>
                                         </div>
 
                                         {/* Core Job Info */}
@@ -277,46 +277,46 @@ export default async function JobsPage({
                                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                                                 <div>
                                                     <Link href={`/jobs/${job.id}`}>
-                                                        <h3 className="text-[22px] font-bold text-black dark:text-white hover:underline decoration-2 underline-offset-4 tracking-tight leading-none mb-2 truncate">
+                                                        <h3 className="text-[22px] font-bold text-foreground hover:underline decoration-2 underline-offset-4 tracking-tight leading-none mb-2 truncate">
                                                             {job.title}
                                                         </h3>
                                                     </Link>
-                                                    <div className="flex items-center text-[15px] font-medium text-neutral-500 dark:text-neutral-400">
+                                                    <div className="flex items-center text-[15px] font-medium text-muted-foreground">
                                                         <span>{job.company}</span>
-                                                        <span className="mx-2 text-neutral-300 dark:text-neutral-600">•</span>
+                                                        <span className="mx-2 text-border">•</span>
                                                         <span>{job.location}</span>
                                                     </div>
                                                 </div>
 
                                                 <div className="flex items-center shrink-0 gap-3">
                                                     {/* AI Match Score Pill */}
-                                                    <div className={`px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400'}`}>
+                                                    <div className={`px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1.5 ${job.matchScore >= 80 ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'}`}>
                                                         <Sparkles className="h-3.5 w-3.5" />
                                                         {job.matchScore}% Match
                                                     </div>
                                                     {/* Save Button */}
-                                                    <div className="text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+                                                    <div className="text-muted-foreground hover:text-foreground transition-colors">
                                                         <SaveJobButton jobId={job.id} initialSaved={job.isSaved} />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Structured Meta Data Grid */}
-                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-5 border-t border-neutral-100/60 dark:border-neutral-800/60">
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-5 border-t border-border/50">
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Experience</div>
-                                                    <div className="text-[15px] font-semibold text-[#111827] dark:text-neutral-200">1 to 3 Years</div>
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Experience</div>
+                                                    <div className="text-[15px] font-semibold text-foreground">1 to 3 Years</div>
                                                 </div>
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Job Type</div>
-                                                    <div className="text-[15px] font-semibold text-[#111827] dark:text-neutral-200">{job.type}</div>
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Job Type</div>
+                                                    <div className="text-[15px] font-semibold text-foreground">{job.type}</div>
                                                 </div>
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Salary</div>
-                                                    <div className="text-[15px] font-bold text-black dark:text-white">{job.salary}</div>
+                                                    <div className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground">Salary</div>
+                                                    <div className="text-[15px] font-bold text-foreground">{job.salary}</div>
                                                 </div>
                                                 <div className="flex items-end justify-end">
-                                                    <div className="text-[11px] font-semibold tracking-wide text-neutral-400 dark:text-neutral-500">
+                                                    <div className="text-[11px] font-semibold tracking-wide text-muted-foreground">
                                                         Posted {new Date(job.postedAt).toLocaleDateString()}
                                                     </div>
                                                 </div>
