@@ -3,9 +3,14 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm use 20
         - npm ci
     build:
       commands:
+        # Build-time environment variable injection
+        - echo "NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL" >> .env
+        - echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY" >> .env
+        - echo "DATABASE_URL=$DATABASE_URL" >> .env
         - npx prisma generate
         - npm run build
   artifacts:
