@@ -3,7 +3,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { supabaseAdmin } from "@/lib/supabase";
 import { generateObject } from "ai";
-import { google } from "@ai-sdk/google";
+import { defaultModel } from "@/lib/ai";
 import { z } from "zod";
 
 export const dynamic = 'force-dynamic';
@@ -100,10 +100,10 @@ export async function POST(req: NextRequest) {
         let experience = 0;
         let summary = "Your profile has been successfully processed.";
 
-        if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        if (process.env.NVIDIA_API_KEY) {
             try {
                 const { object } = await generateObject({
-                    model: google("gemini-1.5-flash"),
+                    model: defaultModel,
                     schema: z.object({
                         skills: z.array(z.string()).describe("A list of 5-15 technical and professional skills mentioned in the resume"),
                         experience: z.number().describe("Total years of professional experience as an integer"),
@@ -129,16 +129,16 @@ export async function POST(req: NextRequest) {
                 
                 experience = object.experience || 0;
                 summary = object.summary || summary;
-                console.log("[Resume Pipeline] Gemini extraction successful.");
+                console.log("[Resume Pipeline] NVIDIA extraction successful.");
 
             } catch (err) {
-                console.error("[Resume Pipeline] Gemini Native Extraction failed:", err);
+                console.error("[Resume Pipeline] NVIDIA Native Extraction failed:", err);
                 return NextResponse.json({ 
                     error: "AI extraction failed. The PDF might be too large or complex for the current model." 
                 }, { status: 500 });
             }
         } else {
-            console.error("[Resume Pipeline] Configuration Error: GOOGLE_GENERATIVE_AI_API_KEY missing");
+            console.error("[Resume Pipeline] Configuration Error: NVIDIA_API_KEY missing");
             return NextResponse.json({ error: "AI Service not configured" }, { status: 500 });
         }
 

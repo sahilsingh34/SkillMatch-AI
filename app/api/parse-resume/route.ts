@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { generateObject } from 'ai';
+import { defaultModel } from '@/lib/ai';
+import { z } from 'zod';
 
 // Mock skill extraction fallback
 function mockExtractSkills(text: string) {
@@ -29,56 +32,32 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Invalid or too short resume text provided" }, { status: 400 });
         }
 
-        // Check if Google Gemini API key is configured
-        const hasGeminiKey = !!process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+        // Check if NVIDIA API key is configured
+        const hasApiKey = !!process.env.NVIDIA_API_KEY;
 
-        if (hasGeminiKey) {
+        if (hasApiKey) {
             try {
-                const { GoogleGenerativeAI, SchemaType } = await import('@google/generative-ai');
-                const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY as string);
-
-                const schema = {
-                    type: SchemaType.OBJECT,
-                    properties: {
-                        skills: {
-                            type: SchemaType.ARRAY,
-                            items: { type: SchemaType.STRING },
-                            description: "A list of 10-15 key technical and soft skills found in the resume."
-                        },
-                        summary: {
-                            type: SchemaType.STRING,
-                            description: "A 2-3 sentence professional summary of the candidate based on the resume."
-                        },
-                        yearsOfExperience: {
-                            type: SchemaType.NUMBER,
-                            description: "Estimated total years of professional experience, if discernible."
-                        }
-                    },
-                    required: ["skills", "summary"]
-                };
-
-                const model = genAI.getGenerativeModel({
-                    model: "gemini-2.0-flash", // Reverting to 2.0-flash since 1.5 models are 404ing on this key
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: schema as any,
-                    }
-                });
-
                 const prompt = `You are an expert technical recruiter and resume parser. Analyze the following resume text and extract the core skills and a professional summary.\n\nResume Text:\n${text}`;
-                const result = await model.generateContent(prompt);
-                const responseText = result.response.text();
-                const parsedResult = JSON.parse(responseText);
+                
+                const { object } = await generateObject({
+                    model: defaultModel,
+                    schema: z.object({
+                        skills: z.array(z.string()).describe("A list of 10-15 key technical and soft skills found in the resume."),
+                        summary: z.string().describe("A 2-3 sentence professional summary of the candidate based on the resume."),
+                        yearsOfExperience: z.number().optional().describe("Estimated total years of professional experience, if discernible.")
+                    }),
+                    prompt
+                });
 
                 return NextResponse.json({
                     success: true,
-                    skills: parsedResult.skills || [],
-                    summary: parsedResult.summary || "",
-                    yearsOfExperience: parsedResult.yearsOfExperience || null,
-                    source: "gemini"
+                    skills: object.skills || [],
+                    summary: object.summary || "",
+                    yearsOfExperience: object.yearsOfExperience || null,
+                    source: "nvidia"
                 });
             } catch (llmError) {
-                console.error("Gemini API Error, falling back to mock:", llmError);
+                console.error("NVIDIA API Error, falling back to mock:", llmError);
                 // Fall through to mock extraction
             }
         }

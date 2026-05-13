@@ -1,9 +1,11 @@
 "use server";
 
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { auth } from '@clerk/nextjs/server';
+import { generateObject } from 'ai';
+import { defaultModel } from '@/lib/ai';
+import { z } from 'zod';
 
 export async function createJobAction(formData: FormData) {
     try {
@@ -40,40 +42,25 @@ export async function createJobAction(formData: FormData) {
 
         // AI Skill Extraction from Job Description
         let extractedSkills: string[] = [];
-        const hasGeminiKey = !!process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+        const hasApiKey = !!process.env.NVIDIA_API_KEY;
 
-        if (hasGeminiKey) {
+        if (hasApiKey) {
             try {
-                const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY as string);
-                const schema = {
-                    type: SchemaType.OBJECT,
-                    properties: {
-                        skills: {
-                            type: SchemaType.ARRAY,
-                            items: { type: SchemaType.STRING },
-                            description: "A list of 5-10 core technical and soft skills required for the job."
-                        }
-                    },
-                    required: ["skills"]
-                };
-
-                const model = genAI.getGenerativeModel({
-                    model: "gemini-1.5-flash",
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: schema as any,
-                    }
-                });
-
                 const prompt = `You are an expert technical recruiter. Analyze the following job description and extract 5 to 10 core skills (e.g. 'React', 'Project Management') required for this role.\n\nDescription:\n${description}`;
-                const result = await model.generateContent(prompt);
-                const parsedResult = JSON.parse(result.response.text());
+                
+                const { object } = await generateObject({
+                    model: defaultModel,
+                    schema: z.object({
+                        skills: z.array(z.string()).describe("A list of 5-10 core technical and soft skills required for the job.")
+                    }),
+                    prompt
+                });
                 
                 // Normalize skills: lowercase and unique
-                const rawSkills = (parsedResult.skills || []).map((s: string) => s.trim().toLowerCase()).filter(Boolean);
+                const rawSkills = (object.skills || []).map((s: string) => s.trim().toLowerCase()).filter(Boolean);
                 extractedSkills = Array.from(new Set(rawSkills)) as string[];
             } catch (aiError) {
-                console.error("Failed to extract skills via Gemini:", aiError);
+                console.error("Failed to extract skills via NVIDIA:", aiError);
                 extractedSkills = ["communication", "problem solving"];
             }
         } else {

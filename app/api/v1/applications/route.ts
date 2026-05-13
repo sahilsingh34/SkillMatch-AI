@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { google } from "@ai-sdk/google";
+import { defaultModel } from "@/lib/ai";
 import { generateText } from "ai";
 
 /**
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
         let matchScore = 50;
         try {
             const { text } = await generateText({
-                model: google("gemini-1.5-flash"),
+                model: defaultModel,
                 prompt: `Rate match from 0-100 between Candidate Skills: ${user.profile.skills} and Job Required Skills: ${job.skills}. Return only the integer score.`
             });
             matchScore = parseInt(text.trim()) || 50;

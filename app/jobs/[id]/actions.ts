@@ -3,13 +3,13 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { google } from "@ai-sdk/google";
+import { defaultModel } from "@/lib/ai";
 import { generateText } from "ai";
 
 /**
  * AI-Enhanced Match Score Calculator
- * Uses Gemini to semantically compare user skills against job requirements
- * Falls back to basic string matching if Gemini is unavailable
+ * Uses NVIDIA AI to semantically compare user skills against job requirements
+ * Falls back to basic string matching if NVIDIA is unavailable
  */
 async function calculateAIMatchScore(
     jobTitle: string,
@@ -20,7 +20,7 @@ async function calculateAIMatchScore(
 ): Promise<number> {
     try {
         const { text } = await generateText({
-            model: google("gemini-1.5-flash"),
+            model: defaultModel,
             prompt: `You are a recruitment AI. Calculate the match score between this candidate and job.
 
 JOB TITLE: ${jobTitle}

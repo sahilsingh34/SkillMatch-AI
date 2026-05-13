@@ -1,9 +1,11 @@
 "use server";
 
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { auth } from '@clerk/nextjs/server';
+import { generateObject } from 'ai';
+import { defaultModel } from '@/lib/ai';
+import { z } from 'zod';
 
 export async function deleteJobAction(jobId: string) {
     try {
@@ -73,26 +75,16 @@ export async function updateJobAction(jobId: string, formData: FormData) {
 
         // AI Skill Extraction (if description changed)
         let skillsString = existingJob.skills;
-        if (description !== existingJob.description && process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        if (description !== existingJob.description && process.env.NVIDIA_API_KEY) {
             try {
-                const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
-                const schema = {
-                    type: SchemaType.OBJECT,
-                    properties: {
-                        skills: {
-                            type: SchemaType.ARRAY,
-                            items: { type: SchemaType.STRING },
-                        }
-                    },
-                    required: ["skills"]
-                };
-                const model = genAI.getGenerativeModel({
-                    model: "gemini-2.0-flash",
-                    generationConfig: { responseMimeType: "application/json", responseSchema: schema as any }
+                const { object } = await generateObject({
+                    model: defaultModel,
+                    schema: z.object({
+                        skills: z.array(z.string()).describe("A list of 5-10 core technical and soft skills required for the job.")
+                    }),
+                    prompt: `Extract 5-10 core skills for: ${description}`
                 });
-                const result = await model.generateContent(`Extract 5-10 core skills for: ${description}`);
-                const parsedResult = JSON.parse(result.response.text());
-                skillsString = (parsedResult.skills || []).join(', ');
+                skillsString = (object.skills || []).join(', ');
             } catch (aiError) {
                 console.error("Skill re-extraction failed:", aiError);
             }

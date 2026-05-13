@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import { google } from "@ai-sdk/google";
+import { defaultModel } from "@/lib/ai";
 import { generateText } from "ai";
 
 export async function getJobSeekerProfileAction() {
@@ -70,9 +70,9 @@ export async function getSkillGapAnalysisAction() {
             .slice(0, 20)
             .map(([skill]) => skill);
 
-        // 3. Call Gemini for intelligent analysis
+        // 3. Call NVIDIA for intelligent analysis
         const { text } = await generateText({
-            model: google("gemini-2.0-flash"),
+            model: defaultModel,
             prompt: `You are a career advisor AI. Analyze this job seeker's skill gap.
 
 USER'S CURRENT SKILLS: ${userSkills}

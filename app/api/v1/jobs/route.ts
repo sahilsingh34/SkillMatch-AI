@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { google } from "@ai-sdk/google";
+import { defaultModel } from "@/lib/ai";
 import { generateText } from "ai";
 
 /**
@@ -99,10 +99,10 @@ export async function POST(req: NextRequest) {
 
         // AI Skill Extraction
         let extractedSkills: string[] = ["Generalist"];
-        if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        if (process.env.NVIDIA_API_KEY) {
             try {
                 const { text } = await generateText({
-                    model: google("gemini-1.5-flash"), // Using available model
+                    model: defaultModel,
                     prompt: `Extract 5-10 core skills from this job description: ${description}. Return as a comma-separated list.`
                 });
                 extractedSkills = text.split(",").map(s => s.trim());
