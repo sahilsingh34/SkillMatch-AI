@@ -2,7 +2,6 @@ import { createOpenAI } from '@ai-sdk/openai';
 
 // Initialize the NVIDIA AI client using the OpenAI compatible endpoint
 export const nvidia = createOpenAI({
-  compatibility: 'compatible', // Important for generic OpenAI compatible endpoints
   baseURL: 'https://integrate.api.nvidia.com/v1',
   apiKey: process.env.NVIDIA_API_KEY,
 });
