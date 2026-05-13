@@ -5,6 +5,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import { generateObject } from "ai";
 import { defaultModel } from "@/lib/ai";
 import { z } from "zod";
+import PDFParser from "pdf2json";
 
 export const dynamic = 'force-dynamic';
 
@@ -80,14 +81,22 @@ export async function POST(req: NextRequest) {
 
         console.log(`[Resume Pipeline] File uploaded successfully. Public URL: ${resumeUrl}`);
 
-        // 2. Parse the PDF text for Gemini
-        const pdf = require("pdf-parse");
+        // 2. Parse the PDF text
         let extractedText = "";
 
         try {
-            console.log("[Resume Pipeline] Parsing PDF text...");
-            const data = await pdf(buffer);
-            extractedText = data.text;
+            console.log("[Resume Pipeline] Parsing PDF text with pdf2json...");
+            extractedText = await new Promise<string>((resolve, reject) => {
+                const pdfParser = new (PDFParser as any)(null, 1); // 1 = extract raw text
+                
+                pdfParser.on("pdfParser_dataError", (errData: any) => reject(errData.parserError));
+                pdfParser.on("pdfParser_dataReady", () => {
+                    const text = (pdfParser as any).getRawTextContent();
+                    resolve(text);
+                });
+                
+                pdfParser.parseBuffer(buffer);
+            });
             console.log(`[Resume Pipeline] PDF parsed. Text length: ${extractedText.length}`);
         } catch (err) {
             console.error("[Resume Pipeline] PDF Parse error:", err);
